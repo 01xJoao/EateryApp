@@ -1,0 +1,17 @@
+//
+//  NavigationService.swift
+//  Eatery
+//
+//  Created by João Palma on 17/11/2020.
+//
+
+import Foundation
+
+protocol NavigationService where Self: NavigationServiceImp {
+    func rootViewController() -> RootViewController
+    func navigate<TViewModel : ViewModel>(viewModel: TViewModel.Type, arguments: Any?, animated: Bool)
+    func navigateModal<TViewModel : ViewModel>(viewModel: TViewModel.Type, arguments: Any?)
+    func navigateAndSetAsContainer<TViewModel : ViewModel>(viewModel: TViewModel.Type)
+    func close(arguments: Any?, animated: Bool)
+    func closeModal(arguments: Any?)
+}

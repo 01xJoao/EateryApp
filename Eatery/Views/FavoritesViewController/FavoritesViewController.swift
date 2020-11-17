@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  FavoritesViewController.swift
 //  Eatery
 //
 //  Created by João Palma on 17/11/2020.
@@ -7,13 +7,9 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-
+final class FavoritesViewController: BaseViewController<FavoritesViewModel> {
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        self.title = "Favorites"
     }
-
-
 }
-
