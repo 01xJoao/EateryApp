@@ -27,6 +27,8 @@ enum CustomUIAppearance {
         
         UIBarButtonItem.appearance().setTitleTextAttributes([.foregroundColor: UIColor.Theme.white], for: .normal)
         UIBarButtonItem.appearance().tintColor = UIColor.Theme.white
+        
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
     }
     
     static private func _textShadow() -> NSShadow {
