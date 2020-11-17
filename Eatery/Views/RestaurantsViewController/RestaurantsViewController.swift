@@ -15,8 +15,16 @@ final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>,
     }
     
     private func _setupView() {
+        _configureFilterButton()
         _configureSearchController()
     }
+    
+    private func _configureFilterButton() {
+        let filterButton = UIBarButtonItem(image: UIImage(systemName: "line.horizontal.3.decrease.circle"), style: .done, target: self, action: #selector(_filterAction))
+        self.navigationItem.rightBarButtonItem = filterButton
+    }
+    
+    @objc private func _filterAction() {}
     
     private func _configureSearchController() {
         let searchController = UISearchController()
