@@ -22,7 +22,8 @@ final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>,
         _configureSearchController()
         _configureCollectionView()
         
-        _collectionDataSource.updateData(on: [Restaurant(name: "Fish"), Restaurant(name: "Let"), Restaurant(name: "Done"), Restaurant(name: "Stuff")])
+        _collectionDataSource.updateData(on: [Restaurant(name: "Fish"), Restaurant(name: "Let"), Restaurant(name: "Done"), Restaurant(name: "Stuff"),
+                                              Restaurant(name: "Fish1"), Restaurant(name: "Let2"), Restaurant(name: "Done3"), Restaurant(name: "Stuff4")])
         
     }
     
@@ -55,17 +56,18 @@ final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>,
     }
     
     private func _configureCollectionView() {
+        _setCollectionViewHorizontalScroll()
+        
         self.view.addSubview(_collectionView)
         
         _collectionView.contentInset = UIEdgeInsets(top: 12, left: 12, bottom: 10, right: 12)
         _collectionView.delegate = _collectionDataSource
         _collectionView.dataSource = _collectionDataSource
         _collectionView.backgroundColor = .clear
+        _collectionView.showsHorizontalScrollIndicator = false
         
         _collectionView.anchor(top: self.view.topAnchor, leading: self.view.safeAreaLayoutGuide.leadingAnchor,
                                bottom: self.view.bottomAnchor, trailing: self.view.safeAreaLayoutGuide.trailingAnchor)
-        
-        _setCollectionViewHorizontalScroll()
     }
     
     private func _setCollectionViewHorizontalScroll() {
@@ -74,6 +76,10 @@ final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>,
         }
     }
     
-    func updateSearchResults(for searchController: UISearchController) {
+    func updateSearchResults(for searchController: UISearchController) {}
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        coordinator.animate { _ in self._collectionView.collectionViewLayout.invalidateLayout() }
     }
 }

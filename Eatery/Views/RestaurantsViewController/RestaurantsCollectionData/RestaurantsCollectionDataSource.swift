@@ -7,8 +7,10 @@
 
 import UIKit
 
+enum Section { case restaurants }
+
 final class RestaurantsCollectionDataSource: UICollectionViewDiffableDataSource<Section, Restaurant> {
-    static private let _portraitCellMinimumWidth = 300
+    private let _estimatedCellWidth:CGFloat = 270
     
     private let _collectionView: UICollectionView!
     private var _restaurantList = [Restaurant]()
@@ -27,24 +29,41 @@ final class RestaurantsCollectionDataSource: UICollectionViewDiffableDataSource<
         _restaurantList.append(contentsOf: restaurants)
         
         var snapshot = NSDiffableDataSourceSnapshot<Section, Restaurant>()
-        snapshot.appendSections([.main])
-        snapshot.appendItems(restaurants, toSection: .main)
+        snapshot.appendSections([.restaurants])
+        snapshot.appendItems(restaurants, toSection: .restaurants)
         self.apply(snapshot, animatingDifferences: true)
     }
 }
 
 extension RestaurantsCollectionDataSource: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let collectionViewWidth = collectionView.bounds.width
+
+        var cellWidth: CGFloat = 0
+        let provisoryItemCountInRow: CGFloat = (collectionViewWidth / _estimatedCellWidth)
+        let cellCount = ceil(provisoryItemCountInRow)
         
-        let collectionViewWidth: CGFloat = min(collectionView.bounds.width, collectionView.bounds.height)
+        if(provisoryItemCountInRow > 2) {
+            cellWidth = _calculateCellWidth(provisoryItemCountInRow, cellCount, collectionViewWidth)
+        } else {
+            cellWidth = collectionViewWidth / 2
+        }
         
         let flowLayout = collectionViewLayout as! UICollectionViewFlowLayout
-        let spaceBetweenCells = flowLayout.minimumInteritemSpacing * 2
-        
+        let spaceBetweenCells = flowLayout.minimumInteritemSpacing * cellCount
+        let itemWidth: CGFloat = cellWidth - spaceBetweenCells
         let itemHeight: CGFloat = 200
-        let itemWidth: CGFloat = (collectionViewWidth / 2) - spaceBetweenCells
         
         return CGSize(width: itemWidth, height: itemHeight)
+    }
+    
+    private func _calculateCellWidth(_ provisoryItemCountInRow: CGFloat, _ cellCount: CGFloat, _ collectionViewWidth: CGFloat) -> CGFloat {
+        let cellWidth = ceil(collectionViewWidth / (provisoryItemCountInRow + 1))
+        
+        let remainder = provisoryItemCountInRow.truncatingRemainder(dividingBy: 1)
+        let increaseCellSize = (remainder / cellCount)
+        
+        return cellWidth + (cellWidth * increaseCellSize)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -52,15 +71,10 @@ extension RestaurantsCollectionDataSource: UICollectionViewDelegateFlowLayout, U
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        0
+        10
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         12
     }
-}
-
-
-enum Section {
-    case main
 }
