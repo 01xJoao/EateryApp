@@ -10,3 +10,4 @@ import Foundation
 typealias CompletionHandler = () -> Void
 typealias CompletionHandlerWithParam<T> = (T) -> Void
 typealias CanExecuteCompletionHandler = () -> (Bool)
+typealias CompletionWebHandler<T> = (Result<T?, WebServiceError>) -> Void

@@ -31,8 +31,9 @@ final class LocationServiceImp: NSObject, LocationService, CLLocationManagerDele
         let currentlocation = CLLocation(latitude: location!.coordinate.latitude, longitude: location!.coordinate.longitude)
         
         _fetchCityAndCountry(from: currentlocation) { [weak self] city, country, error in
-            guard let self = self else { return }
-            self._currentLocation = city ?? country ?? ""
+            guard let self = self, let city = city, let country = country else { return }
+            
+            self._currentLocation = "\(city), \(country)"
         }
     }
     

@@ -47,6 +47,9 @@
 		9DED64612565760700D2C11B /* CustomTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DED645E2565760700D2C11B /* CustomTitleLabel.swift */; };
 		9DED646F2565AF3000D2C11B /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DED646E2565AF3000D2C11B /* LocationService.swift */; };
 		9DED64742565AF3D00D2C11B /* LocationServiceImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DED64732565AF3D00D2C11B /* LocationServiceImp.swift */; };
+		9DED64792565B84900D2C11B /* WebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DED64782565B84900D2C11B /* WebService.swift */; };
+		9DED647E2565B9A700D2C11B /* WebServiceImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DED647D2565B9A700D2C11B /* WebServiceImp.swift */; };
+		9DED64832565BA4B00D2C11B /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DED64822565BA4B00D2C11B /* Enums.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -113,6 +116,9 @@
 		9DED645E2565760700D2C11B /* CustomTitleLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTitleLabel.swift; sourceTree = "<group>"; };
 		9DED646E2565AF3000D2C11B /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		9DED64732565AF3D00D2C11B /* LocationServiceImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationServiceImp.swift; sourceTree = "<group>"; };
+		9DED64782565B84900D2C11B /* WebService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebService.swift; sourceTree = "<group>"; };
+		9DED647D2565B9A700D2C11B /* WebServiceImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebServiceImp.swift; sourceTree = "<group>"; };
+		9DED64822565BA4B00D2C11B /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -283,6 +289,7 @@
 			children = (
 				9DC73B6225648378003E3547 /* UIViewHelpers */,
 				9D80311E2564463300234AE0 /* CustomUI+Ext.swift */,
+				9DED64822565BA4B00D2C11B /* Enums.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -372,6 +379,7 @@
 			children = (
 				9D803160256451C100234AE0 /* NavigationService.swift */,
 				9DED646E2565AF3000D2C11B /* LocationService.swift */,
+				9DED64782565B84900D2C11B /* WebService.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -381,6 +389,7 @@
 			children = (
 				9D803168256451CB00234AE0 /* NavigationServiceImp.swift */,
 				9DED64732565AF3D00D2C11B /* LocationServiceImp.swift */,
+				9DED647D2565B9A700D2C11B /* WebServiceImp.swift */,
 			);
 			path = Implementations;
 			sourceTree = "<group>";
@@ -560,8 +569,10 @@
 				9D80311F2564463300234AE0 /* CustomUI+Ext.swift in Sources */,
 				9DC73B6E256483A4003E3547 /* AspectFitImageView.swift in Sources */,
 				9D803116256443B800234AE0 /* RootViewController.swift in Sources */,
+				9DED64832565BA4B00D2C11B /* Enums.swift in Sources */,
 				9DC73B6F256483A4003E3547 /* UIStackView.swift in Sources */,
 				9DED646F2565AF3000D2C11B /* LocationService.swift in Sources */,
+				9DED647E2565B9A700D2C11B /* WebServiceImp.swift in Sources */,
 				9DC73B6B256483A4003E3547 /* UIButton.swift in Sources */,
 				9D803169256451CB00234AE0 /* NavigationServiceImp.swift in Sources */,
 				9D7CFE7A256460C600A801BC /* FavoritesViewController.swift in Sources */,
@@ -576,6 +587,7 @@
 				9D80312725644AD600234AE0 /* BaseViewController.swift in Sources */,
 				9D80313225644BA200234AE0 /* ViewModel.swift in Sources */,
 				9D213C192564352E0097CD58 /* SceneDelegate.swift in Sources */,
+				9DED64792565B84900D2C11B /* WebService.swift in Sources */,
 				9D803158256450D100234AE0 /* DiContainer.swift in Sources */,
 				9D7CFE6725645D5600A801BC /* Typealias.swift in Sources */,
 				9D80313A25644BAA00234AE0 /* ViewModelBase.swift in Sources */,
