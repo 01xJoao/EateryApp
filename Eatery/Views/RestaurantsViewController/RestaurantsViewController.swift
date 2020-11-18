@@ -38,9 +38,11 @@ final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>,
         let searchController = UISearchController()
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.searchBarStyle = .minimal
         
-        searchController.searchBar.setImage(UIImage(systemName: "leaf")!.withTintColor(UIColor.Theme.lightGrey, renderingMode: .alwaysOriginal),
+        searchController.searchBar.searchBarStyle = .minimal
+        searchController.searchBar.searchTextField.backgroundColor = UIColor.Theme.black.withAlphaComponent(0.35)
+        
+        searchController.searchBar.setImage(UIImage(systemName: "leaf")!.withTintColor(UIColor.lightGray, renderingMode: .alwaysOriginal),
                                             for: UISearchBar.Icon.search, state: .normal)
         
         searchController.searchBar.setImage(UIImage(systemName: "xmark.circle.fill")!.withTintColor(UIColor.Theme.white, renderingMode: .alwaysOriginal),
@@ -50,7 +52,7 @@ final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>,
             NSAttributedString.init(string: "", attributes: [NSAttributedString.Key.foregroundColor: UIColor.Theme.white])
     
         searchController.searchBar.searchTextField.attributedPlaceholder =
-            NSAttributedString.init(string: "Search", attributes: [NSAttributedString.Key.foregroundColor: UIColor.Theme.lightGrey])
+            NSAttributedString.init(string: "Search", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         
         self.navigationItem.searchController = searchController
     }

@@ -61,9 +61,9 @@ extension RestaurantsCollectionDataSource: UICollectionViewDelegateFlowLayout, U
         let cellWidth = ceil(collectionViewWidth / (provisoryItemCountInRow + 1))
         
         let remainder = provisoryItemCountInRow.truncatingRemainder(dividingBy: 1)
-        let increaseCellSize = (remainder / cellCount)
+        let increaseCellSizePercentage = (remainder / cellCount)
         
-        return cellWidth + (cellWidth * increaseCellSize)
+        return cellWidth + (cellWidth * increaseCellSizePercentage)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
