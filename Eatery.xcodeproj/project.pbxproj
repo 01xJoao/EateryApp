@@ -45,6 +45,8 @@
 		9DC73B8125648FE0003E3547 /* RestaurantCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC73B8025648FE0003E3547 /* RestaurantCell.swift */; };
 		9DED645F2565760700D2C11B /* CustomBodyLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DED645C2565760700D2C11B /* CustomBodyLabel.swift */; };
 		9DED64612565760700D2C11B /* CustomTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DED645E2565760700D2C11B /* CustomTitleLabel.swift */; };
+		9DED646F2565AF3000D2C11B /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DED646E2565AF3000D2C11B /* LocationService.swift */; };
+		9DED64742565AF3D00D2C11B /* LocationServiceImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DED64732565AF3D00D2C11B /* LocationServiceImp.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -109,6 +111,8 @@
 		9DC73B8025648FE0003E3547 /* RestaurantCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantCell.swift; sourceTree = "<group>"; };
 		9DED645C2565760700D2C11B /* CustomBodyLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomBodyLabel.swift; sourceTree = "<group>"; };
 		9DED645E2565760700D2C11B /* CustomTitleLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTitleLabel.swift; sourceTree = "<group>"; };
+		9DED646E2565AF3000D2C11B /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		9DED64732565AF3D00D2C11B /* LocationServiceImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationServiceImp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -367,6 +371,7 @@
 			isa = PBXGroup;
 			children = (
 				9D803160256451C100234AE0 /* NavigationService.swift */,
+				9DED646E2565AF3000D2C11B /* LocationService.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -375,6 +380,7 @@
 			isa = PBXGroup;
 			children = (
 				9D803168256451CB00234AE0 /* NavigationServiceImp.swift */,
+				9DED64732565AF3D00D2C11B /* LocationServiceImp.swift */,
 			);
 			path = Implementations;
 			sourceTree = "<group>";
@@ -550,10 +556,12 @@
 				9D7CFE5525645BC200A801BC /* RestaurantDetailViewModel.swift in Sources */,
 				9D80313F25644BFA00234AE0 /* MainViewModel.swift in Sources */,
 				9D80314825644D9D00234AE0 /* MainViewController.swift in Sources */,
+				9DED64742565AF3D00D2C11B /* LocationServiceImp.swift in Sources */,
 				9D80311F2564463300234AE0 /* CustomUI+Ext.swift in Sources */,
 				9DC73B6E256483A4003E3547 /* AspectFitImageView.swift in Sources */,
 				9D803116256443B800234AE0 /* RootViewController.swift in Sources */,
 				9DC73B6F256483A4003E3547 /* UIStackView.swift in Sources */,
+				9DED646F2565AF3000D2C11B /* LocationService.swift in Sources */,
 				9DC73B6B256483A4003E3547 /* UIButton.swift in Sources */,
 				9D803169256451CB00234AE0 /* NavigationServiceImp.swift in Sources */,
 				9D7CFE7A256460C600A801BC /* FavoritesViewController.swift in Sources */,
