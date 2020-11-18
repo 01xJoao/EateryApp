@@ -52,7 +52,7 @@ extension RestaurantsCollectionDataSource: UICollectionViewDelegateFlowLayout, U
         let flowLayout = collectionViewLayout as! UICollectionViewFlowLayout
         let spaceBetweenCells = flowLayout.minimumInteritemSpacing * cellCount
         let itemWidth: CGFloat = cellWidth - spaceBetweenCells
-        let itemHeight: CGFloat = 200
+        let itemHeight: CGFloat = itemWidth * 1.65
         
         return CGSize(width: itemWidth, height: itemHeight)
     }

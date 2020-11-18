@@ -43,6 +43,8 @@
 		9DC73B70256483A4003E3547 /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC73B69256483A4003E3547 /* UILabel.swift */; };
 		9DC73B76256484E3003E3547 /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC73B75256484E3003E3547 /* Restaurant.swift */; };
 		9DC73B8125648FE0003E3547 /* RestaurantCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC73B8025648FE0003E3547 /* RestaurantCell.swift */; };
+		9DED645F2565760700D2C11B /* CustomBodyLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DED645C2565760700D2C11B /* CustomBodyLabel.swift */; };
+		9DED64612565760700D2C11B /* CustomTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DED645E2565760700D2C11B /* CustomTitleLabel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,6 +107,8 @@
 		9DC73B69256483A4003E3547 /* UILabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
 		9DC73B75256484E3003E3547 /* Restaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
 		9DC73B8025648FE0003E3547 /* RestaurantCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantCell.swift; sourceTree = "<group>"; };
+		9DED645C2565760700D2C11B /* CustomBodyLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomBodyLabel.swift; sourceTree = "<group>"; };
+		9DED645E2565760700D2C11B /* CustomTitleLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTitleLabel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,6 +167,7 @@
 				9D213C182564352E0097CD58 /* SceneDelegate.swift */,
 				9D80310C256442F800234AE0 /* Core */,
 				9D8031122564435D00234AE0 /* Views */,
+				9DED645B256575F000D2C11B /* CustomViews */,
 				9D80311D256445EA00234AE0 /* Utils */,
 			);
 			path = Eatery;
@@ -404,6 +409,15 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		9DED645B256575F000D2C11B /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				9DED645C2565760700D2C11B /* CustomBodyLabel.swift */,
+				9DED645E2565760700D2C11B /* CustomTitleLabel.swift */,
+			);
+			path = CustomViews;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -560,7 +574,9 @@
 				9DC73B8125648FE0003E3547 /* RestaurantCell.swift in Sources */,
 				9D7CFE8F256481C200A801BC /* RestaurantsCollectionDataSource.swift in Sources */,
 				9D7CFE722564608400A801BC /* RestaurantsViewController.swift in Sources */,
+				9DED64612565760700D2C11B /* CustomTitleLabel.swift in Sources */,
 				9D7CFE5025645BAB00A801BC /* FavoritesViewModel.swift in Sources */,
+				9DED645F2565760700D2C11B /* CustomBodyLabel.swift in Sources */,
 				9D80314D25644E0900234AE0 /* BaseTabBarViewController.swift in Sources */,
 				9D7CFE6125645CB900A801BC /* DynamicValue.swift in Sources */,
 				9D803161256451C100234AE0 /* NavigationService.swift in Sources */,
