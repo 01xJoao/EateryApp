@@ -8,6 +8,9 @@
 import UIKit
 
 final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>, UISearchResultsUpdating {
+    private lazy var _collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    private lazy var _collectionDataSource = RestaurantsCollectionDataSource(collectionView: _collectionView)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Restaurants"
@@ -17,6 +20,10 @@ final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>,
     private func _setupView() {
         _configureFilterButton()
         _configureSearchController()
+        _configureCollectionView()
+        
+        _collectionDataSource.updateData(on: [Restaurant(name: "Fish"), Restaurant(name: "Let"), Restaurant(name: "Done"), Restaurant(name: "Stuff")])
+        
     }
     
     private func _configureFilterButton() {
@@ -45,6 +52,26 @@ final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>,
             NSAttributedString.init(string: "Search", attributes: [NSAttributedString.Key.foregroundColor: UIColor.Theme.lightGrey])
         
         self.navigationItem.searchController = searchController
+    }
+    
+    private func _configureCollectionView() {
+        self.view.addSubview(_collectionView)
+        
+        _collectionView.contentInset = UIEdgeInsets(top: 12, left: 12, bottom: 10, right: 12)
+        _collectionView.delegate = _collectionDataSource
+        _collectionView.dataSource = _collectionDataSource
+        _collectionView.backgroundColor = .clear
+        
+        _collectionView.anchor(top: self.view.topAnchor, leading: self.view.safeAreaLayoutGuide.leadingAnchor,
+                               bottom: self.view.bottomAnchor, trailing: self.view.safeAreaLayoutGuide.trailingAnchor)
+        
+        _setCollectionViewHorizontalScroll()
+    }
+    
+    private func _setCollectionViewHorizontalScroll() {
+        if let flowLayout = _collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            flowLayout.scrollDirection = .vertical
+        }
     }
     
     func updateSearchResults(for searchController: UISearchController) {
