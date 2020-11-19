@@ -23,20 +23,62 @@ struct RestaurantElementStruct: Codable {
     let restaurant: RestaurantStruct
 }
 
-struct RestaurantStruct: Codable {
+struct RestaurantStruct: Codable, Hashable {
     let id: String
     let name: String
     let cuisines: String
     let thumb: String
     let location: LocationStruct
+    let userRating: UserRatingStruct
     let priceRange: Int
     
     enum CodingKeys: String, CodingKey {
         case id, name, location, cuisines, thumb
         case priceRange = "price_range"
+        case userRating = "user_rating"
     }
 }
 
-struct LocationStruct: Codable {
+struct LocationStruct: Codable, Hashable {
     let address, latitude, longitude: String
+}
+
+struct UserRatingStruct: Codable, Hashable {
+    let aggregateRating: AggregateRating
+
+    enum CodingKeys: String, CodingKey {
+        case aggregateRating = "aggregate_rating"
+    }
+}
+
+enum AggregateRating: Codable, Hashable {
+    case integer(Int)
+    case string(String)
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        
+        if let x = try? container.decode(Int.self) {
+            self = .integer(x)
+            return
+        }
+        
+        if let x = try? container.decode(String.self) {
+            self = .string(x)
+            return
+        }
+        
+        throw DecodingError.typeMismatch(AggregateRating.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Wrong type for AggregateRating"))
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        
+        switch self {
+        case .integer(let x):
+            try container.encode(x)
+        case .string(let x):
+            try container.encode(x)
+        }
+    }
 }

@@ -21,9 +21,6 @@ final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>,
         _configureFilterButton()
         _configureSearchController()
         _configureCollectionView()
-        
-        _collectionDataSource.updateData(on: [Restaurant(name: "Fish"), Restaurant(name: "Let"), Restaurant(name: "Done"), Restaurant(name: "Stuff"),
-                                              Restaurant(name: "Fish1"), Restaurant(name: "Let2"), Restaurant(name: "Done3"), Restaurant(name: "Stuff4")])
     }
     
     private func _configureFilterButton() {

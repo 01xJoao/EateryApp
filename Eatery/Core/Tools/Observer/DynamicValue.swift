@@ -15,16 +15,16 @@ final class DynamicValue<T> {
         self.value = value
     }
     
-    func addObserver(_ observer: NSObject, completionHandler: @escaping CompletionHandler) {
-        _observers[observer.description] = completionHandler
+    func addObserver(observer: String, completionHandler: @escaping CompletionHandler) {
+        _observers[observer] = completionHandler
     }
     
-    func addAndNotify(_ observer: NSObject, completionHandler: @escaping CompletionHandler) {
-        addObserver(observer, completionHandler: completionHandler)
+    func addAndNotify(observer: String, completionHandler: @escaping CompletionHandler) {
+        addObserver(observer: observer, completionHandler: completionHandler)
         notify()
     }
     
-    func removeObserver(_ observer: NSObject, completionHandler: @escaping CompletionHandler) {
+    func removeObserver(observer: String, completionHandler: @escaping CompletionHandler) {
         _observers.removeValue(forKey: observer.description)
     }
     
@@ -37,7 +37,7 @@ final class DynamicValue<T> {
     }
 }
 
-final class DynamicValueList<T> : NSObject {
+final class DynamicValueList<T> {
     var data: DynamicValue<[T]> = DynamicValue([])
     
     func add(object: T){

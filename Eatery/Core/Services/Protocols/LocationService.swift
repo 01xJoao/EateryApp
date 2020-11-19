@@ -6,7 +6,7 @@
 //
 
 protocol LocationService where Self: LocationServiceImp {
-    func getUserLocation() -> String
+    func getUserLocation() -> DynamicValue<String?>
     func checkUserAuthorization() -> Bool
-    func requestUserAuthorization()
+    func requestUserAuthorization() -> Bool
 }
