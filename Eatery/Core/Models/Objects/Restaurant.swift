@@ -9,10 +9,12 @@ import Foundation
 
 struct Restaurant: Hashable {
     private let _restaurant: RestaurantStruct
-    private lazy var _bigSizeImage: Bool = { return Bool.random() }()
+    //private let _bigSizeImage: Bool
+    private var _isFavorite = false
 
     init(_ restaurant: RestaurantStruct) {
         _restaurant = restaurant
+        //_bigSizeImage = Bool.random()
     }
     
     func getName() -> String {
@@ -38,9 +40,9 @@ struct Restaurant: Hashable {
         }
     }
     
-    mutating func isImageBig() -> Bool {
-        _bigSizeImage
-    }
+//    func isImageBig() -> Bool {
+//        _bigSizeImage
+//    }
     
     func getDistance() -> String {
         return "3 km"
@@ -48,12 +50,22 @@ struct Restaurant: Hashable {
     
     func getImageWithSize(width: Int, height: Int) -> String {
         let image = _restaurant.thumb.replacingOccurrences(of: "=200%", with: "=\(String(width))%")
-                                     .replacingOccurrences(of: "A200%", with: "A\(String(height))%")
+                                     .replacingOccurrences(of: "200%", with: "\(String(height))%")
+                                     .replacingOccurrences(of: "C200%", with: "C\(String(width))%")
+                                     .replacingOccurrences(of: "200&", with: "\(String(height))&")
         
         return image
     }
     
     func getCuisines() -> String {
         _restaurant.cuisines.replacingOccurrences(of: ",", with: " ·")
+    }
+    
+    func isFavorite() -> Bool {
+        _isFavorite
+    }
+    
+    mutating func setFavorite(_ favorite: Bool) {
+        _isFavorite = favorite
     }
 }

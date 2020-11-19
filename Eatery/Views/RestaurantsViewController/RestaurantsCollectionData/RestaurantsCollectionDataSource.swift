@@ -21,6 +21,9 @@ final class RestaurantsCollectionDataSource: UICollectionViewDiffableDataSource<
 
         super.init(collectionView: collectionView) { (collectionView, indexPath, rastaurant) -> UICollectionViewCell? in
             let restaurantCell = collectionView.dequeueReusableCell(withReuseIdentifier: RestaurantCell.reuseId, for: indexPath) as! RestaurantCell
+            
+            restaurantCell.configure(with: rastaurant)
+            
             return restaurantCell
         }
     }
@@ -52,7 +55,7 @@ extension RestaurantsCollectionDataSource: UICollectionViewDelegateFlowLayout, U
         let flowLayout = collectionViewLayout as! UICollectionViewFlowLayout
         let spaceBetweenCells = flowLayout.minimumInteritemSpacing * cellCount
         let itemWidth: CGFloat = cellWidth - spaceBetweenCells
-        let itemHeight: CGFloat = itemWidth * 1.65
+        let itemHeight: CGFloat = itemWidth * 1.73
         
         return CGSize(width: itemWidth, height: itemHeight)
     }
@@ -69,12 +72,12 @@ extension RestaurantsCollectionDataSource: UICollectionViewDelegateFlowLayout, U
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath.item)
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         10
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        12
+        18
     }
 }

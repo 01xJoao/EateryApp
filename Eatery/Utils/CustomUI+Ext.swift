@@ -70,3 +70,107 @@ extension Reusable {
         return String(describing: self)
     }
 }
+
+class TopAlignedCollectionViewFlowLayout: UICollectionViewFlowLayout {
+    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+        let attributes = super.layoutAttributesForElements(in: rect)?.map { $0.copy() } as? [UICollectionViewLayoutAttributes]
+
+        attributes?.reduce([CGFloat: (CGFloat, [UICollectionViewLayoutAttributes])]()) {
+            guard $1.representedElementCategory == .cell else { return $0 }
+            return $0.merging([ceil($1.center.y): ($1.frame.origin.y, [$1])]) {
+                ($0.0 < $1.0 ? $0.0 : $1.0, $0.1 + $1.1)
+            }
+        }.values.forEach { minY, line in
+            line.forEach {
+                $0.frame = $0.frame.offsetBy(
+                    dx: 0,
+                    dy: minY - $0.frame.origin.y
+                )
+            }
+        }
+
+        return attributes
+    }
+}
+
+//class AlignedCollectionViewFlowLayout: UICollectionViewFlowLayout {
+//
+//    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+//        if let attributes = super.layoutAttributesForElements(in: rect) {
+//            let sectionElements: [Int : [UICollectionViewLayoutAttributes]] = attributes
+//                .filter {
+//                    return $0.representedElementCategory == .cell //take cells only
+//                }.groupBy {
+//                    return $0.indexPath.section //group attributes by section
+//            }
+//
+//            sectionElements.forEach { (section, elements) in
+//                //get suplementary view (header) to align each section
+//                let suplementaryView = attributes.first {
+//                    return $0.representedElementCategory == .supplementaryView && $0.indexPath.section == section
+//                }
+//                //call align method
+//                alignToTopSameSectionElements(elements, with: suplementaryView)
+//            }
+//
+//            return attributes
+//        }
+//
+//        return super.layoutAttributesForElements(in: rect)
+//    }
+//
+//    private func alignToTopSameSectionElements(_ elements: [UICollectionViewLayoutAttributes], with suplementaryView: UICollectionViewLayoutAttributes?) {
+//        //group attributes by colum
+//        let columElements: [Int : [UICollectionViewLayoutAttributes]] = elements.groupBy {
+//            return Int($0.frame.midX)
+//        }
+//
+//        columElements.enumerated().forEach { (columIndex, object) in
+//            let columElement = object.value.sorted {
+//                return $0.indexPath < $1.indexPath
+//            }
+//
+//            columElement.enumerated().forEach { (index, element) in
+//                var frame = element.frame
+//
+//                if columIndex == 0 {
+//                    frame.origin.x = minimumLineSpacing
+//                }
+//
+//                switch index {
+//                case 0:
+//                    if let suplementaryView = suplementaryView {
+//                        frame.origin.y = suplementaryView.frame.maxY
+//                    }
+//                default:
+//                    let beforeElement = columElement[index-1]
+//                    frame.origin.y = beforeElement.frame.maxY + minimumInteritemSpacing
+//                }
+//
+//                element.frame = frame
+//            }
+//        }
+//    }
+//}
+//
+//public extension Array {
+//    func groupBy<U> (groupingFunction group: (Element) -> U) -> [U: Array] {
+//
+//        var result = [U: Array]()
+//
+//        for item in self {
+//
+//            let groupKey = group(item)
+//
+//            let hasValue = result[groupKey]
+//
+//            if hasValue != nil {
+//                result[groupKey]! += [item]
+//            } else {
+//                result[groupKey] = [item]
+//            }
+//        }
+//
+//        return result
+//    }
+//}

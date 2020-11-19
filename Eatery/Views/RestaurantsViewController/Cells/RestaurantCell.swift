@@ -10,35 +10,57 @@ import UIKit
 final class RestaurantCell: UICollectionViewCell {
     static let reuseId = "RestaurantCell"
     
-    private let _imageView = UIImageView()
+    private let _defaultRestaurantImage = UIImageView()
+    private let _restaurantImageView = UIImageView()
     private let _titleLabel = CustomTitleLabel(textAligment: .left, fontSize: 18)
     private let _distanceLabel = CustomBodyLabel(textAligment: .right, fontSize: 12, color: UIColor.Theme.mainGreen)
     private let _distanceImage = UIImageView(image: UIImage(systemName: "figure.walk")!.withTintColor(UIColor.Theme.mainGreen, renderingMode: .alwaysOriginal))
     private let _descriptionLabel = CustomBodyLabel(textAligment: .left, fontSize: 14, color: .secondaryLabel)
     
-    private let _starButton = UIButton(backgroundColor: .clear)
-    private let _priceScaleLabel = CustomBodyLabel(textAligment: .left, fontSize: 17, color: UIColor.Theme.orange, weight: .semibold)
+    private let _heartButton = UIButton()
+    private let _priceScaleLabel = CustomBodyLabel(textAligment: .left, fontSize: 17, color: UIColor.Theme.mainGreen, weight: .semibold)
     private let _ratingLabel = CustomBodyLabel(textAligment: .center, fontSize: 16, color: UIColor.Theme.white, weight: .semibold)
+    private let _ratingBackgroundView =  UIView(backgroundColor: UIColor.Theme.mainGreen.withAlphaComponent(0.7))
+    private let _heartImage = UIImageView()
     
     private var _imageHeightConstraint: NSLayoutConstraint?
+    private var _imageCacheKey:NSString = ""
         
     override init(frame: CGRect) {
         super.init(frame: .zero)
         _setupView()
-        
-        _imageView.backgroundColor = UIColor.Theme.lightGrey
     }
     
-    override func setNeedsLayout() {
-        super.setNeedsLayout()
+    public func configure(with restaurant: Restaurant) {
+        _titleLabel.text = restaurant.getName()
+        _descriptionLabel.text = restaurant.getCuisines()
+        _distanceLabel.text = restaurant.getDistance()
+        _heartImage.image = _setFavoriteImage(restaurant.isFavorite())
         
-        guard let imageHeightConstraint = _imageHeightConstraint else { return }
-        
-        let newSize = self.bounds.height * 0.77
-        
-        if(imageHeightConstraint.constant != newSize) {
-            imageHeightConstraint.constant = newSize
+        _setRestaurantImage(restaurant.getImageWithSize(width: 600, height: 800))
+        _setPriceValue(restaurant.getPriceScale())
+        _setRatingValue(restaurant.getRating())
+    }
+    
+    private func _setPriceValue(_ price: String) {
+        _priceScaleLabel.text = price
+
+        switch price {
+        case "$": _priceScaleLabel.textColor = UIColor.Theme.mainGreen; return
+        case "$$": _priceScaleLabel.textColor = UIColor.Theme.orange; return
+        default: _priceScaleLabel.textColor = UIColor.Theme.red; return
         }
+    }
+    
+    private func _setRatingValue(_ rating: String?) {
+        guard let rating = rating else {
+            _ratingLabel.text = ""
+            _ratingBackgroundView.isHidden = true
+            return
+        }
+        
+        _ratingBackgroundView.isHidden = false
+        _ratingLabel.text = rating
     }
     
     private func _setupView() {
@@ -52,28 +74,43 @@ final class RestaurantCell: UICollectionViewCell {
     }
     
     private func _configureImageView() {
-        self.contentView.addSubview(_imageView)
-        _imageView.anchor(top: self.contentView.topAnchor, leading: self.contentView.leadingAnchor, bottom: nil, trailing: self.contentView.trailingAnchor)
-        _imageView.layer.cornerRadius = 10
-        _imageView.layer.shadowOpacity = 0.45
-        _imageView.layer.shadowOffset = CGSize(width: 1, height: 1)
+        let backgroundShadow = UIView()
+        self.contentView.addSubview(backgroundShadow)
         
-        _imageHeightConstraint = _imageView.heightAnchor.constraint(equalToConstant: 0)
+        backgroundShadow.addSubview(_restaurantImageView)
+        _restaurantImageView.fillSuperview()
+        
+        backgroundShadow.anchor(top: self.contentView.topAnchor, leading: self.contentView.leadingAnchor, bottom: nil, trailing: self.contentView.trailingAnchor)
+        backgroundShadow.layer.cornerRadius = 10
+        backgroundShadow.layer.shadowOpacity = 0.35
+        backgroundShadow.layer.shadowRadius = 3
+        backgroundShadow.layer.shadowOffset = CGSize(width: 0, height: 0)
+        
+        _restaurantImageView.layer.cornerRadius = backgroundShadow.layer.cornerRadius
+        _restaurantImageView.layer.masksToBounds = true
+        _restaurantImageView.contentMode = .scaleAspectFill
+        
+        
+        _defaultRestaurantImage.image = UIImage(systemName: "photo.on.rectangle.angled")!.withTintColor(UIColor.Theme.lightGrey, renderingMode: .alwaysOriginal)
+        _restaurantImageView.addSubview(_defaultRestaurantImage)
+        _defaultRestaurantImage.centerInSuperview(size: CGSize(width: 50, height: 40))
+        
+        let imageFilter = UIView(backgroundColor: UIColor.black.withAlphaComponent(0.075))
+        _restaurantImageView.addSubview(imageFilter)
+        imageFilter.fillSuperview()
+        
+        _imageHeightConstraint = _restaurantImageView.heightAnchor.constraint(equalToConstant: 0)
         _imageHeightConstraint?.isActive = true
     }
     
     private func _configureTitleLabel() {
         self.contentView.addSubview(_titleLabel)
         
-        _titleLabel.anchor(top: _imageView.bottomAnchor, leading: _imageView.leadingAnchor, bottom: nil, trailing: _imageView.trailingAnchor,
-                           padding: .init(top: 14.5, left: 0, bottom: 0, right: 0))
-        
-        _titleLabel.text = "Pizzaria Braga"
+        _titleLabel.anchor(top: _restaurantImageView.bottomAnchor, leading: _restaurantImageView.leadingAnchor, bottom: nil, trailing: _restaurantImageView.trailingAnchor,
+                           padding: .init(top: 18, left: 0, bottom: 0, right: 0))
     }
     
     private func _configureDistanceView() {
-        _distanceLabel.text = "3 km"
-        
         _distanceImage.withSize(CGSize(width: 12, height: 12))
         
         let distanceView = UIView()
@@ -86,67 +123,100 @@ final class RestaurantCell: UICollectionViewCell {
         
         self.contentView.addSubview(distanceView)
         
-        distanceView.anchor(top: _imageView.bottomAnchor, leading: _imageView.leadingAnchor, bottom: nil, trailing: _imageView.trailingAnchor,
+        distanceView.anchor(top: _restaurantImageView.bottomAnchor, leading: _restaurantImageView.leadingAnchor, bottom: nil, trailing: _restaurantImageView.trailingAnchor,
                             padding: .init(top: 4, left: 0, bottom: 0, right: 0))
     }
     
     private func _configureDescriptionLabel() {
         self.contentView.addSubview(_descriptionLabel)
-        _descriptionLabel.anchor(top: _titleLabel.bottomAnchor, leading: _imageView.leadingAnchor, bottom: nil, trailing: _imageView.trailingAnchor,
-                                 padding: .init(top: 4, left: 0, bottom: 0, right: 0))
-        
-        _descriptionLabel.text = "Chinese · Sushi"
+        _descriptionLabel.anchor(top: _titleLabel.bottomAnchor, leading: _restaurantImageView.leadingAnchor, bottom: nil, trailing: _restaurantImageView.trailingAnchor,
+                                 padding: .init(top: 2.5, left: 0, bottom: 0, right: 0))
     }
     
     private func _configureStarButton() {
-        self.contentView.addSubview(_starButton)
+        self.contentView.addSubview(_heartButton)
         
-        _starButton.anchor(top: nil, leading: nil, bottom: _imageView.bottomAnchor, trailing: _imageView.trailingAnchor)
-        _starButton.withSize(CGSize(width: 47, height: 47))
+        _heartButton.anchor(top: nil, leading: nil, bottom: _restaurantImageView.bottomAnchor, trailing: _restaurantImageView.trailingAnchor)
+        _heartButton.withSize(CGSize(width: 47, height: 47))
+        _heartButton.addSubview(_heartImage)
         
-        let starImage = UIImageView(image: UIImage(systemName: "heart.fill")!.withTintColor(UIColor.Theme.red, renderingMode: .alwaysOriginal))
+        _heartButton.layer.shadowOpacity = 0.4
+        _heartButton.layer.shadowOffset = CGSize(width: 0.5, height: 0.5)
+        _heartButton.layer.shadowRadius = 0.5
+        _heartButton.layer.cornerRadius = 10
         
-        _starButton.addSubview(starImage)
-        
-        starImage.fillSuperview(padding: .init(top: 10, left: 8, bottom: 10, right: 8))
-        starImage.layer.shadowOpacity = 0.4
-        starImage.layer.shadowOffset = CGSize(width: 1, height: 1)
+        _heartImage.fillSuperview(padding: .init(top: 10, left: 8, bottom: 10, right: 8))
+        _heartImage.layer.shadowOpacity = 0.4
+        _heartImage.layer.shadowOffset = CGSize(width: 1, height: 1)
     }
     
     private func _configurePriceScaleLabel() {
         self.contentView.addSubview(_priceScaleLabel)
         
-        _priceScaleLabel.anchor(top: _imageView.topAnchor, leading: _imageView.leadingAnchor, bottom: nil, trailing: nil,
+        _priceScaleLabel.anchor(top: _restaurantImageView.topAnchor, leading: _restaurantImageView.leadingAnchor, bottom: nil, trailing: nil,
                                  padding: .init(top: 8, left: 8, bottom: 0, right: 0))
         
-        _priceScaleLabel.text = "$$"
         _priceScaleLabel.layer.shadowOpacity = 0.4
         _priceScaleLabel.layer.shadowOffset = CGSize(width: 0.5, height: 0.5)
         _priceScaleLabel.layer.shadowRadius = 0.5
     }
     
     private func _configureRatingView() {
-        let backgroundView = UIView(backgroundColor: UIColor.Theme.mainGreen.withAlphaComponent(0.7))
+        self.contentView.addSubview(_ratingBackgroundView)
         
-        self.contentView.addSubview(backgroundView)
-        
-        backgroundView.anchor(top: _imageView.topAnchor, leading: nil, bottom: nil, trailing: _imageView.trailingAnchor,
+        _ratingBackgroundView.anchor(top: _restaurantImageView.topAnchor, leading: nil, bottom: nil, trailing: _restaurantImageView.trailingAnchor,
                                  padding: .init(top: 8, left: 0, bottom: 0, right: 8))
         
-        backgroundView.withSize(CGSize(width: 40, height: 26))
-        backgroundView.layer.cornerRadius = 8
-        backgroundView.addSubview(_ratingLabel)
+        _ratingBackgroundView.withSize(CGSize(width: 40, height: 26))
+        _ratingBackgroundView.layer.cornerRadius = 8
+        _ratingBackgroundView.addSubview(_ratingLabel)
         
         _ratingLabel.centerInSuperview()
         _ratingLabel.layer.shadowOpacity = 0.4
         _ratingLabel.layer.shadowOffset = CGSize(width: 0.5, height: 0.5)
         _ratingLabel.layer.shadowRadius = 0.5
-        
-        _ratingLabel.text = "4.2"
     }
     
-    public func configureCell(with restaurant: Restaurant) {
+    private func _setFavoriteImage(_ isFavorite: Bool) -> UIImage {
+        UIImage(systemName: isFavorite ? "heart.fill" : "heart" )!.withTintColor(UIColor.Theme.red, renderingMode: .alwaysOriginal)
+    }
+    
+    private func _setRestaurantImage(_ imageUrl: String) {
+        _imageCacheKey = NSString(string: imageUrl)
         
+        ImageCache.shared.getImage(from: imageUrl, completed: { [weak self] (image, cachedKey) in
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                
+                guard let image = image, let cachedKey = cachedKey else {
+                    self._setRestaurantImage(nil, false)
+                    return
+                }
+                
+                if self._imageCacheKey == cachedKey {
+                    self._setRestaurantImage(image, true)
+                } else {
+                    self._setRestaurantImage(nil, false)
+                }
+            }
+        })
+    }
+    
+    private func _setRestaurantImage(_ image: UIImage?, _ isHidden: Bool) {
+        self._restaurantImageView.image = image
+        self._defaultRestaurantImage.isHidden = isHidden
+    }
+    
+    override func setNeedsLayout() {
+        super.setNeedsLayout()
+        
+        guard let imageHeightConstraint = _imageHeightConstraint else { return }
+        
+        let newSize = self.bounds.height * 0.77
+        
+        if(imageHeightConstraint.constant != newSize) {
+            imageHeightConstraint.constant = newSize
+        }
     }
     
     required init?(coder: NSCoder) {

@@ -18,9 +18,18 @@ final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>,
     }
     
     private func _setupView() {
+        _setData()
         _configureFilterButton()
         _configureSearchController()
         _configureCollectionView()
+    }
+    
+    private func _setData() {
+        viewModel.restaurantList.data.addObserver(observer: "restaurants") { [weak self] in
+            guard let self = self else { return }
+            
+            self._collectionDataSource.updateData(on: self.viewModel.restaurantList.data.value)
+        }
     }
     
     private func _configureFilterButton() {

@@ -13,7 +13,8 @@ final class RestaurantsViewModel: ViewModelBase {
 
     private var _userLocation = ""
     private var _userCity: CityStruct?
-    private var _restaurantList = Set<[Restaurant]>()
+    
+    private(set) var restaurantList = DynamicValueList<Restaurant>()
     
     init(restaurantWebService: RestaurantWebService, locationService: LocationService) {
         _restaurantWebService = restaurantWebService
@@ -104,6 +105,6 @@ final class RestaurantsViewModel: ViewModelBase {
             Restaurant(val.restaurant)
         }
         
-        _restaurantList.insert(newRestaurantList)
+        restaurantList.addAll(newRestaurantList)
     }
 }

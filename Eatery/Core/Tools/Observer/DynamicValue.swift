@@ -38,13 +38,13 @@ final class DynamicValue<T> {
 }
 
 final class DynamicValueList<T> {
-    var data: DynamicValue<[T]> = DynamicValue([])
+    private(set) var data: DynamicValue<[T]> = DynamicValue([])
     
-    func add(object: T){
+    func add(_ object: T){
         data.value.append(object)
     }
     
-    func addAll(object: [T]){
+    func addAll(_ object: [T]){
         data.value.append(contentsOf: object)
     }
     
