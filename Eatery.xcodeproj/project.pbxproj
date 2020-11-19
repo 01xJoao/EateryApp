@@ -50,6 +50,10 @@
 		9DED64792565B84900D2C11B /* WebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DED64782565B84900D2C11B /* WebService.swift */; };
 		9DED647E2565B9A700D2C11B /* WebServiceImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DED647D2565B9A700D2C11B /* WebServiceImp.swift */; };
 		9DED64832565BA4B00D2C11B /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DED64822565BA4B00D2C11B /* Enums.swift */; };
+		9DED648C2565DF1300D2C11B /* RestaurantWebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DED648B2565DF1300D2C11B /* RestaurantWebService.swift */; };
+		9DED64942565DF2400D2C11B /* RestaurantWebServiceImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DED64932565DF2400D2C11B /* RestaurantWebServiceImp.swift */; };
+		9DED649A2565E06E00D2C11B /* CityStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DED64992565E06E00D2C11B /* CityStruct.swift */; };
+		9DED64A22565E0DC00D2C11B /* RestaurantStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DED64A12565E0DC00D2C11B /* RestaurantStruct.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -119,6 +123,10 @@
 		9DED64782565B84900D2C11B /* WebService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebService.swift; sourceTree = "<group>"; };
 		9DED647D2565B9A700D2C11B /* WebServiceImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebServiceImp.swift; sourceTree = "<group>"; };
 		9DED64822565BA4B00D2C11B /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
+		9DED648B2565DF1300D2C11B /* RestaurantWebService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantWebService.swift; sourceTree = "<group>"; };
+		9DED64932565DF2400D2C11B /* RestaurantWebServiceImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantWebServiceImp.swift; sourceTree = "<group>"; };
+		9DED64992565E06E00D2C11B /* CityStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityStruct.swift; sourceTree = "<group>"; };
+		9DED64A12565E0DC00D2C11B /* RestaurantStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantStruct.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -370,6 +378,7 @@
 			isa = PBXGroup;
 			children = (
 				9DC73B74256484C3003E3547 /* Objects */,
+				9DED64982565E04E00D2C11B /* DataStructures */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -377,6 +386,7 @@
 		9D80315E256451A700234AE0 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				9DED64892565DED900D2C11B /* WebServices */,
 				9D803160256451C100234AE0 /* NavigationService.swift */,
 				9DED646E2565AF3000D2C11B /* LocationService.swift */,
 				9DED64782565B84900D2C11B /* WebService.swift */,
@@ -387,6 +397,7 @@
 		9D80315F256451AB00234AE0 /* Implementations */ = {
 			isa = PBXGroup;
 			children = (
+				9DED648A2565DEE000D2C11B /* WebServices */,
 				9D803168256451CB00234AE0 /* NavigationServiceImp.swift */,
 				9DED64732565AF3D00D2C11B /* LocationServiceImp.swift */,
 				9DED647D2565B9A700D2C11B /* WebServiceImp.swift */,
@@ -431,6 +442,31 @@
 				9DED645E2565760700D2C11B /* CustomTitleLabel.swift */,
 			);
 			path = CustomViews;
+			sourceTree = "<group>";
+		};
+		9DED64892565DED900D2C11B /* WebServices */ = {
+			isa = PBXGroup;
+			children = (
+				9DED648B2565DF1300D2C11B /* RestaurantWebService.swift */,
+			);
+			path = WebServices;
+			sourceTree = "<group>";
+		};
+		9DED648A2565DEE000D2C11B /* WebServices */ = {
+			isa = PBXGroup;
+			children = (
+				9DED64932565DF2400D2C11B /* RestaurantWebServiceImp.swift */,
+			);
+			path = WebServices;
+			sourceTree = "<group>";
+		};
+		9DED64982565E04E00D2C11B /* DataStructures */ = {
+			isa = PBXGroup;
+			children = (
+				9DED64992565E06E00D2C11B /* CityStruct.swift */,
+				9DED64A12565E0DC00D2C11B /* RestaurantStruct.swift */,
+			);
+			path = DataStructures;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -577,21 +613,25 @@
 				9D803169256451CB00234AE0 /* NavigationServiceImp.swift in Sources */,
 				9D7CFE7A256460C600A801BC /* FavoritesViewController.swift in Sources */,
 				9DC73B70256483A4003E3547 /* UILabel.swift in Sources */,
+				9DED649A2565E06E00D2C11B /* CityStruct.swift in Sources */,
 				9DC73B6D256483A4003E3547 /* UIView+Stacking.swift in Sources */,
 				9DC73B6C256483A4003E3547 /* AnchoredConstraints.swift in Sources */,
 				9D213C212564352E0097CD58 /* Eatery.xcdatamodeld in Sources */,
 				9DC73B6A256483A4003E3547 /* UIView+Layout.swift in Sources */,
 				9D213C172564352E0097CD58 /* AppDelegate.swift in Sources */,
 				9D80310E2564430E00234AE0 /* Core.swift in Sources */,
+				9DED648C2565DF1300D2C11B /* RestaurantWebService.swift in Sources */,
 				9D7CFE4B25645BA200A801BC /* RestaurantsViewModel.swift in Sources */,
 				9D80312725644AD600234AE0 /* BaseViewController.swift in Sources */,
 				9D80313225644BA200234AE0 /* ViewModel.swift in Sources */,
 				9D213C192564352E0097CD58 /* SceneDelegate.swift in Sources */,
 				9DED64792565B84900D2C11B /* WebService.swift in Sources */,
 				9D803158256450D100234AE0 /* DiContainer.swift in Sources */,
+				9DED64942565DF2400D2C11B /* RestaurantWebServiceImp.swift in Sources */,
 				9D7CFE6725645D5600A801BC /* Typealias.swift in Sources */,
 				9D80313A25644BAA00234AE0 /* ViewModelBase.swift in Sources */,
 				9DC73B8125648FE0003E3547 /* RestaurantCell.swift in Sources */,
+				9DED64A22565E0DC00D2C11B /* RestaurantStruct.swift in Sources */,
 				9D7CFE8F256481C200A801BC /* RestaurantsCollectionDataSource.swift in Sources */,
 				9D7CFE722564608400A801BC /* RestaurantsViewController.swift in Sources */,
 				9DED64612565760700D2C11B /* CustomTitleLabel.swift in Sources */,

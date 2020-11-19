@@ -19,6 +19,7 @@ struct Core {
         DiContainer.registerSingleton(NavigationService.self, constructor: { NavigationServiceImp() })
         DiContainer.registerSingleton(LocationService.self, constructor: { LocationServiceImp() })
         DiContainer.registerSingleton(WebService.self, constructor: { WebServiceImp() })
+        DiContainer.registerSingleton(RestaurantWebService.self, constructor: { RestaurantWebServiceImp(webService: DiContainer.resolve()) })
     }
     
     private static func _registerViewModels() {

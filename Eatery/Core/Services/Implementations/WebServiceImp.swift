@@ -43,10 +43,7 @@ final class WebServiceImp: WebService {
             }
             
             do {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                
-                let value = try decoder.decode(T.self, from: validData)
+                let value = try JSONDecoder().decode(T.self, from: validData)
                 completion(.success(value))
             } catch {
                 completion(.failure(WebServiceError.dataError))
