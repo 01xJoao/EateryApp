@@ -19,7 +19,6 @@ final class RestaurantsCollectionDataSource: UICollectionViewDiffableDataSource<
 
         super.init(collectionView: collectionView) { (collectionView, indexPath, rastaurant) -> UICollectionViewCell? in
             let restaurantCell = collectionView.dequeueReusableCell(withReuseIdentifier: RestaurantCell.reuseId, for: indexPath) as! RestaurantCell
-            
             restaurantCell.configure(with: rastaurant)
             
             return restaurantCell

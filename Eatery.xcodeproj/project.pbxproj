@@ -45,6 +45,9 @@
 		9DC73B70256483A4003E3547 /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC73B69256483A4003E3547 /* UILabel.swift */; };
 		9DC73B76256484E3003E3547 /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC73B75256484E3003E3547 /* Restaurant.swift */; };
 		9DC73B8125648FE0003E3547 /* RestaurantCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC73B8025648FE0003E3547 /* RestaurantCell.swift */; };
+		9DD9EF4225684F2300E00BE5 /* FavoritesTableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD9EF4125684F2300E00BE5 /* FavoritesTableDataSource.swift */; };
+		9DD9EF472568500C00E00BE5 /* Favorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD9EF462568500C00E00BE5 /* Favorite.swift */; };
+		9DD9EF4C256850CB00E00BE5 /* FavoriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD9EF4B256850CB00E00BE5 /* FavoriteCell.swift */; };
 		9DED645F2565760700D2C11B /* CustomBodyLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DED645C2565760700D2C11B /* CustomBodyLabel.swift */; };
 		9DED64612565760700D2C11B /* CustomTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DED645E2565760700D2C11B /* CustomTitleLabel.swift */; };
 		9DED646F2565AF3000D2C11B /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DED646E2565AF3000D2C11B /* LocationService.swift */; };
@@ -119,6 +122,9 @@
 		9DC73B69256483A4003E3547 /* UILabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
 		9DC73B75256484E3003E3547 /* Restaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
 		9DC73B8025648FE0003E3547 /* RestaurantCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantCell.swift; sourceTree = "<group>"; };
+		9DD9EF4125684F2300E00BE5 /* FavoritesTableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesTableDataSource.swift; sourceTree = "<group>"; };
+		9DD9EF462568500C00E00BE5 /* Favorite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorite.swift; sourceTree = "<group>"; };
+		9DD9EF4B256850CB00E00BE5 /* FavoriteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCell.swift; sourceTree = "<group>"; };
 		9DED645C2565760700D2C11B /* CustomBodyLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomBodyLabel.swift; sourceTree = "<group>"; };
 		9DED645E2565760700D2C11B /* CustomTitleLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTitleLabel.swift; sourceTree = "<group>"; };
 		9DED646E2565AF3000D2C11B /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
@@ -240,6 +246,8 @@
 		9D7CFE6F2564604400A801BC /* FavoritesViewController */ = {
 			isa = PBXGroup;
 			children = (
+				9DD9EF4025684E4C00E00BE5 /* Cells */,
+				9DD9EF3F25684E3D00E00BE5 /* FavoritesTableData */,
 				9D7CFE79256460C600A801BC /* FavoritesViewController.swift */,
 			);
 			path = FavoritesViewController;
@@ -426,6 +434,7 @@
 			isa = PBXGroup;
 			children = (
 				9DC73B75256484E3003E3547 /* Restaurant.swift */,
+				9DD9EF462568500C00E00BE5 /* Favorite.swift */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -434,6 +443,22 @@
 			isa = PBXGroup;
 			children = (
 				9DC73B8025648FE0003E3547 /* RestaurantCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		9DD9EF3F25684E3D00E00BE5 /* FavoritesTableData */ = {
+			isa = PBXGroup;
+			children = (
+				9DD9EF4125684F2300E00BE5 /* FavoritesTableDataSource.swift */,
+			);
+			path = FavoritesTableData;
+			sourceTree = "<group>";
+		};
+		9DD9EF4025684E4C00E00BE5 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				9DD9EF4B256850CB00E00BE5 /* FavoriteCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -634,6 +659,7 @@
 				9D7CFE6725645D5600A801BC /* Typealias.swift in Sources */,
 				9D80313A25644BAA00234AE0 /* ViewModelBase.swift in Sources */,
 				9D50BDD42566DC0C00C29E9C /* CustomCollectionLayout.swift in Sources */,
+				9DD9EF472568500C00E00BE5 /* Favorite.swift in Sources */,
 				9DC73B8125648FE0003E3547 /* RestaurantCell.swift in Sources */,
 				9DED64A22565E0DC00D2C11B /* RestaurantStruct.swift in Sources */,
 				9D7CFE8F256481C200A801BC /* RestaurantsCollectionDataSource.swift in Sources */,
@@ -642,7 +668,9 @@
 				9D7CFE5025645BAB00A801BC /* FavoritesViewModel.swift in Sources */,
 				9DED645F2565760700D2C11B /* CustomBodyLabel.swift in Sources */,
 				9D80314D25644E0900234AE0 /* BaseTabBarViewController.swift in Sources */,
+				9DD9EF4C256850CB00E00BE5 /* FavoriteCell.swift in Sources */,
 				9D7CFE6125645CB900A801BC /* DynamicValue.swift in Sources */,
+				9DD9EF4225684F2300E00BE5 /* FavoritesTableDataSource.swift in Sources */,
 				9D803161256451C100234AE0 /* NavigationService.swift in Sources */,
 				9DC73B76256484E3003E3547 /* Restaurant.swift in Sources */,
 			);

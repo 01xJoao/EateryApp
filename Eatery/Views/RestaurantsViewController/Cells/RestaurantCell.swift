@@ -28,7 +28,7 @@ final class RestaurantCell: UICollectionViewCell {
         
     override init(frame: CGRect) {
         super.init(frame: .zero)
-        _setupView()
+        _setupCell()
     }
     
     public func configure(with restaurant: Restaurant) {
@@ -63,7 +63,7 @@ final class RestaurantCell: UICollectionViewCell {
         _ratingLabel.text = rating
     }
     
-    private func _setupView() {
+    private func _setupCell() {
         _configureImageView()
         _configureTitleLabel()
         _configureDistanceView()

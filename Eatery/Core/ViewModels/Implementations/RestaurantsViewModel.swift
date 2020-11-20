@@ -12,8 +12,6 @@ final class RestaurantsViewModel: ViewModelBase {
     private var _locationService: LocationService
 
     private var _userLocation = (lat: "", long: "")
-    //private var _userCity: CityStruct()
-    
     private(set) var restaurantList = DynamicValueList<Restaurant>()
     
     init(restaurantWebService: RestaurantWebService, locationService: LocationService) {
