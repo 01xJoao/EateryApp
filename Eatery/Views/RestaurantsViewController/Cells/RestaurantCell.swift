@@ -20,7 +20,7 @@ final class RestaurantCell: UICollectionViewCell {
     private let _heartButton = UIButton()
     private let _priceScaleLabel = CustomBodyLabel(textAligment: .left, fontSize: 17, color: UIColor.Theme.mainGreen, weight: .semibold)
     private let _ratingLabel = CustomBodyLabel(textAligment: .center, fontSize: 16, color: UIColor.Theme.white, weight: .semibold)
-    private let _ratingBackgroundView =  UIView(backgroundColor: UIColor.Theme.mainGreen.withAlphaComponent(0.7))
+    private let _ratingBackgroundView =  UIView(backgroundColor: UIColor.Theme.mainGreen.withAlphaComponent(0.9))
     private let _heartImage = UIImageView()
     
     private var _imageHeightConstraint: NSLayoutConstraint?
@@ -91,13 +91,10 @@ final class RestaurantCell: UICollectionViewCell {
         _restaurantImageView.contentMode = .scaleAspectFill
         
         
-        _defaultRestaurantImage.image = UIImage(systemName: "photo.on.rectangle.angled")!.withTintColor(UIColor.Theme.lightGrey, renderingMode: .alwaysOriginal)
+        _defaultRestaurantImage.image = UIImage(systemName: "photo.on.rectangle.angled")!.withTintColor(UIColor.Theme.darkGrey, renderingMode: .alwaysOriginal)
         _restaurantImageView.addSubview(_defaultRestaurantImage)
-        _defaultRestaurantImage.centerInSuperview(size: CGSize(width: 50, height: 40))
         
-        let imageFilter = UIView(backgroundColor: UIColor.black.withAlphaComponent(0.075))
-        _restaurantImageView.addSubview(imageFilter)
-        imageFilter.fillSuperview()
+        _defaultRestaurantImage.centerInSuperview(size: CGSize(width: 50, height: 40))
         
         _imageHeightConstraint = _restaurantImageView.heightAnchor.constraint(equalToConstant: 0)
         _imageHeightConstraint?.isActive = true

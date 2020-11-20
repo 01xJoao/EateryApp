@@ -9,6 +9,14 @@ import Foundation
 
 final class WebServiceImp: WebService {
     private let _zomatoAPIKey = "38fd20391c95ec7757bb9b1010596d17"
+    private let _URLSession: URLSession
+    
+    init() {
+        let configuration = URLSessionConfiguration.default
+        configuration.timeoutIntervalForRequest = TimeInterval(20)
+        configuration.timeoutIntervalForResource = TimeInterval(20)
+        _URLSession = URLSession(configuration: configuration)
+    }
 
     func getRequest<T>(path: String, query: [String: String?], completion: @escaping CompletionWebHandler<T>) where T : Decodable, T : Encodable {
         let requestComponent = _createURLComponent(path, query)
@@ -22,7 +30,7 @@ final class WebServiceImp: WebService {
         getRequest.setValue("application/json", forHTTPHeaderField: "Accept")
         getRequest.setValue(_zomatoAPIKey, forHTTPHeaderField: "user-key")
 
-        URLSession.shared.dataTask(with: getRequest) { data, response, error in
+        _URLSession.dataTask(with: getRequest) { data, response, error in
             if let _ = error {
                 completion(.failure(WebServiceError.noInternet))
                 return

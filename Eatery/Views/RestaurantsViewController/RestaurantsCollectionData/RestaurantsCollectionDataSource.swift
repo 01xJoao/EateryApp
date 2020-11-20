@@ -12,12 +12,10 @@ enum Section { case restaurants }
 final class RestaurantsCollectionDataSource: UICollectionViewDiffableDataSource<Section, Restaurant> {
     private let _estimatedCellWidth:CGFloat = 270
     
-    private let _collectionView: UICollectionView!
     private var _restaurantList = [Restaurant]()
     
     init(collectionView: UICollectionView) {
-        _collectionView = collectionView
-        _collectionView.register(RestaurantCell.self, forCellWithReuseIdentifier: RestaurantCell.reuseId)
+        collectionView.register(RestaurantCell.self, forCellWithReuseIdentifier: RestaurantCell.reuseId)
 
         super.init(collectionView: collectionView) { (collectionView, indexPath, rastaurant) -> UICollectionViewCell? in
             let restaurantCell = collectionView.dequeueReusableCell(withReuseIdentifier: RestaurantCell.reuseId, for: indexPath) as! RestaurantCell

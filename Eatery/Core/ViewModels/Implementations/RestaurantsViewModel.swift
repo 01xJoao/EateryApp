@@ -55,6 +55,8 @@ final class RestaurantsViewModel: ViewModelBase {
     
     
     private func _getUserCity() {
+        self.isBusy.value = true
+        
         _restaurantWebService.getCityDetails(query: ["q": _userLocation]) { [weak self] (result: Result<CityListStruct?, WebServiceError>) in
             guard let self = self else { return }
             
@@ -63,6 +65,7 @@ final class RestaurantsViewModel: ViewModelBase {
                 guard let cityList = cityList else { return }
                 self._saveCityDetails(cityList)
             case .failure( let error):
+                self.isBusy.value = false
                 print("Display error: \(error)")
             }
         }
@@ -79,11 +82,13 @@ final class RestaurantsViewModel: ViewModelBase {
     
     private func _getRestaurants() {
         guard let _userCity = _userCity else { return }
+        self.isBusy.value = true
         
         let query = ["entity_id": String(_userCity.id), "entity_type": "city", "start": "1", "count": "20"]
         
         _restaurantWebService.getRestaurants(query: query) { [weak self] (result: Result<RestaurantListStruct?, WebServiceError>) in
             guard let self = self else { return }
+            self.isBusy.value = false
             
             switch result {
             case .success(let restaurantList):

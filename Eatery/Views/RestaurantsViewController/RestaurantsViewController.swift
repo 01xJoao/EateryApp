@@ -10,6 +10,9 @@ import UIKit
 final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>, UISearchResultsUpdating {
     private lazy var _collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     private lazy var _collectionDataSource = RestaurantsCollectionDataSource(collectionView: _collectionView)
+    private lazy var _activityIndicatorView = UIWidgets.setActivityIndicatoryInto(view: self.view)
+    
+    private let _backgroundImage = UIImageView(image: UIImage(systemName: "leaf")!.withTintColor(UIColor.Theme.lightGrey, renderingMode: .alwaysOriginal))
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,13 +25,18 @@ final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>,
         _configureFilterButton()
         _configureSearchController()
         _configureCollectionView()
+        _configureActivityIndicator()
+        _configureViewBackgroundImage()
     }
     
     private func _setData() {
         viewModel.restaurantList.data.addObserver(observer: "restaurants") { [weak self] in
             guard let self = self else { return }
             
-            self._collectionDataSource.updateData(on: self.viewModel.restaurantList.data.value)
+            DispatchQueue.main.async {
+                self._backgroundImage.isHidden = !self.viewModel.restaurantList.data.value.isEmpty
+                self._collectionDataSource.updateData(on: self.viewModel.restaurantList.data.value)
+            }
         }
     }
     
@@ -41,24 +49,24 @@ final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>,
     
     private func _configureSearchController() {
         let searchController = UISearchController()
+        
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
-        
         searchController.searchBar.searchBarStyle = .minimal
         searchController.searchBar.searchTextField.backgroundColor = UIColor.Theme.black.withAlphaComponent(0.35)
-        
-        searchController.searchBar.setImage(UIImage(systemName: "leaf")!.withTintColor(UIColor.lightGray, renderingMode: .alwaysOriginal),
+
+        searchController.searchBar.setImage(UIImage(systemName: "magnifyingglass")!.withTintColor(UIColor.lightGray, renderingMode: .alwaysOriginal),
                                             for: UISearchBar.Icon.search, state: .normal)
-        
+
         searchController.searchBar.setImage(UIImage(systemName: "xmark.circle.fill")!.withTintColor(UIColor.Theme.white, renderingMode: .alwaysOriginal),
                                             for: UISearchBar.Icon.clear, state: .normal)
-        
+
         searchController.searchBar.searchTextField.attributedText =
             NSAttributedString.init(string: "", attributes: [NSAttributedString.Key.foregroundColor: UIColor.Theme.white])
-    
+
         searchController.searchBar.searchTextField.attributedPlaceholder =
             NSAttributedString.init(string: "Search", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
-        
+
         self.navigationItem.searchController = searchController
     }
     
@@ -81,6 +89,22 @@ final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>,
         if let flowLayout = _collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.scrollDirection = .vertical
         }
+    }
+    
+    private func _configureActivityIndicator() {
+        viewModel.isBusy.addAndNotify(observer: "isBusy") { [weak self] in
+            guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                self._activityIndicatorView.isHidden = !self.viewModel.isBusy.value
+            }
+        }
+    }
+    
+    private func _configureViewBackgroundImage() {
+        self.view.addSubview(_backgroundImage)
+        
+        _backgroundImage.centerInSuperview(size: CGSize(width: 60, height: 55))
     }
     
     func updateSearchResults(for searchController: UISearchController) {}

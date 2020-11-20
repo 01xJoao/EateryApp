@@ -34,7 +34,7 @@ class ImageCache {
                 return
             }
 
-            self._saveImageWith(key: cacheKey, image: image)
+            self._saveImageWith(key: cacheKey, image: image.addFilter(FilterType.Chrome))
             
             completed(image, cacheKey)
         }).resume()
