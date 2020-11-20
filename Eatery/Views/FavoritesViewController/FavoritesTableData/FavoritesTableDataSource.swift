@@ -8,14 +8,16 @@
 import UIKit
 
 final class FavoritesDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
-    private let _favoriteList = [Favorite]()
+    private var _favoriteList = [Favorite]()
     
     init(_ tableView: UITableView, _ favorites: [Favorite]) {
         tableView.register(FavoriteCell.self, forCellReuseIdentifier: FavoriteCell.reuseId)
+        tableView.separatorStyle = .none
+        _favoriteList.append(contentsOf: favorites)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        print(indexPath)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -33,6 +35,6 @@ final class FavoritesDataSource: NSObject, UITableViewDataSource, UITableViewDel
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        160
+        168
     }
 }

@@ -236,7 +236,6 @@
 		9D7CFE6E2564602D00A801BC /* RestaurantsViewController */ = {
 			isa = PBXGroup;
 			children = (
-				9DC73B7F25648FB8003E3547 /* Cells */,
 				9D7CFE8D2564811500A801BC /* RestaurantsCollectionData */,
 				9D7CFE712564608400A801BC /* RestaurantsViewController.swift */,
 			);
@@ -246,7 +245,6 @@
 		9D7CFE6F2564604400A801BC /* FavoritesViewController */ = {
 			isa = PBXGroup;
 			children = (
-				9DD9EF4025684E4C00E00BE5 /* Cells */,
 				9DD9EF3F25684E3D00E00BE5 /* FavoritesTableData */,
 				9D7CFE79256460C600A801BC /* FavoritesViewController.swift */,
 			);
@@ -263,6 +261,7 @@
 		9D7CFE8D2564811500A801BC /* RestaurantsCollectionData */ = {
 			isa = PBXGroup;
 			children = (
+				9DC73B7F25648FB8003E3547 /* Cells */,
 				9D7CFE8E256481C200A801BC /* RestaurantsCollectionDataSource.swift */,
 			);
 			path = RestaurantsCollectionData;
@@ -450,6 +449,7 @@
 		9DD9EF3F25684E3D00E00BE5 /* FavoritesTableData */ = {
 			isa = PBXGroup;
 			children = (
+				9DD9EF4025684E4C00E00BE5 /* Cells */,
 				9DD9EF4125684F2300E00BE5 /* FavoritesTableDataSource.swift */,
 			);
 			path = FavoritesTableData;

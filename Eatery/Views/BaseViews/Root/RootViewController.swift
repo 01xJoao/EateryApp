@@ -27,7 +27,7 @@ final class RootViewController: UIViewController {
     }
     
     private func _removeCurrentViewController() {
-        if !self.children.isEmpty {
+        if (!self.children.isEmpty) {
             self.willMove(toParent: nil)
             self.children.first!.removeFromParent()
             self.children.first!.view.removeFromSuperview()

@@ -9,10 +9,10 @@ import UIKit
 
 final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>, UISearchResultsUpdating {
     private var _collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-    private lazy var _collectionDataSource = RestaurantsCollectionDataSource(collectionView: _collectionView)
+    private lazy var _collectionDataSourceProvider = RestaurantsCollectionDataSource(collectionView: _collectionView)
     
     private lazy var _activityIndicatorView = UIWidgets.setActivityIndicatoryInto(view: self.view)
-    private let _backgroundImage = UIImageView(image: UIImage(systemName: "leaf")!.withTintColor(UIColor.Theme.lightGrey, renderingMode: .alwaysOriginal))
+    private let _backgroundImage = UIImageView(image: UIImage(systemName: "leaf")?.withTintColor(UIColor.Theme.lightGrey, renderingMode: .alwaysOriginal))
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +35,7 @@ final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>,
             
             DispatchQueue.main.async {
                 self._backgroundImage.isHidden = !self.viewModel.restaurantList.data.value.isEmpty
-                self._collectionDataSource.updateData(on: self.viewModel.restaurantList.data.value)
+                self._collectionDataSourceProvider.updateData(on: self.viewModel.restaurantList.data.value)
             }
         }
     }
@@ -55,10 +55,10 @@ final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>,
         searchController.searchBar.searchBarStyle = .minimal
         searchController.searchBar.searchTextField.backgroundColor = UIColor.Theme.black.withAlphaComponent(0.35)
 
-        searchController.searchBar.setImage(UIImage(systemName: "magnifyingglass")!.withTintColor(UIColor.lightGray, renderingMode: .alwaysOriginal),
+        searchController.searchBar.setImage(UIImage(systemName: "magnifyingglass")?.withTintColor(UIColor.lightGray, renderingMode: .alwaysOriginal),
                                             for: UISearchBar.Icon.search, state: .normal)
 
-        searchController.searchBar.setImage(UIImage(systemName: "xmark.circle.fill")!.withTintColor(UIColor.Theme.white, renderingMode: .alwaysOriginal),
+        searchController.searchBar.setImage(UIImage(systemName: "xmark.circle.fill")?.withTintColor(UIColor.Theme.white, renderingMode: .alwaysOriginal),
                                             for: UISearchBar.Icon.clear, state: .normal)
 
         searchController.searchBar.searchTextField.attributedText =
@@ -76,8 +76,8 @@ final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>,
         self.view.addSubview(_collectionView)
         
         _collectionView.contentInset = UIEdgeInsets(top: 12, left: 12, bottom: 10, right: 12)
-        _collectionView.delegate = _collectionDataSource
-        _collectionView.dataSource = _collectionDataSource
+        _collectionView.delegate = _collectionDataSourceProvider
+        _collectionView.dataSource = _collectionDataSourceProvider
         _collectionView.backgroundColor = .clear
         _collectionView.showsHorizontalScrollIndicator = false
         

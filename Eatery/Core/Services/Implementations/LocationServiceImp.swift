@@ -28,8 +28,9 @@ final class LocationServiceImp: NSObject, LocationService, CLLocationManagerDele
     }
     
     internal func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let location = locations.last
-        _currentLocation.value = (lat: String(location!.coordinate.latitude), long: String(location!.coordinate.longitude))
+        guard let location = locations.last else { return }
+        
+        _currentLocation.value = (lat: String(location.coordinate.latitude), long: String(location.coordinate.longitude))
         
 //        let currentlocation = CLLocation(latitude: location!.coordinate.latitude, longitude: location!.coordinate.longitude)
 //        _fetchCityAndCountry(from: currentlocation) { [weak self] city, country, error in
