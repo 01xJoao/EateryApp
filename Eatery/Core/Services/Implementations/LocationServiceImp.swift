@@ -7,9 +7,9 @@
 
 import CoreLocation
 
-final class LocationServiceImp: NSObject, LocationService, CLLocationManagerDelegate {
+final class LocationServiceImp: NSObject, LocationService, CLLocationManagerDelegate {    
     private var _locationManager: CLLocationManager = CLLocationManager()
-    private let _currentLocation : DynamicValue<String?> = DynamicValue<String?>("")
+    private let _currentLocation : DynamicValue<(String, String)?> = DynamicValue<(String, String)?>((lat: "", long: ""))
     
     override init() {
         super.init()
@@ -29,13 +29,13 @@ final class LocationServiceImp: NSObject, LocationService, CLLocationManagerDele
     
     internal func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = locations.last
-        let currentlocation = CLLocation(latitude: location!.coordinate.latitude, longitude: location!.coordinate.longitude)
+        _currentLocation.value = (lat: String(location!.coordinate.latitude), long: String(location!.coordinate.longitude))
         
-        _fetchCityAndCountry(from: currentlocation) { [weak self] city, country, error in
-            guard let self = self, let city = city, let country = country else { return }
-            
-            self._currentLocation.value = "\(city), \(country)"
-        }
+//        let currentlocation = CLLocation(latitude: location!.coordinate.latitude, longitude: location!.coordinate.longitude)
+//        _fetchCityAndCountry(from: currentlocation) { [weak self] city, country, error in
+//            guard let self = self, let city = city, let country = country else { return }
+//            self._currentLocation.value = "\(city), \(country)"
+//        }
     }
     
     internal func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
@@ -45,18 +45,18 @@ final class LocationServiceImp: NSObject, LocationService, CLLocationManagerDele
             _currentLocation.value = nil
         }
     }
-    
-    private func _fetchCityAndCountry(from location: CLLocation, completion: @escaping (_ city: String?, _ country:  String?, _ error: Error?) -> ()) {
-        CLGeocoder().reverseGeocodeLocation(location) { placemarks, error in
-            completion(placemarks?.first?.locality, placemarks?.first?.country, error)
-        }
-    }
-    
+//
+//    private func _fetchCityAndCountry(from location: CLLocation, completion: @escaping (_ city: String?, _ country:  String?, _ error: Error?) -> ()) {
+//        CLGeocoder().reverseGeocodeLocation(location) { placemarks, error in
+//            completion(placemarks?.first?.locality, placemarks?.first?.country, error)
+//        }
+//    }
+//
     internal func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("error location manager")
     }
     
-    func getUserLocation() -> DynamicValue<String?> {
+    func getUserLocation() -> DynamicValue<(String, String)?> {
         _currentLocation
     }
     

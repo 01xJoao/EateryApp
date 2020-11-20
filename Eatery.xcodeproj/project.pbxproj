@@ -54,7 +54,6 @@
 		9DED64832565BA4B00D2C11B /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DED64822565BA4B00D2C11B /* Enums.swift */; };
 		9DED648C2565DF1300D2C11B /* RestaurantWebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DED648B2565DF1300D2C11B /* RestaurantWebService.swift */; };
 		9DED64942565DF2400D2C11B /* RestaurantWebServiceImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DED64932565DF2400D2C11B /* RestaurantWebServiceImp.swift */; };
-		9DED649A2565E06E00D2C11B /* CityStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DED64992565E06E00D2C11B /* CityStruct.swift */; };
 		9DED64A22565E0DC00D2C11B /* RestaurantStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DED64A12565E0DC00D2C11B /* RestaurantStruct.swift */; };
 /* End PBXBuildFile section */
 
@@ -129,7 +128,6 @@
 		9DED64822565BA4B00D2C11B /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		9DED648B2565DF1300D2C11B /* RestaurantWebService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantWebService.swift; sourceTree = "<group>"; };
 		9DED64932565DF2400D2C11B /* RestaurantWebServiceImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantWebServiceImp.swift; sourceTree = "<group>"; };
-		9DED64992565E06E00D2C11B /* CityStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityStruct.swift; sourceTree = "<group>"; };
 		9DED64A12565E0DC00D2C11B /* RestaurantStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantStruct.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -469,7 +467,6 @@
 		9DED64982565E04E00D2C11B /* DataStructures */ = {
 			isa = PBXGroup;
 			children = (
-				9DED64992565E06E00D2C11B /* CityStruct.swift */,
 				9DED64A12565E0DC00D2C11B /* RestaurantStruct.swift */,
 			);
 			path = DataStructures;
@@ -619,7 +616,6 @@
 				9D803169256451CB00234AE0 /* NavigationServiceImp.swift in Sources */,
 				9D7CFE7A256460C600A801BC /* FavoritesViewController.swift in Sources */,
 				9DC73B70256483A4003E3547 /* UILabel.swift in Sources */,
-				9DED649A2565E06E00D2C11B /* CityStruct.swift in Sources */,
 				9DC73B6D256483A4003E3547 /* UIView+Stacking.swift in Sources */,
 				9DC73B6C256483A4003E3547 /* AnchoredConstraints.swift in Sources */,
 				9D213C212564352E0097CD58 /* Eatery.xcdatamodeld in Sources */,

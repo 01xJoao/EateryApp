@@ -11,8 +11,8 @@ final class RestaurantsViewModel: ViewModelBase {
     private let _restaurantWebService: RestaurantWebService
     private var _locationService: LocationService
 
-    private var _userLocation = ""
-    private var _userCity: CityStruct?
+    private var _userLocation = (lat: "", long: "")
+    //private var _userCity: CityStruct()
     
     private(set) var restaurantList = DynamicValueList<Restaurant>()
     
@@ -32,7 +32,7 @@ final class RestaurantsViewModel: ViewModelBase {
         
         let locationNotification = _locationService.getUserLocation()
         
-        locationNotification.addAndNotify(observer: _userLocation.description) { [weak self] in
+        locationNotification.addAndNotify(observer: "location") { [weak self] in
             guard let self = self else { return }
             
             guard let location = locationNotification.value else {
@@ -42,7 +42,7 @@ final class RestaurantsViewModel: ViewModelBase {
             
             if(self._userLocation != location) {
                 self._userLocation = location
-                self._getUserCity()
+                self._getRestaurants()
             }
         }
     }
@@ -53,38 +53,16 @@ final class RestaurantsViewModel: ViewModelBase {
         }
     }
     
-    
-    private func _getUserCity() {
-        self.isBusy.value = true
-        
-        _restaurantWebService.getCityDetails(query: ["q": _userLocation]) { [weak self] (result: Result<CityListStruct?, WebServiceError>) in
-            guard let self = self else { return }
-            
-            switch result {
-            case .success(let cityList):
-                guard let cityList = cityList else { return }
-                self._saveCityDetails(cityList)
-            case .failure( let error):
-                self.isBusy.value = false
-                print("Display error: \(error)")
-            }
-        }
-    }
-    
-    private func _saveCityDetails(_ cityList: CityListStruct) {
-        if let city = cityList.locationSuggestions.first {
-            _userCity = city
-            _getRestaurants()
-        } else {
-            print("We could not find your location :(")
-        }
-    }
-    
     private func _getRestaurants() {
-        guard let _userCity = _userCity else { return }
         self.isBusy.value = true
         
-        let query = ["entity_id": String(_userCity.id), "entity_type": "city", "start": "1", "count": "20"]
+        let query = [
+            "start": "1",
+            "count": "20",
+            "lat": _userLocation.lat,
+            "lon": _userLocation.long,
+            "sort": "real_distance"
+        ]
         
         _restaurantWebService.getRestaurants(query: query) { [weak self] (result: Result<RestaurantListStruct?, WebServiceError>) in
             guard let self = self else { return }

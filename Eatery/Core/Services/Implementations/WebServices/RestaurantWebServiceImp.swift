@@ -14,10 +14,6 @@ final class RestaurantWebServiceImp: RestaurantWebService {
         self._webService = webService
     }
     
-    func getCityDetails(query: [String : String?], completion: @escaping CompletionWebHandler<CityListStruct>) {
-        _webService.getRequest(path: "/cities", query: query, completion: completion)
-    }
-    
     func getRestaurants(query: [String : String?], completion: @escaping CompletionWebHandler<RestaurantListStruct>) {
         _webService.getRequest(path: "/search", query: query, completion: completion)
     }
