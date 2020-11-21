@@ -16,6 +16,7 @@ final class RestaurantsViewModel: ViewModelBase {
     
     private var _restaurantStartCount = 1
     private let _numberOfRestaurantsPerCall = 20
+    private var _canFetchMoreRestaurants = true
     
     private(set) lazy var fetchMoreRestaurantsCommand = Command(_fetchRestaurants, canExecute: _canExecute)
     
@@ -30,7 +31,7 @@ final class RestaurantsViewModel: ViewModelBase {
     
     private func _getUserLocation() {
         if !_locationService.checkUserAuthorization() {
-           _requestLocation()
+           _requestUserLocation()
         }
         
         let locationNotification = _locationService.getUserLocation()
@@ -44,19 +45,30 @@ final class RestaurantsViewModel: ViewModelBase {
             }
             
             if(self._userLocation != location) {
-                self._userLocation = location
-                self._fetchRestaurants()
+                self._getRestaurantsIn(location: location)
+                
             }
         }
     }
     
-    private func _requestLocation() {
+    private func _requestUserLocation() {
         if !_locationService.requestUserAuthorization() {
             print("Please enable location services on your phone.")
         }
     }
     
+    private func _getRestaurantsIn(location: (lat: String, long: String)) {
+        _userLocation = location
+        _restaurantStartCount = 1
+        _canFetchMoreRestaurants = true
+        restaurantList.removeAll()
+        
+        _fetchRestaurants()
+    }
+    
     private func _fetchRestaurants() {
+        guard _canFetchMoreRestaurants else { return }
+        
         self.isBusy.value = true
         
         let query = [
@@ -73,7 +85,7 @@ final class RestaurantsViewModel: ViewModelBase {
             switch result {
             case .success(let restaurantList):
                 guard let restaurantList = restaurantList else { return }
-                self._fillRestaurantListWith(restaurantList)
+                self._addRestaurantsToList(restaurantList)
             case .failure( let error):
                 print("Display error: \(error)")
             }
@@ -82,13 +94,14 @@ final class RestaurantsViewModel: ViewModelBase {
         }
     }
     
-    private func _fillRestaurantListWith(_ restaurants: RestaurantListStruct) {
+    private func _addRestaurantsToList(_ restaurants: RestaurantListStruct) {
         guard restaurants.resultsShown > 0 else {
-            print("We could not find restaurants in your location :/") // print("We could not find more restaurants :/")
+            _canFetchMoreRestaurants = false
+            _displayReasonForNotAddingRestaurants()
             return
         }
         
-        _addRestaurantStartCount(with: restaurants.resultsShown)
+        _increaseRestaurantStartCount(with: restaurants.resultsShown)
         
         let newRestaurantList = restaurants.restaurants.map { val -> Restaurant in
             Restaurant(val.restaurant)
@@ -97,10 +110,16 @@ final class RestaurantsViewModel: ViewModelBase {
         restaurantList.addAll(newRestaurantList)
     }
     
-    private func _addRestaurantStartCount(with restaurantCount: Int) {
+    private func _displayReasonForNotAddingRestaurants() {
+        if restaurantList.data.value.isEmpty {
+            print("We could not find restaurants in your location :/")
+        } else {
+            print("We could not find more restaurants.")
+        }
+    }
+    
+    private func _increaseRestaurantStartCount(with restaurantCount: Int) {
         _restaurantStartCount += restaurantCount
-        
-        print(_restaurantStartCount)
     }
     
     private func _canExecute() -> Bool {
