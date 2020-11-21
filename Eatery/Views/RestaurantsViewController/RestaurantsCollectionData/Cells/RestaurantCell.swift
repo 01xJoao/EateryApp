@@ -181,16 +181,11 @@ final class RestaurantCell: UICollectionViewCell {
             DispatchQueue.main.async {
                 guard let self = self else { return }
                 
-                guard let image = image, let cachedKey = cachedKey else {
-                    self._setRestaurantImage(nil, false)
+                guard let image = image, let cachedKey = cachedKey, self._imageCacheKey == cachedKey else {
                     return
                 }
                 
-                if self._imageCacheKey == cachedKey {
-                    self._setRestaurantImage(image, true)
-                } else {
-                    self._setRestaurantImage(nil, false)
-                }
+                self._setRestaurantImage(image, true)
             }
         })
     }
