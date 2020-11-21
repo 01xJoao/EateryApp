@@ -11,11 +11,14 @@ enum Section { case restaurants }
 
 final class RestaurantsCollectionDataSource: UICollectionViewDiffableDataSource<Section, Restaurant> {
     private let _estimatedCellWidth:CGFloat = 270
+    private var _lastScrollPosition:CGFloat = 0
     
     private var _restaurantList = [Restaurant]()
+    private let _fetchRestaurantsHandler: Command
     
-    init(collectionView: UICollectionView) {
+    init(collectionView: UICollectionView, fetchHandler: Command) {
         collectionView.register(RestaurantCell.self, forCellWithReuseIdentifier: RestaurantCell.reuseId)
+        _fetchRestaurantsHandler = fetchHandler
 
         super.init(collectionView: collectionView) { (collectionView, indexPath, rastaurant) -> UICollectionViewCell? in
             let restaurantCell = collectionView.dequeueReusableCell(withReuseIdentifier: RestaurantCell.reuseId, for: indexPath) as! RestaurantCell
@@ -76,5 +79,20 @@ extension RestaurantsCollectionDataSource: UICollectionViewDelegateFlowLayout, U
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         18
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if _shouldFetchMoreRestaurants(scrollView) {
+            _fetchRestaurantsHandler.executeIf()
+        }
+        
+        _lastScrollPosition = scrollView.contentOffset.y
+    }
+    
+    private func _shouldFetchMoreRestaurants(_ scrollView: UIScrollView) -> Bool {
+        let scrollPosition = scrollView.contentOffset.y
+        let scrollSize = scrollView.contentSize.height
+        
+        return scrollPosition > _lastScrollPosition && scrollPosition > (scrollSize * 0.6)
     }
 }

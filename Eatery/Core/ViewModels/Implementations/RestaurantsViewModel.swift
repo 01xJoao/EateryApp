@@ -14,6 +14,11 @@ final class RestaurantsViewModel: ViewModelBase {
     private var _userLocation = (lat: "", long: "")
     private(set) var restaurantList = DynamicValueList<Restaurant>()
     
+    private var _restaurantStartCount = 1
+    private let _numberOfRestaurantsPerCall = 20
+    
+    private(set) lazy var fetchMoreRestaurantsCommand = Command(_fetchRestaurants, canExecute: _canExecute)
+    
     init(restaurantWebService: RestaurantWebService, locationService: LocationService) {
         _restaurantWebService = restaurantWebService
         _locationService = locationService
@@ -40,7 +45,7 @@ final class RestaurantsViewModel: ViewModelBase {
             
             if(self._userLocation != location) {
                 self._userLocation = location
-                self._getRestaurants()
+                self._fetchRestaurants()
             }
         }
     }
@@ -51,12 +56,12 @@ final class RestaurantsViewModel: ViewModelBase {
         }
     }
     
-    private func _getRestaurants() {
+    private func _fetchRestaurants() {
         self.isBusy.value = true
         
         let query = [
-            "start": "1",
-            "count": "20",
+            "start": String(_restaurantStartCount),
+            "count": String(_numberOfRestaurantsPerCall),
             "lat": _userLocation.lat,
             "lon": _userLocation.long,
             "sort": "real_distance"
@@ -64,7 +69,6 @@ final class RestaurantsViewModel: ViewModelBase {
         
         _restaurantWebService.getRestaurants(query: query) { [weak self] (result: Result<RestaurantListStruct?, WebServiceError>) in
             guard let self = self else { return }
-            self.isBusy.value = false
             
             switch result {
             case .success(let restaurantList):
@@ -73,19 +77,33 @@ final class RestaurantsViewModel: ViewModelBase {
             case .failure( let error):
                 print("Display error: \(error)")
             }
+            
+            self.isBusy.value = false
         }
     }
     
     private func _fillRestaurantListWith(_ restaurants: RestaurantListStruct) {
-        guard restaurants.resultsFound > 0 else {
-            print("We could not find restaurants in your location :/")
+        guard restaurants.resultsShown > 0 else {
+            print("We could not find restaurants in your location :/") // print("We could not find more restaurants :/")
             return
         }
+        
+        _addRestaurantStartCount(with: restaurants.resultsShown)
         
         let newRestaurantList = restaurants.restaurants.map { val -> Restaurant in
             Restaurant(val.restaurant)
         }
         
         restaurantList.addAll(newRestaurantList)
+    }
+    
+    private func _addRestaurantStartCount(with restaurantCount: Int) {
+        _restaurantStartCount += restaurantCount
+        
+        print(_restaurantStartCount)
+    }
+    
+    private func _canExecute() -> Bool {
+        return !self.isBusy.value
     }
 }

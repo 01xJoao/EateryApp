@@ -9,7 +9,7 @@ import UIKit
 
 final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>, UISearchResultsUpdating {
     private var _collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-    private lazy var _collectionDataSourceProvider = RestaurantsCollectionDataSource(collectionView: _collectionView)
+    private lazy var _collectionDataSourceProvider = RestaurantsCollectionDataSource(collectionView: _collectionView, fetchHandler: self.viewModel.fetchMoreRestaurantsCommand)
     
     private lazy var _activityIndicatorView = UIWidgets.setActivityIndicatoryInto(view: self.view)
     private let _backgroundImage = UIImageView(image: UIImage(systemName: "leaf")?.withTintColor(UIColor.Theme.lightGrey, renderingMode: .alwaysOriginal))

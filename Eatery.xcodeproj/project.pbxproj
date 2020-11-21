@@ -36,6 +36,8 @@
 		9D803158256450D100234AE0 /* DiContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D803157256450D100234AE0 /* DiContainer.swift */; };
 		9D803161256451C100234AE0 /* NavigationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D803160256451C100234AE0 /* NavigationService.swift */; };
 		9D803169256451CB00234AE0 /* NavigationServiceImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D803168256451CB00234AE0 /* NavigationServiceImp.swift */; };
+		9D95E25A2569616E00E77840 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D95E2592569616E00E77840 /* Command.swift */; };
+		9D95E2622569618900E77840 /* Command{T}.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D95E2612569618900E77840 /* Command{T}.swift */; };
 		9DC73B6A256483A4003E3547 /* UIView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC73B63256483A4003E3547 /* UIView+Layout.swift */; };
 		9DC73B6B256483A4003E3547 /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC73B64256483A4003E3547 /* UIButton.swift */; };
 		9DC73B6C256483A4003E3547 /* AnchoredConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC73B65256483A4003E3547 /* AnchoredConstraints.swift */; };
@@ -113,6 +115,8 @@
 		9D803157256450D100234AE0 /* DiContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiContainer.swift; sourceTree = "<group>"; };
 		9D803160256451C100234AE0 /* NavigationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationService.swift; sourceTree = "<group>"; };
 		9D803168256451CB00234AE0 /* NavigationServiceImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationServiceImp.swift; sourceTree = "<group>"; };
+		9D95E2592569616E00E77840 /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
+		9D95E2612569618900E77840 /* Command{T}.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Command{T}.swift"; sourceTree = "<group>"; };
 		9DC73B63256483A4003E3547 /* UIView+Layout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Layout.swift"; sourceTree = "<group>"; };
 		9DC73B64256483A4003E3547 /* UIButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
 		9DC73B65256483A4003E3547 /* AnchoredConstraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnchoredConstraints.swift; sourceTree = "<group>"; };
@@ -360,6 +364,7 @@
 		9D80315525644F0E00234AE0 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				9D95E2582569615100E77840 /* Command */,
 				9D7CFE6525645D4200A801BC /* Helpers */,
 				9D7CFE5F25645C9C00A801BC /* Observer */,
 				9D803156256450B800234AE0 /* DI */,
@@ -413,6 +418,15 @@
 				9DED647D2565B9A700D2C11B /* WebServiceImp.swift */,
 			);
 			path = Implementations;
+			sourceTree = "<group>";
+		};
+		9D95E2582569615100E77840 /* Command */ = {
+			isa = PBXGroup;
+			children = (
+				9D95E2592569616E00E77840 /* Command.swift */,
+				9D95E2612569618900E77840 /* Command{T}.swift */,
+			);
+			path = Command;
 			sourceTree = "<group>";
 		};
 		9DC73B6225648378003E3547 /* UIViewHelpers */ = {
@@ -649,6 +663,7 @@
 				9D80310E2564430E00234AE0 /* Core.swift in Sources */,
 				9D50BDCD2566BF6400C29E9C /* ImageCache.swift in Sources */,
 				9DED648C2565DF1300D2C11B /* RestaurantWebService.swift in Sources */,
+				9D95E25A2569616E00E77840 /* Command.swift in Sources */,
 				9D7CFE4B25645BA200A801BC /* RestaurantsViewModel.swift in Sources */,
 				9D80312725644AD600234AE0 /* BaseViewController.swift in Sources */,
 				9D80313225644BA200234AE0 /* ViewModel.swift in Sources */,
@@ -663,6 +678,7 @@
 				9DC73B8125648FE0003E3547 /* RestaurantCell.swift in Sources */,
 				9DED64A22565E0DC00D2C11B /* RestaurantStruct.swift in Sources */,
 				9D7CFE8F256481C200A801BC /* RestaurantsCollectionDataSource.swift in Sources */,
+				9D95E2622569618900E77840 /* Command{T}.swift in Sources */,
 				9D7CFE722564608400A801BC /* RestaurantsViewController.swift in Sources */,
 				9DED64612565760700D2C11B /* CustomTitleLabel.swift in Sources */,
 				9D7CFE5025645BAB00A801BC /* FavoritesViewModel.swift in Sources */,
