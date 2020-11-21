@@ -173,9 +173,9 @@ final class RestaurantCell: UICollectionViewCell {
     }
     
     private func _setRestaurantImage(_ imageUrl: String) {
-        guard !imageUrl.isEmpty else { return }
-        
         _imageCacheKey = NSString(string: imageUrl)
+        
+        guard !imageUrl.isEmpty else { return }
         
         ImageCache.shared.getImage(from: imageUrl, completed: { [weak self] (image, cachedKey) in
             DispatchQueue.main.async {
