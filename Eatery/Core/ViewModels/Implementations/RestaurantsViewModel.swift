@@ -79,7 +79,7 @@ final class RestaurantsViewModel: ViewModelBase {
             "sort": "real_distance"
         ]
         
-        _restaurantWebService.getRestaurants(query: query) { [weak self] (result: Result<RestaurantListStruct?, WebServiceError>) in
+        _restaurantWebService.getRestaurants(query: query) { [weak self] (result: Result<RestaurantListObject?, WebServiceError>) in
             guard let self = self else { return }
             
             switch result {
@@ -94,7 +94,7 @@ final class RestaurantsViewModel: ViewModelBase {
         }
     }
     
-    private func _addRestaurantsToList(_ restaurants: RestaurantListStruct) {
+    private func _addRestaurantsToList(_ restaurants: RestaurantListObject) {
         guard restaurants.resultsShown > 0 else {
             _canFetchMoreRestaurants = false
             _displayReasonForNotAddingRestaurants()

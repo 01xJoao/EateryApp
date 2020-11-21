@@ -8,13 +8,17 @@
 import Foundation
 
 struct Restaurant: Hashable {
-    private let _restaurant: RestaurantStruct
+    private let _restaurant: RestaurantObject
     //private let _bigSizeImage: Bool
     private var _isFavorite = false
 
-    init(_ restaurant: RestaurantStruct) {
+    init(_ restaurant: RestaurantObject) {
         _restaurant = restaurant
         //_bigSizeImage = Bool.random()
+    }
+    
+    func getId() -> String {
+        _restaurant.id
     }
     
     func getName() -> String {

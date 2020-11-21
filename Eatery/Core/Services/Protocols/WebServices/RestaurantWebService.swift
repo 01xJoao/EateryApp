@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol RestaurantWebService where Self: RestaurantWebServiceImp {
-    func getRestaurants(query: [String: String?], completion: @escaping CompletionWebHandler<RestaurantListStruct>)
+protocol RestaurantWebService where Self:RestaurantWebServiceImp {
+    func getRestaurants(query: [String: String?], completion: @escaping CompletionWebHandler<RestaurantListObject>)
 }

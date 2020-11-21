@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct RestaurantListStruct: Codable {
+struct RestaurantListObject: Codable {
     let resultsFound, resultsStart, resultsShown: Int
-    let restaurants: [RestaurantElementStruct]
+    let restaurants: [RestaurantElementObject]
 
     enum CodingKeys: String, CodingKey {
         case resultsFound = "results_found"
@@ -19,17 +19,17 @@ struct RestaurantListStruct: Codable {
     }
 }
 
-struct RestaurantElementStruct: Codable {
-    let restaurant: RestaurantStruct
+struct RestaurantElementObject: Codable {
+    let restaurant: RestaurantObject
 }
 
-struct RestaurantStruct: Codable, Hashable {
+struct RestaurantObject: Codable, Hashable {
     let id: String
     let name: String
     let cuisines: String
     let thumb: String
-    let location: LocationStruct
-    let userRating: UserRatingStruct
+    let location: LocationObject
+    let userRating: UserRatingObject
     let priceRange: Int
     
     enum CodingKeys: String, CodingKey {
@@ -39,11 +39,11 @@ struct RestaurantStruct: Codable, Hashable {
     }
 }
 
-struct LocationStruct: Codable, Hashable {
+struct LocationObject: Codable, Hashable {
     let address, latitude, longitude: String
 }
 
-struct UserRatingStruct: Codable, Hashable {
+struct UserRatingObject: Codable, Hashable {
     let aggregateRating: AggregateRating
 
     enum CodingKeys: String, CodingKey {

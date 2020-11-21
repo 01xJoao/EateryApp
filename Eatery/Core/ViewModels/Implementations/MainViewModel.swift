@@ -7,5 +7,4 @@
 
 import Foundation
 
-final class MainViewModel: ViewModelBase {
-}
+final class MainViewModel: ViewModelBase {}

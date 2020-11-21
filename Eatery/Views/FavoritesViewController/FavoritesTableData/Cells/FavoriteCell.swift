@@ -7,7 +7,7 @@
 
 import UIKit
 
-class FavoriteCell: UITableViewCell {
+final class FavoriteCell: UITableViewCell {
     static let reuseId = "FavoriteCell"
     
     private let _backgroundView = UIView(backgroundColor: UIColor.Theme.backgroundColor)
