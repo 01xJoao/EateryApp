@@ -37,6 +37,7 @@ final class RestaurantCell: UICollectionViewCell {
         _descriptionLabel.text = restaurant.getCuisines()
         _distanceLabel.text = restaurant.getDistance()
         _heartImage.image = _setFavoriteImage(restaurant.isFavorite())
+        _setRestaurantImage(nil, false)
         
         _setRestaurantImage(restaurant.getImageWithSize(width: 600, height: 800))
         _setPriceValue(restaurant.getPriceScale())
@@ -172,6 +173,8 @@ final class RestaurantCell: UICollectionViewCell {
     }
     
     private func _setRestaurantImage(_ imageUrl: String) {
+        guard !imageUrl.isEmpty else { return }
+        
         _imageCacheKey = NSString(string: imageUrl)
         
         ImageCache.shared.getImage(from: imageUrl, completed: { [weak self] (image, cachedKey) in
