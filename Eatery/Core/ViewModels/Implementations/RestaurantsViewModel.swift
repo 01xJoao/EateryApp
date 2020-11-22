@@ -15,7 +15,7 @@ final class RestaurantsViewModel: ViewModelBase {
     private var _restaurantStartCount = 1
     private let _numberOfRestaurantsPerCall = 20
     private var _canFetchMoreRestaurants = true
-    private var _userLocation = (lat: "", long: "")
+    private var _userLocation: (lat: String, long: String)?
     private var _favoriteRestaurants = [String]()
     private var _search = ""
     
@@ -60,9 +60,8 @@ final class RestaurantsViewModel: ViewModelBase {
                 return
             }
             
-            if(self._userLocation != location) {
+            if(self._userLocation == nil || self._userLocation! != location) {
                 self._getRestaurantsIn(location: location)
-                
             }
         }
     }
@@ -87,15 +86,15 @@ final class RestaurantsViewModel: ViewModelBase {
     }
     
     private func _fetchRestaurants(clearList: Bool = false) {
-        guard _canFetchMoreRestaurants else { return }
+        guard _canFetchMoreRestaurants, let userLocation = _userLocation else { return }
         
         self.isBusy.value = true
         
         let query = [
             "start": String(_restaurantStartCount),
             "count": String(_numberOfRestaurantsPerCall),
-            "lat": _userLocation.lat,
-            "lon": _userLocation.long,
+            "lat": userLocation.lat,
+            "lon": userLocation.long,
             "sort": restaurantFilter.rawValue
         ]
         
@@ -254,5 +253,3 @@ final class RestaurantsViewModel: ViewModelBase {
         return !self.isBusy.value
     }
 }
-
-
