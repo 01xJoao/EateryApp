@@ -31,9 +31,10 @@ struct RestaurantObject: Codable, Hashable {
     let location: LocationObject
     let userRating: UserRatingObject
     let priceRange: Int
+    let timings: String
     
     enum CodingKeys: String, CodingKey {
-        case id, name, location, cuisines, thumb
+        case id, name, location, cuisines, thumb, timings
         case priceRange = "price_range"
         case userRating = "user_rating"
     }

@@ -37,7 +37,21 @@ final class FavoriteCell: UITableViewCell {
     }
     
     public func configure(with favorite: Favorite) {
+        _priceScaleLabel.text = favorite.getPriceScale()
+        _priceScaleLabel.textColor = UIHelper.getColorForPrice(favorite.getPriceScale())
         
+        _titleLabel.text = favorite.getName()
+        _subtitleLabel.text =  favorite.getCuisines()
+        _timeLabel.text = favorite.getTiming()
+        _distanceLabel.text = favorite.getDistance()
+        
+        if let image = favorite.getImage() {
+            _restaurantImageView.image = UIImage(data: image)
+            _defaultRestaurantImage.isHidden = true
+        } else {
+            _restaurantImageView.image = nil
+            _defaultRestaurantImage.isHidden = false
+        }
     }
     
     private func _setupCell() {
@@ -80,8 +94,6 @@ final class FavoriteCell: UITableViewCell {
         _backgroundView.addSubview(_priceScaleLabel)
         _priceScaleLabel.anchor(top: _backgroundView.topAnchor, leading: nil, bottom: nil, trailing: _backgroundView.trailingAnchor,
                                 padding: .init(top: 5, left: 15, bottom: 0, right: 12))
-        
-        _priceScaleLabel.text = "$"
     }
     
     private func _configureTitleAndSubtitle() {
@@ -98,9 +110,6 @@ final class FavoriteCell: UITableViewCell {
                               padding: .init(top: 4, left: 0, bottom: 0, right: 12))
         
         _titleLabel.numberOfLines = 2
-        
-        _titleLabel.text = "Pizzaria Maximinus"
-        _subtitleLabel.text = "Test"
     }
     
     private func _configureFavoriteButton() {
@@ -129,7 +138,9 @@ final class FavoriteCell: UITableViewCell {
         stackView.anchor(top: nil, leading: _titleLabel.leadingAnchor, bottom: _restaurantImageView.bottomAnchor, trailing: nil,
                             padding: .init(top: 0, left: 0, bottom: paddingBottom, right: 0))
         
-        textLabel.text = "test"
+        NSLayoutConstraint.activate([
+            stackView.trailingAnchor.constraint(lessThanOrEqualTo: _heartButton.leadingAnchor)
+        ])
     }
     
     override func layoutSubviews() {

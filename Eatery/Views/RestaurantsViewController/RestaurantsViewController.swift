@@ -54,7 +54,6 @@ final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>,
     
     private func _configureSearchController() {
         let searchController = UISearchController()
-        
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.searchBarStyle = .minimal
@@ -117,7 +116,7 @@ final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>,
     }
     
     private func _setRestaurantAsfavoriteHandler(restaurantId: String) {
-        //viewModel.favoriteRestaurantCommand.execute()
+        viewModel.favoriteRestaurantCommand.execute(restaurantId)
     }
     
     func updateSearchResults(for searchController: UISearchController) {}

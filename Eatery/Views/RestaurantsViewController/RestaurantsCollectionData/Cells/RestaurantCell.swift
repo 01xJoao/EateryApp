@@ -12,7 +12,6 @@ final class RestaurantCell: UICollectionViewCell {
     
     private let _restaurantImageView = UIImageView()
     private let _defaultRestaurantImage = UIImageView(image: UIImage(systemName: "photo.on.rectangle.angled")?.withTintColor(UIColor.Theme.darkGrey, renderingMode: .alwaysOriginal))
-   
     private let _titleLabel = CustomTitleLabel(textAligment: .left, fontSize: 18)
     private let _distanceLabel = CustomBodyLabel(textAligment: .right, fontSize: 12, color: UIColor.Theme.mainGreen)
     private let _distanceImage = UIImageView(image: UIImage(systemName: "figure.walk")?.withTintColor(UIColor.Theme.mainGreen, renderingMode: .alwaysOriginal))
@@ -43,22 +42,13 @@ final class RestaurantCell: UICollectionViewCell {
         _titleLabel.text = restaurant.getName()
         _descriptionLabel.text = restaurant.getCuisines()
         _distanceLabel.text = restaurant.getDistance()
+        _priceScaleLabel.text = restaurant.getPriceScale()
+        _priceScaleLabel.textColor = UIHelper.getColorForPrice(restaurant.getPriceScale())
         _heartImage.image = _setFavoriteImage(restaurant.isFavorite())
         _setRestaurantImage(nil, false)
         
-        _setRestaurantImage(restaurant.getImageWithSize(width: 600, height: 800))
-        _setPriceValue(restaurant.getPriceScale())
+        _setRestaurantImage(restaurant.getThumbnail())
         _setRatingValue(restaurant.getRating())
-    }
-    
-    private func _setPriceValue(_ price: String) {
-        _priceScaleLabel.text = price
-
-        switch price {
-        case "$": _priceScaleLabel.textColor = UIColor.Theme.mainGreen; return
-        case "$$": _priceScaleLabel.textColor = UIColor.Theme.orange; return
-        default: _priceScaleLabel.textColor = UIColor.Theme.red; return
-        }
     }
     
     private func _setRatingValue(_ rating: String?) {
@@ -195,11 +185,7 @@ final class RestaurantCell: UICollectionViewCell {
         
         ImageCache.shared.getImage(from: imageUrl, completed: { [weak self] (image, cachedKey) in
             DispatchQueue.main.async {
-                guard let self = self else { return }
-                
-                guard let image = image, let cachedKey = cachedKey, self._imageCacheKey == cachedKey else {
-                    return
-                }
+                guard let self = self, let image = image, let cachedKey = cachedKey, self._imageCacheKey == cachedKey else { return }
                 
                 self._setRestaurantImage(image, true)
             }

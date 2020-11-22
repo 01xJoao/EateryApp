@@ -40,6 +40,16 @@ class ImageCache {
         }).resume()
     }
     
+    func getImageData(from urlString: String) -> Data? {
+        let cacheKey = NSString(string: urlString)
+        
+        if let image = _getImageWith(key: cacheKey) {
+            return image.jpegData(compressionQuality: 1.0)
+        }
+        
+        return nil
+    }
+    
     
     private func _getImageWith(key: NSString) -> UIImage? {
         return _cache.object(forKey: key)

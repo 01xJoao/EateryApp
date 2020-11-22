@@ -8,21 +8,30 @@
 import UIKit
 
 final class FavoritesDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
-    private var _favoriteList = [Favorite]()
+    private var _tableView: UITableView?
     
-    init(_ tableView: UITableView, _ favorites: [Favorite]) {
+    var favoriteList = [Favorite]() {
+        didSet {
+            DispatchQueue.main.async { [weak self] in
+                self?._tableView?.reloadData()
+            }
+        }
+    }
+    
+    init(_ tableView: UITableView) {
+        _tableView = tableView
         tableView.register(FavoriteCell.self, forCellReuseIdentifier: FavoriteCell.reuseId)
         tableView.separatorStyle = .none
-        _favoriteList.append(contentsOf: favorites)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(indexPath)
+        print(indexPath.row)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: FavoriteCell.reuseId, for: indexPath) as! FavoriteCell
-        cell.configure(with: _favoriteList[indexPath.row])
+        cell.selectionStyle = .none
+        cell.configure(with: favoriteList[indexPath.row])
         return cell
     }
     
@@ -31,10 +40,18 @@ final class FavoritesDataSource: NSObject, UITableViewDataSource, UITableViewDel
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return _favoriteList.count
+        return favoriteList.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         168
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        16
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        UIView()
     }
 }

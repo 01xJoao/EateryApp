@@ -46,11 +46,9 @@ struct Restaurant: Hashable {
         return "3 km"
     }
     
-    func getImageWithSize(width: Int, height: Int) -> String {
-        let image = _restaurant.thumb.replacingOccurrences(of: "=200%", with: "=\(String(width))%")
-                                     .replacingOccurrences(of: "A200%", with: "A\(String(height))%")
-                                     .replacingOccurrences(of: "C200%", with: "C\(String(width))%")
-                                     .replacingOccurrences(of: "200&", with: "\(String(height))&")
+    func getThumbnail() -> String {
+        let image = _restaurant.thumb.replacingOccurrences(of: "=200%", with: "=600%").replacingOccurrences(of: "A200%", with: "A800%")
+                                     .replacingOccurrences(of: "C200%", with: "C600%").replacingOccurrences(of: "200&", with: "800&")
         
         return image
     }
@@ -63,7 +61,19 @@ struct Restaurant: Hashable {
         _isFavorite
     }
     
-    mutating func setFavorite() {
+    mutating func tuggleFavorite() {
         _isFavorite = !_isFavorite
+    }
+    
+    func getLocation() -> (lat: String, long: String) {
+        (lat: _restaurant.location.latitude, long: _restaurant.location.longitude)
+    }
+    
+    func getTiming() -> String {
+        let timing = _restaurant.timings.split(separator: "(", maxSplits: 1, omittingEmptySubsequences: true).first
+        
+        guard let timeSafe = timing else { return ""}
+        
+        return String(timeSafe)
     }
 }

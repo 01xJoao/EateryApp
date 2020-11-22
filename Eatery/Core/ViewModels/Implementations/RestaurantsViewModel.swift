@@ -9,6 +9,7 @@ import Foundation
 
 final class RestaurantsViewModel: ViewModelBase {
     private let _restaurantWebService: RestaurantWebService
+    private let _restaurantDatabaseService: RestaurantDatabaseService
     private var _locationService: LocationService
 
     private var _userLocation = (lat: "", long: "")
@@ -21,8 +22,9 @@ final class RestaurantsViewModel: ViewModelBase {
     private(set) lazy var fetchMoreRestaurantsCommand = Command(_fetchRestaurants, canExecute: _canExecute)
     private(set) lazy var favoriteRestaurantCommand = WpCommand(_favoriteRestaurant)
     
-    init(restaurantWebService: RestaurantWebService, locationService: LocationService) {
+    init(restaurantWebService: RestaurantWebService, locationService: LocationService, restaurantDatabaseService: RestaurantDatabaseService) {
         _restaurantWebService = restaurantWebService
+        _restaurantDatabaseService = restaurantDatabaseService
         _locationService = locationService
     }
     
@@ -129,10 +131,34 @@ final class RestaurantsViewModel: ViewModelBase {
         }
         
         guard let safeIndex = index else { return }
-
-        restaurantList.data.value[safeIndex].setFavorite()
         
-        //save or delete restaurant from favorites
+        restaurantList.data.value[safeIndex].tuggleFavorite()
+        
+        let restaurant = restaurantList.data.value[safeIndex]
+        
+        if restaurant.isFavorite() {
+            _saveRestaurantInDatabase(restaurant)
+        } else {
+            _restaurantDatabaseService.removeFavorite(restaurant.getId())
+        }
+    }
+    
+    private func _saveRestaurantInDatabase(_ restaurant: Restaurant) {
+        let restaurantImageData = ImageCache.shared.getImageData(from: restaurant.getThumbnail())
+        
+        let restaurantDBO = RestaurantDBObject(
+            id: restaurant.getId(),
+            name: restaurant.getName(),
+            cousine: restaurant.getCuisines(),
+            priceRange: restaurant.getPriceScale(),
+            rating: restaurant.getRating() ?? "",
+            lat: restaurant.getLocation().lat,
+            long: restaurant.getLocation().long,
+            timings: restaurant.getTiming(),
+            image: restaurantImageData
+        )
+        
+        _restaurantDatabaseService.saveFavorite(restaurantDBO)
     }
     
     private func _canExecute() -> Bool {

@@ -9,7 +9,7 @@ import UIKit
 
 final class FavoritesViewController: BaseViewController<FavoritesViewModel> {
     private let _tableView = UITableView()
-    private lazy var _tableDataSourceProvider = FavoritesDataSource(_tableView, [Favorite()])
+    private lazy var _tableDataSourceProvider = FavoritesDataSource(_tableView)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +25,10 @@ final class FavoritesViewController: BaseViewController<FavoritesViewModel> {
     }
     
     private func _setData() {
-        
+        viewModel.favoriteList.data.addObserver(observer: "favorites") { [weak self] in
+            guard let self = self else { return }
+            self._tableDataSourceProvider.favoriteList = self.viewModel.favoriteList.data.value
+        }
     }
     
     private func _configureTableView() {
