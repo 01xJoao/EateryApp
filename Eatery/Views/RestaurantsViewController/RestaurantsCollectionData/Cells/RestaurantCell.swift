@@ -58,8 +58,8 @@ final class RestaurantCell: UICollectionViewCell {
             return
         }
         
-        _ratingBackgroundView.isHidden = false
         _ratingLabel.text = rating
+        _ratingBackgroundView.isHidden = false
     }
     
     private func _setupCell() {
@@ -199,12 +199,12 @@ final class RestaurantCell: UICollectionViewCell {
     override func setNeedsLayout() {
         super.setNeedsLayout()
         
-        guard let imageHeightConstraint = _imageHeightConstraint else { return }
-        
-        let newSize = self.bounds.height * 0.77
-        
-        if(imageHeightConstraint.constant != newSize) {
-            imageHeightConstraint.constant = newSize
+        if let imageHeightConstraint = _imageHeightConstraint {
+            let newSize = self.bounds.height * 0.77
+            
+            if(imageHeightConstraint.constant != newSize) {
+                imageHeightConstraint.constant = newSize
+            }
         }
     }
     

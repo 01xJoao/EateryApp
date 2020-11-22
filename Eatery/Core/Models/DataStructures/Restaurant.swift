@@ -11,8 +11,9 @@ struct Restaurant: Hashable {
     private let _restaurant: RestaurantObject
     private var _isFavorite = false
 
-    init(_ restaurant: RestaurantObject) {
+    init(_ restaurant: RestaurantObject, isFavorite: Bool = false) {
         _restaurant = restaurant
+        _isFavorite = isFavorite
     }
     
     func getId() -> String {
@@ -63,6 +64,10 @@ struct Restaurant: Hashable {
     
     mutating func tuggleFavorite() {
         _isFavorite = !_isFavorite
+    }
+    
+    mutating func setFavorite(_ isFavorite: Bool) {
+        _isFavorite = isFavorite
     }
     
     func getLocation() -> (lat: String, long: String) {

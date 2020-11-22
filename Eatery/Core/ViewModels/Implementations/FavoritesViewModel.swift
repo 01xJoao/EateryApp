@@ -36,9 +36,9 @@ final class FavoritesViewModel: ViewModelBase {
             $0.getId() == restaurantId
         }
         
-        guard let safeIndex = index else { return }
-        
-        favoriteList.remove(at: safeIndex)
-        _restaurantDatabaseService.removeFavorite(restaurantId)
+        if let safeIndex = index {
+            favoriteList.remove(at: safeIndex)
+            _restaurantDatabaseService.removeFavorite(restaurantId)
+        }
     }
 }

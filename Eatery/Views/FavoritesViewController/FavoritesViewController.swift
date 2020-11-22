@@ -29,6 +29,7 @@ final class FavoritesViewController: BaseViewController<FavoritesViewModel> {
     private func _setData() {
         viewModel.favoriteList.data.addObserver(observer: "favorites") { [weak self] in
             guard let self = self else { return }
+            
             self._updateBackgroundImage()
             self._tableDataSourceProvider.favoriteList = self.viewModel.favoriteList.data.value
         }

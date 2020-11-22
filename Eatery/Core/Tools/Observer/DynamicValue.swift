@@ -40,19 +40,19 @@ final class DynamicValue<T> {
 final class DynamicValueList<T> {
     private(set) var data: DynamicValue<[T]> = DynamicValue([])
     
-    func add(_ object: T){
+    func add(_ object: T) {
         data.value.append(object)
     }
     
-    func addAll(_ object: [T]){
+    func addAll(_ object: [T]) {
         data.value.append(contentsOf: object)
     }
     
-    func remove(at: Int){
+    func remove(at: Int) {
         data.value.remove(at: at)
     }
     
-    func removeAll(){
+    func removeAll() {
         data.value.removeAll()
     }
 }

@@ -14,6 +14,7 @@ final class RestaurantsViewModel: ViewModelBase {
 
     private var _userLocation = (lat: "", long: "")
     private(set) var restaurantList = DynamicValueList<Restaurant>()
+    private var _favoriteRestaurants = [String]()
     
     private var _restaurantStartCount = 1
     private let _numberOfRestaurantsPerCall = 20
@@ -29,7 +30,12 @@ final class RestaurantsViewModel: ViewModelBase {
     }
     
     override func initialize() {
+        _getFavoriteRestaurants()
         _getUserLocation()
+    }
+    
+    override func appearing() {
+        _getFavoriteRestaurants()
     }
     
     private func _getUserLocation() {
@@ -107,7 +113,7 @@ final class RestaurantsViewModel: ViewModelBase {
         _increaseRestaurantStartCount(with: restaurants.resultsShown)
         
         let newRestaurantList = restaurants.restaurants.map { val -> Restaurant in
-            Restaurant(val.restaurant)
+            Restaurant(val.restaurant, isFavorite: _favoriteRestaurants.contains(val.restaurant.id))
         }
         
         restaurantList.addAll(newRestaurantList)
@@ -159,6 +165,26 @@ final class RestaurantsViewModel: ViewModelBase {
         )
         
         _restaurantDatabaseService.saveFavorite(restaurantDBO)
+    }
+    
+    private func _getFavoriteRestaurants() {
+        _favoriteRestaurants = _restaurantDatabaseService.getFavorites().map { $0.id }
+        _updateRestaurantListWithFavorites()
+    }
+    
+    private func _updateRestaurantListWithFavorites() {
+        guard !restaurantList.data.value.isEmpty else { return }
+        
+        var restaurants = restaurantList.data.value
+        
+        restaurantList.removeAll()
+        
+        for index in 0..<restaurants.count {
+            let isFavorite = _favoriteRestaurants.contains(restaurants[index].getId())
+            restaurants[index].setFavorite(isFavorite)
+        }
+        
+        restaurantList.addAll(restaurants)
     }
     
     private func _canExecute() -> Bool {
