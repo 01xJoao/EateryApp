@@ -10,10 +10,12 @@ import Foundation
 struct Restaurant: Hashable {
     private let _restaurant: RestaurantObject
     private var _isFavorite = false
+    private var _distance = ""
 
-    init(_ restaurant: RestaurantObject, isFavorite: Bool = false) {
+    init(_ restaurant: RestaurantObject, isFavorite: Bool = false, distance: String) {
         _restaurant = restaurant
         _isFavorite = isFavorite
+        _distance = distance
     }
     
     func getId() -> String {
@@ -44,7 +46,7 @@ struct Restaurant: Hashable {
     }
     
     func getDistance() -> String {
-        return "3 km"
+        return _distance
     }
     
     func getThumbnail() -> String {

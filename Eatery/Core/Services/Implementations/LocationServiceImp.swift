@@ -10,6 +10,7 @@ import CoreLocation
 final class LocationServiceImp: NSObject, LocationService, CLLocationManagerDelegate {    
     private var _locationManager: CLLocationManager = CLLocationManager()
     private let _currentLocation : DynamicValue<(String, String)?> = DynamicValue<(String, String)?>((lat: "", long: ""))
+    private var _location: CLLocation?
     
     override init() {
         super.init()
@@ -30,13 +31,9 @@ final class LocationServiceImp: NSObject, LocationService, CLLocationManagerDele
     internal func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         
-        _currentLocation.value = (lat: String(location.coordinate.latitude), long: String(location.coordinate.longitude))
+        _location = location
         
-//        let currentlocation = CLLocation(latitude: location!.coordinate.latitude, longitude: location!.coordinate.longitude)
-//        _fetchCityAndCountry(from: currentlocation) { [weak self] city, country, error in
-//            guard let self = self, let city = city, let country = country else { return }
-//            self._currentLocation.value = "\(city), \(country)"
-//        }
+        _currentLocation.value = (lat: String(location.coordinate.latitude), long: String(location.coordinate.longitude))
     }
     
     internal func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
@@ -46,13 +43,7 @@ final class LocationServiceImp: NSObject, LocationService, CLLocationManagerDele
             _currentLocation.value = nil
         }
     }
-//
-//    private func _fetchCityAndCountry(from location: CLLocation, completion: @escaping (_ city: String?, _ country:  String?, _ error: Error?) -> ()) {
-//        CLGeocoder().reverseGeocodeLocation(location) { placemarks, error in
-//            completion(placemarks?.first?.locality, placemarks?.first?.country, error)
-//        }
-//    }
-//
+
     internal func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("error location manager")
     }
@@ -72,5 +63,14 @@ final class LocationServiceImp: NSObject, LocationService, CLLocationManagerDele
         }
         
         return false
+    }
+    
+    func getDistanceFrom(restaurantLocation: (lat: String, long: String)) -> Int? {
+        guard let location = _location, !restaurantLocation.lat.isEmpty, !restaurantLocation.long.isEmpty else { return nil }
+        
+        let distance = location.distance(from: CLLocation(latitude: CLLocationDegrees(Double(restaurantLocation.lat)!),
+                                                          longitude:  CLLocationDegrees(Double(restaurantLocation.long)!)))
+        
+        return Int(distance)
     }
 }

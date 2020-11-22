@@ -39,8 +39,6 @@ final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>,
             guard let self = self else { return }
             guard !self.viewModel.isSearching else { return }
             
-            print(self.viewModel.restaurantList.data.value.count)
-            
             DispatchQueue.main.async {
                 self._backgroundImage.isHidden = !self.viewModel.restaurantList.data.value.isEmpty
                 self._collectionDataSourceProvider.updateData(on: self.viewModel.restaurantList.data.value, isSearching: false)

@@ -22,3 +22,13 @@ struct UIHelper {
         }
     }
 }
+
+struct Helper {
+    static func getDistanceInMetrics(_ distance: Int) -> String {
+        if(distance < 1000) {
+            return "\(distance) m"
+        } else {
+            return "\(distance/1000) km"
+        }
+    }
+}

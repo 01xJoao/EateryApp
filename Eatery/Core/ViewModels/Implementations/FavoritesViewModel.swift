@@ -9,13 +9,15 @@ import Foundation
 
 final class FavoritesViewModel: ViewModelBase {
     private let _restaurantDatabaseService: RestaurantDatabaseService
+    private let _locationSerivce: LocationService
     
     private(set) var favoriteList = DynamicValueList<Favorite>()
     
     private(set) lazy var unfavoriteRestaurantCommand = WpCommand(_unfavoriteRestaurant)
     
-    init(restaurantDatabaseService: RestaurantDatabaseService) {
+    init(restaurantDatabaseService: RestaurantDatabaseService, locationSerivce: LocationService) {
         _restaurantDatabaseService = restaurantDatabaseService
+        _locationSerivce = locationSerivce
     }
     
     override func appearing() {
@@ -26,10 +28,23 @@ final class FavoritesViewModel: ViewModelBase {
         favoriteList.removeAll()
         
         let favoritesDBO = _restaurantDatabaseService.getFavorites()
-        let favoriteRestaurants = favoritesDBO.map { Favorite($0) }
+        let favoriteRestaurants = favoritesDBO.map { restaurant -> Favorite in
+            let distance = _getRestaurantDistance((lat: restaurant.lat, long: restaurant.long))
+            
+            return Favorite(restaurant, distance: distance)
+        }
         
         favoriteList.addAll(favoriteRestaurants)
     }
+    
+    private func _getRestaurantDistance(_ location: (lat: String, long: String)) -> String {
+        let distance = _locationSerivce.getDistanceFrom(restaurantLocation: location)
+        
+        guard let realDistance = distance else { return "" }
+        
+        return Helper.getDistanceInMetrics(realDistance)
+    }
+    
     
     private func _unfavoriteRestaurant(restaurantId: String) {
         let index = favoriteList.data.value.firstIndex {

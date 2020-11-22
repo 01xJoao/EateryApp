@@ -9,9 +9,11 @@ import Foundation
 
 struct Favorite {
     private let _restaurant: RestaurantDBObject
+    private let _distance: String
     
-    init(_ restaurant: RestaurantDBObject) {
+    init(_ restaurant: RestaurantDBObject, distance: String) {
         _restaurant = restaurant
+        _distance = distance
     }
     
     func getId() -> String {
@@ -31,7 +33,7 @@ struct Favorite {
     }
     
     func getDistance() -> String {
-        return "3 km"
+        return _distance
     }
     
     func getThumbnail() -> Data? {

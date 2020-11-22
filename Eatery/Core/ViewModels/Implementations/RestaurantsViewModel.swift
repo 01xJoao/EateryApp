@@ -117,8 +117,9 @@ final class RestaurantsViewModel: ViewModelBase {
         
         _increaseRestaurantStartCount(with: restaurants.resultsShown)
         
-        let newRestaurantList = restaurants.restaurants.map { val -> Restaurant in
-            Restaurant(val.restaurant, isFavorite: _favoriteRestaurants.contains(val.restaurant.id))
+        let newRestaurantList = restaurants.restaurants.map { value -> Restaurant in
+            let distance = _getRestaurantDistance(value.restaurant.location)
+            return Restaurant(value.restaurant, isFavorite: _favoriteRestaurants.contains(value.restaurant.id), distance: distance)
         }
         
         restaurantList.addAll(newRestaurantList)
@@ -126,6 +127,14 @@ final class RestaurantsViewModel: ViewModelBase {
         if isSearching {
             _searchRestaurant(search: _search)
         }
+    }
+    
+    private func _getRestaurantDistance(_ location: LocationObject) -> String {
+        let distance = _locationService.getDistanceFrom(restaurantLocation: (lat: location.latitude, long: location.longitude))
+        
+        guard let realDistance = distance else { return "" }
+        
+        return Helper.getDistanceInMetrics(realDistance)
     }
     
     private func _displayReasonForNotAddingRestaurants() {

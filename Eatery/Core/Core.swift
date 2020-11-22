@@ -27,7 +27,7 @@ struct Core {
         DiContainer.register(MainViewModel.self, constructor: { MainViewModel() })
         DiContainer.register(RestaurantsViewModel.self, constructor: { RestaurantsViewModel(restaurantWebService: DiContainer.resolve(),
                                                                 locationService: DiContainer.resolve(), restaurantDatabaseService: DiContainer.resolve()) })
-        DiContainer.register(FavoritesViewModel.self, constructor: { FavoritesViewModel(restaurantDatabaseService: DiContainer.resolve()) })
+        DiContainer.register(FavoritesViewModel.self, constructor: { FavoritesViewModel(restaurantDatabaseService: DiContainer.resolve(), locationSerivce: DiContainer.resolve()) })
     }
     
     private static func _registerViewControllers() {
