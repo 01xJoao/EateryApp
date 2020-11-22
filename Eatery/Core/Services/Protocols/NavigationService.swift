@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol NavigationService where Self:NavigationServiceImp {
+protocol NavigationService {
     func rootViewController() -> RootViewController
     func navigate<TViewModel : ViewModel>(viewModel: TViewModel.Type, arguments: Any?, animated: Bool)
     func navigateModal<TViewModel : ViewModel>(viewModel: TViewModel.Type, arguments: Any?)

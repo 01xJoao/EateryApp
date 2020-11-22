@@ -28,7 +28,7 @@ final class LocationServiceImp: NSObject, LocationService, CLLocationManagerDele
         _locationManager.startMonitoringSignificantLocationChanges()
     }
     
-    internal func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         
         _location = location
@@ -36,7 +36,7 @@ final class LocationServiceImp: NSObject, LocationService, CLLocationManagerDele
         _currentLocation.value = (lat: String(location.coordinate.latitude), long: String(location.coordinate.longitude))
     }
     
-    internal func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if(status == CLAuthorizationStatus.authorizedWhenInUse) {
             _setupLocationManager()
         } else if (status == CLAuthorizationStatus.denied) {
@@ -44,7 +44,7 @@ final class LocationServiceImp: NSObject, LocationService, CLLocationManagerDele
         }
     }
 
-    internal func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("error location manager")
     }
     

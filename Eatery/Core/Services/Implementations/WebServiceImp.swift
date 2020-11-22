@@ -36,10 +36,6 @@ final class WebServiceImp: WebService {
                 return
             }
             
-            if let httpResponse = response as? HTTPURLResponse {
-                print("API status: \(httpResponse.statusCode)")
-            }
-            
             guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else  {
                 completion(.failure(WebServiceError.requestError))
                 return

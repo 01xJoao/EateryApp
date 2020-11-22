@@ -10,6 +10,8 @@ import UIKit
 final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>, UISearchBarDelegate {
     private var _collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
+    private let _filterSegmentControl = UISegmentedControl(items: ["Distance", "Rating", "Price"])
+
     private lazy var _collectionDataSourceProvider = RestaurantsCollectionDataSource(
         collectionView: _collectionView,
         fetchHandler: _fetchMoreRestaurantsHandler,
@@ -29,6 +31,7 @@ final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>,
         _setData()
         _configureFilterButton()
         _configureSearchController()
+        _configureFilter()
         _configureCollectionView()
         _configureActivityIndicator()
         _configureViewBackgroundImage()
@@ -55,11 +58,14 @@ final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>,
     }
     
     private func _configureFilterButton() {
-        let filterButton = UIBarButtonItem(image: UIImage(systemName: "line.horizontal.3.decrease.circle"), style: .done, target: self, action: #selector(_filterAction))
+        let filterButton = UIBarButtonItem(image: UIImage(systemName: "line.horizontal.3.decrease.circle"), style: .done, target: self, action: #selector(_showFilterAction))
         self.navigationItem.rightBarButtonItem = filterButton
     }
     
-    @objc private func _filterAction() {}
+    @objc private func _showFilterAction() {
+        guard let isToolbarHidden = self.navigationController?.isToolbarHidden else { return }
+        self.navigationController?.setToolbarHidden(!isToolbarHidden, animated: true)
+    }
     
     private func _configureSearchController() {
         let searchController = UISearchController()
@@ -81,6 +87,23 @@ final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>,
             NSAttributedString.init(string: "Search", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
 
         self.navigationItem.searchController = searchController
+    }
+    
+    private func _configureFilter() {
+        _filterSegmentControl.selectedSegmentIndex = 0
+        _filterSegmentControl.addTarget(self, action: #selector(_filterChanged), for: .valueChanged)
+        
+        self.toolbarItems = [ UIBarButtonItem.init(customView: _filterSegmentControl) ]
+    }
+    
+    @objc private func _filterChanged() {
+        guard !viewModel.isBusy.value else {
+            _filterSegmentControl.selectedSegmentIndex = viewModel.restaurantFilter.index
+            return
+        }
+        
+        let filterSelected = _filterSegmentControl.selectedSegmentIndex
+        viewModel.changeFilterCommand.execute(filterSelected)
     }
     
     private func _configureCollectionView() {

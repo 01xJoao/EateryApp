@@ -22,11 +22,13 @@ final class RestaurantsViewModel: ViewModelBase {
     private(set) var restaurantList = DynamicValueList<Restaurant>()
     private(set) var searchRestaurantList = DynamicValueList<Restaurant>()
     private(set) var isSearching = false
+    private(set) var restaurantFilter = RestaurantFilter.distance
     
-    private(set) lazy var fetchMoreRestaurantsCommand = Command(_fetchRestaurants, canExecute: _canExecute)
+    private(set) lazy var fetchMoreRestaurantsCommand = Command({ self._fetchRestaurants()}, canExecute: _canExecute)
     private(set) lazy var favoriteRestaurantCommand = WpCommand(_favoriteRestaurant)
     private(set) lazy var seachRestaurantCommand = WpCommand(_searchRestaurant)
     private(set) lazy var cancelSearchRestaurantCommand = Command(_cancelSearch)
+    private(set) lazy var changeFilterCommand = WpCommand(_filterRestaurants)
     
     init(restaurantWebService: RestaurantWebService, locationService: LocationService, restaurantDatabaseService: RestaurantDatabaseService) {
         _restaurantWebService = restaurantWebService
@@ -73,14 +75,18 @@ final class RestaurantsViewModel: ViewModelBase {
     
     private func _getRestaurantsIn(location: (lat: String, long: String)) {
         _userLocation = location
-        _restaurantStartCount = 1
-        _canFetchMoreRestaurants = true
+        _clearRestaurantCount()
         restaurantList.removeAll()
         
         _fetchRestaurants()
     }
     
-    private func _fetchRestaurants() {
+    private func _clearRestaurantCount() {
+        _restaurantStartCount = 1
+        _canFetchMoreRestaurants = true
+    }
+    
+    private func _fetchRestaurants(clearList: Bool = false) {
         guard _canFetchMoreRestaurants else { return }
         
         self.isBusy.value = true
@@ -90,7 +96,7 @@ final class RestaurantsViewModel: ViewModelBase {
             "count": String(_numberOfRestaurantsPerCall),
             "lat": _userLocation.lat,
             "lon": _userLocation.long,
-            "sort": "real_distance"
+            "sort": restaurantFilter.rawValue
         ]
         
         _restaurantWebService.getRestaurants(query: query) { [weak self] (result: Result<RestaurantListObject?, WebServiceError>) in
@@ -99,7 +105,7 @@ final class RestaurantsViewModel: ViewModelBase {
             switch result {
             case .success(let restaurantList):
                 guard let restaurantList = restaurantList else { return }
-                self._addRestaurantsToList(restaurantList)
+                self._addRestaurantsToList(restaurantList, clearList)
             case .failure( let error):
                 print("Display error: \(error)")
             }
@@ -108,7 +114,7 @@ final class RestaurantsViewModel: ViewModelBase {
         }
     }
     
-    private func _addRestaurantsToList(_ restaurants: RestaurantListObject) {
+    private func _addRestaurantsToList(_ restaurants: RestaurantListObject, _ clearList: Bool) {
         guard restaurants.resultsShown > 0 else {
             _canFetchMoreRestaurants = false
             _displayReasonForNotAddingRestaurants()
@@ -122,7 +128,11 @@ final class RestaurantsViewModel: ViewModelBase {
             return Restaurant(value.restaurant, isFavorite: _favoriteRestaurants.contains(value.restaurant.id), distance: distance)
         }
         
-        restaurantList.addAll(newRestaurantList)
+        if clearList {
+            restaurantList.removeAllAndAdd(object: newRestaurantList)
+        } else {
+            restaurantList.addAll(newRestaurantList)
+        }
         
         if isSearching {
             _searchRestaurant(search: _search)
@@ -204,7 +214,7 @@ final class RestaurantsViewModel: ViewModelBase {
             restaurants[index].setFavorite(isFavorite)
         }
         
-        restaurantList.changeListFor(object: restaurants)
+        restaurantList.removeAllAndAdd(object: restaurants)
         
         if isSearching {
             _searchRestaurant(search: _search)
@@ -216,7 +226,7 @@ final class RestaurantsViewModel: ViewModelBase {
         isSearching = true
         
         guard !search.isEmpty else {
-            searchRestaurantList.changeListFor(object: restaurantList.data.value)
+            searchRestaurantList.removeAllAndAdd(object: restaurantList.data.value)
             return
         }
         
@@ -224,7 +234,7 @@ final class RestaurantsViewModel: ViewModelBase {
             $0.containsSearch(search)
         }
         
-        searchRestaurantList.changeListFor(object: searchRestaurants)
+        searchRestaurantList.removeAllAndAdd(object: searchRestaurants)
     }
     
     private func _cancelSearch() {
@@ -234,8 +244,15 @@ final class RestaurantsViewModel: ViewModelBase {
         restaurantList.data.notify()
     }
     
+    private func _filterRestaurants(filter: Int) {
+        restaurantFilter = RestaurantFilter.allCases[filter]
+        _clearRestaurantCount()
+        _fetchRestaurants(clearList: true)
+    }
+    
     private func _canExecute() -> Bool {
         return !self.isBusy.value
     }
 }
+
 

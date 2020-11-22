@@ -13,10 +13,18 @@ enum WebServiceError: String, Error {
     case dataError = "Data received from the server is invalid. Please try again."
 }
 
-enum FilterType : String {
-    case Chrome = "CIPhotoEffectChrome"
-    case Fade = "CIPhotoEffectFade"
-    case Noir = "CIPhotoEffectNoir"
-    case Process = "CIPhotoEffectProcess"
-    case Transfer =  "CIPhotoEffectTransfer"
+enum ImageFilterType: String {
+    case chrome = "CIPhotoEffectChrome"
+    case fade = "CIPhotoEffectFade"
+    case noir = "CIPhotoEffectNoir"
+    case process = "CIPhotoEffectProcess"
+    case transfer =  "CIPhotoEffectTransfer"
+}
+
+enum RestaurantFilter: String, CaseIterable {
+    case distance = "real_distance"
+    case rating = "rating"
+    case cost = "cost"
+    
+    static let allValues = [distance, rating, cost]
 }

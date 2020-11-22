@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol ViewModel where Self: ViewModelBase {
+protocol ViewModel {
     func prepare(arguments: Any)
     func initialize()
     func appearing()

@@ -56,7 +56,7 @@ final class DynamicValueList<T> {
         data.value.removeAll()
     }
     
-    func changeListFor(object: [T]) {
+    func removeAllAndAdd(object: [T]) {
         data.value = object
     }
 }

@@ -94,7 +94,7 @@ class TopAlignedCollectionViewFlowLayout: UICollectionViewFlowLayout {
 }
 
 extension UIImage {
-    func addFilter(_ filter: FilterType) -> UIImage {
+    func addFilter(_ filter: ImageFilterType) -> UIImage {
         let filter = CIFilter(name: filter.rawValue)
         
         let ciInput = CIImage(image: self)

@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol RestaurantDatabaseService where Self:RestaurantDatabaseServiceImp {
+protocol RestaurantDatabaseService {
     func getFavorites() -> [RestaurantDBObject]
     func saveFavorite(_ restaurant: RestaurantDBObject)
     func removeFavorite(_ resturantId: String)

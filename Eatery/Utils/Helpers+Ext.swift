@@ -13,6 +13,12 @@ extension Collection {
     }
 }
 
+extension CaseIterable where Self: Equatable {
+    var index: Self.AllCases.Index {
+        return Self.allCases.firstIndex { self == $0 }!
+    }
+}
+
 struct UIHelper {
     static func getColorForPrice(_ price: String) -> UIColor {
         switch price {

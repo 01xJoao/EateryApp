@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol WebService where Self:WebServiceImp {
+protocol WebService {
     func getRequest<T: Codable>(path: String, query: [String: String?], completion: @escaping CompletionWebHandler<T>)
 }
