@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>, UISearchResultsUpdating {
+final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>, UISearchBarDelegate {
     private var _collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
     private lazy var _collectionDataSourceProvider = RestaurantsCollectionDataSource(
@@ -37,10 +37,21 @@ final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>,
     private func _setData() {
         viewModel.restaurantList.data.addObserver(observer: "restaurants") { [weak self] in
             guard let self = self else { return }
+            guard !self.viewModel.isSearching else { return }
+            
+            print(self.viewModel.restaurantList.data.value.count)
             
             DispatchQueue.main.async {
                 self._backgroundImage.isHidden = !self.viewModel.restaurantList.data.value.isEmpty
-                self._collectionDataSourceProvider.updateData(on: self.viewModel.restaurantList.data.value)
+                self._collectionDataSourceProvider.updateData(on: self.viewModel.restaurantList.data.value, isSearching: false)
+            }
+        }
+        
+        viewModel.searchRestaurantList.data.addObserver(observer: "searchRestaurants") { [weak self] in
+            guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                self._collectionDataSourceProvider.updateData(on: self.viewModel.searchRestaurantList.data.value, isSearching: true)
             }
         }
     }
@@ -54,7 +65,7 @@ final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>,
     
     private func _configureSearchController() {
         let searchController = UISearchController()
-        searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.searchBarStyle = .minimal
         searchController.searchBar.searchTextField.backgroundColor = UIColor.Theme.black.withAlphaComponent(0.35)
@@ -119,7 +130,13 @@ final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>,
         viewModel.favoriteRestaurantCommand.execute(restaurantId)
     }
     
-    func updateSearchResults(for searchController: UISearchController) {}
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        viewModel.seachRestaurantCommand.execute(searchText)
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        viewModel.cancelSearchRestaurantCommand.execute()
+    }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)

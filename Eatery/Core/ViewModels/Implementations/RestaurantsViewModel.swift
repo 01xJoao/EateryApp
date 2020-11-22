@@ -11,17 +11,22 @@ final class RestaurantsViewModel: ViewModelBase {
     private let _restaurantWebService: RestaurantWebService
     private let _restaurantDatabaseService: RestaurantDatabaseService
     private var _locationService: LocationService
-
-    private var _userLocation = (lat: "", long: "")
-    private(set) var restaurantList = DynamicValueList<Restaurant>()
-    private var _favoriteRestaurants = [String]()
     
     private var _restaurantStartCount = 1
     private let _numberOfRestaurantsPerCall = 20
     private var _canFetchMoreRestaurants = true
+    private var _userLocation = (lat: "", long: "")
+    private var _favoriteRestaurants = [String]()
+    private var _search = ""
+    
+    private(set) var restaurantList = DynamicValueList<Restaurant>()
+    private(set) var searchRestaurantList = DynamicValueList<Restaurant>()
+    private(set) var isSearching = false
     
     private(set) lazy var fetchMoreRestaurantsCommand = Command(_fetchRestaurants, canExecute: _canExecute)
     private(set) lazy var favoriteRestaurantCommand = WpCommand(_favoriteRestaurant)
+    private(set) lazy var seachRestaurantCommand = WpCommand(_searchRestaurant)
+    private(set) lazy var cancelSearchRestaurantCommand = Command(_cancelSearch)
     
     init(restaurantWebService: RestaurantWebService, locationService: LocationService, restaurantDatabaseService: RestaurantDatabaseService) {
         _restaurantWebService = restaurantWebService
@@ -117,6 +122,10 @@ final class RestaurantsViewModel: ViewModelBase {
         }
         
         restaurantList.addAll(newRestaurantList)
+        
+        if isSearching {
+            _searchRestaurant(search: _search)
+        }
     }
     
     private func _displayReasonForNotAddingRestaurants() {
@@ -146,6 +155,10 @@ final class RestaurantsViewModel: ViewModelBase {
             _saveRestaurantInDatabase(restaurant)
         } else {
             _restaurantDatabaseService.removeFavorite(restaurant.getId())
+        }
+        
+        if isSearching {
+            _searchRestaurant(search: _search)
         }
     }
     
@@ -177,14 +190,39 @@ final class RestaurantsViewModel: ViewModelBase {
         
         var restaurants = restaurantList.data.value
         
-        restaurantList.removeAll()
-        
         for index in 0..<restaurants.count {
             let isFavorite = _favoriteRestaurants.contains(restaurants[index].getId())
             restaurants[index].setFavorite(isFavorite)
         }
         
-        restaurantList.addAll(restaurants)
+        restaurantList.changeListFor(object: restaurants)
+        
+        if isSearching {
+            _searchRestaurant(search: _search)
+        }
+    }
+    
+    private func _searchRestaurant(search: String) {
+        _search = search
+        isSearching = true
+        
+        guard !search.isEmpty else {
+            searchRestaurantList.changeListFor(object: restaurantList.data.value)
+            return
+        }
+        
+        let searchRestaurants = restaurantList.data.value.filter {
+            $0.containsSearch(search)
+        }
+        
+        searchRestaurantList.changeListFor(object: searchRestaurants)
+    }
+    
+    private func _cancelSearch() {
+        _search = ""
+        isSearching = false
+        searchRestaurantList.removeAll()
+        restaurantList.data.notify()
     }
     
     private func _canExecute() -> Bool {
