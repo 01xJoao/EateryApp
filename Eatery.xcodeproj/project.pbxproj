@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		9D119B192569E6EA00245EA0 /* Helpers+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D119B182569E6EA00245EA0 /* Helpers+Ext.swift */; };
+		9D1861BE256B227F00DC9710 /* I18N.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1861BD256B227F00DC9710 /* I18N.swift */; };
+		9D1861C5256B26C200DC9710 /* pt.json in Resources */ = {isa = PBXBuildFile; fileRef = 9D1861C4256B26C200DC9710 /* pt.json */; };
+		9D1861CA256B26D900DC9710 /* en.json in Resources */ = {isa = PBXBuildFile; fileRef = 9D1861C9256B26D900DC9710 /* en.json */; };
 		9D213C172564352E0097CD58 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D213C162564352E0097CD58 /* AppDelegate.swift */; };
 		9D213C192564352E0097CD58 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D213C182564352E0097CD58 /* SceneDelegate.swift */; };
 		9D213C212564352E0097CD58 /* Eatery.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9D213C1F2564352E0097CD58 /* Eatery.xcdatamodeld */; };
@@ -85,6 +88,9 @@
 
 /* Begin PBXFileReference section */
 		9D119B182569E6EA00245EA0 /* Helpers+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helpers+Ext.swift"; sourceTree = "<group>"; };
+		9D1861BD256B227F00DC9710 /* I18N.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = I18N.swift; sourceTree = "<group>"; };
+		9D1861C4256B26C200DC9710 /* pt.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = pt.json; sourceTree = "<group>"; };
+		9D1861C9256B26D900DC9710 /* en.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = en.json; sourceTree = "<group>"; };
 		9D213C132564352E0097CD58 /* Eatery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eatery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D213C162564352E0097CD58 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9D213C182564352E0097CD58 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -174,6 +180,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9D1861BC256B225A00DC9710 /* I18N */ = {
+			isa = PBXGroup;
+			children = (
+				9D1861BD256B227F00DC9710 /* I18N.swift */,
+			);
+			path = I18N;
+			sourceTree = "<group>";
+		};
+		9D1861C2256B267500DC9710 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				9D1861C3256B268300DC9710 /* Languages */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		9D1861C3256B268300DC9710 /* Languages */ = {
+			isa = PBXGroup;
+			children = (
+				9D1861C4256B26C200DC9710 /* pt.json */,
+				9D1861C9256B26D900DC9710 /* en.json */,
+			);
+			path = Languages;
+			sourceTree = "<group>";
+		};
 		9D213C0A2564352E0097CD58 = {
 			isa = PBXGroup;
 			children = (
@@ -197,6 +228,7 @@
 		9D213C152564352E0097CD58 /* Eatery */ = {
 			isa = PBXGroup;
 			children = (
+				9D1861C2256B267500DC9710 /* Resources */,
 				9D213C27256435320097CD58 /* Info.plist */,
 				9D213C22256435320097CD58 /* Assets.xcassets */,
 				9D213C1F2564352E0097CD58 /* Eatery.xcdatamodeld */,
@@ -373,6 +405,7 @@
 		9D80315525644F0E00234AE0 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				9D1861BC256B225A00DC9710 /* I18N */,
 				9D95E2582569615100E77840 /* Command */,
 				9D7CFE6525645D4200A801BC /* Helpers */,
 				9D7CFE5F25645C9C00A801BC /* Observer */,
@@ -658,7 +691,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D1861C5256B26C200DC9710 /* pt.json in Resources */,
 				9D213C26256435320097CD58 /* LaunchScreen.storyboard in Resources */,
+				9D1861CA256B26D900DC9710 /* en.json in Resources */,
 				9D213C23256435320097CD58 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -737,6 +772,7 @@
 				9D803161256451C100234AE0 /* NavigationService.swift in Sources */,
 				9D95E28725699D4700E77840 /* RestaurantDatabaseServiceImp.swift in Sources */,
 				9DC73B76256484E3003E3547 /* Restaurant.swift in Sources */,
+				9D1861BE256B227F00DC9710 /* I18N.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -15,7 +15,7 @@ final class FavoritesViewController: BaseViewController<FavoritesViewModel> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Favorites"
+        self.title = viewModel.favoritesTitle
         
         _setupView()
     }

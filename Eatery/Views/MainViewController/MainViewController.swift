@@ -18,8 +18,8 @@ final class MainViewController: BaseTabBarController<MainViewModel> {
     
     private func _createTabBarController() {
         self.viewControllers = [
-            _createViewTab(RestaurantsViewModel.self, "Restaurants",  UIImage(systemName: "leaf")!, selectedColor: _greenColor),
-            _createViewTab(FavoritesViewModel.self, "Favorites", UIImage(systemName: "heart.circle")!, selectedColor: UIColor.Theme.red)
+            _createViewTab(RestaurantsViewModel.self, viewModel.restaurantsTitle,  UIImage(systemName: "leaf")!, selectedColor: _greenColor),
+            _createViewTab(FavoritesViewModel.self, viewModel.favoritesTitle, UIImage(systemName: "heart.circle")!, selectedColor: UIColor.Theme.red)
         ]
         
         _changeTabBarTitleColors()

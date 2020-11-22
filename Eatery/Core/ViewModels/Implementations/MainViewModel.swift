@@ -7,4 +7,7 @@
 
 import Foundation
 
-final class MainViewModel: ViewModelBase {}
+final class MainViewModel: ViewModelBase {
+    let restaurantsTitle = I18N.localize(key: "restaurants")
+    let favoritesTitle = I18N.localize(key: "favorites")
+}

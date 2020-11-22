@@ -252,4 +252,10 @@ final class RestaurantsViewModel: ViewModelBase {
     private func _canExecute() -> Bool {
         return !self.isBusy.value
     }
+    
+    let titleLabel = I18N.localize(key: "restaurants")
+    let searchLabel = I18N.localize(key: "restaurants_search")
+    let distanceLabel = I18N.localize(key: "restaurants_distance")
+    let ratingLabel = I18N.localize(key: "restaurants_rating")
+    let priceLabel = I18N.localize(key: "restaurants_price")
 }

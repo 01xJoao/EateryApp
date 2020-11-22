@@ -56,4 +56,6 @@ final class FavoritesViewModel: ViewModelBase {
             _restaurantDatabaseService.removeFavorite(restaurantId)
         }
     }
+    
+    let favoritesTitle = I18N.localize(key: "favorites")
 }

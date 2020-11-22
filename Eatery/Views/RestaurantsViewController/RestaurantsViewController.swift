@@ -10,20 +10,19 @@ import UIKit
 final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>, UISearchBarDelegate {
     private var _collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
-    private let _filterSegmentControl = UISegmentedControl(items: ["Distance", "Rating", "Price"])
-
     private lazy var _collectionDataSourceProvider = RestaurantsCollectionDataSource(
         collectionView: _collectionView,
         fetchHandler: _fetchMoreRestaurantsHandler,
         favoriteHandler: _setRestaurantAsfavoriteHandler
     )
     
+    private lazy var _filterSegmentControl = UISegmentedControl(items: [viewModel.distanceLabel, viewModel.ratingLabel, viewModel.priceLabel])
     private lazy var _activityIndicatorView = UIWidgets.setActivityIndicatoryInto(view: self.view)
     private let _backgroundImage = UIImageView(image: UIImage(systemName: "leaf")?.withTintColor(UIColor.Theme.lightGrey, renderingMode: .alwaysOriginal))
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Restaurants"
+        self.title = viewModel.titleLabel
         _setupView()
     }
     
@@ -84,7 +83,7 @@ final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>,
             NSAttributedString.init(string: "", attributes: [NSAttributedString.Key.foregroundColor: UIColor.Theme.white])
 
         searchController.searchBar.searchTextField.attributedPlaceholder =
-            NSAttributedString.init(string: "Search", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+            NSAttributedString.init(string: viewModel.searchLabel, attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
 
         self.navigationItem.searchController = searchController
     }
