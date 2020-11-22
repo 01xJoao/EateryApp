@@ -14,15 +14,15 @@ final class RestaurantsCollectionDataSource: UICollectionViewDiffableDataSource<
     private var _lastScrollPosition:CGFloat = 0
     
     private var _restaurantList = [Restaurant]()
-    private let _fetchRestaurantsHandler: Command
+    private var _fetchRestaurantsHandler: CompletionHandler
     
-    init(collectionView: UICollectionView, fetchHandler: Command) {
+    init(collectionView: UICollectionView, fetchHandler: @escaping CompletionHandler, favoriteHandler: @escaping CompletionHandlerWithParam<String>) {
         collectionView.register(RestaurantCell.self, forCellWithReuseIdentifier: RestaurantCell.reuseId)
         _fetchRestaurantsHandler = fetchHandler
 
         super.init(collectionView: collectionView) { (collectionView, indexPath, rastaurant) -> UICollectionViewCell? in
             let restaurantCell = collectionView.dequeueReusableCell(withReuseIdentifier: RestaurantCell.reuseId, for: indexPath) as! RestaurantCell
-            restaurantCell.configure(with: rastaurant)
+            restaurantCell.configure(with: rastaurant, favoriteHandler: favoriteHandler)
             
             return restaurantCell
         }
@@ -83,7 +83,7 @@ extension RestaurantsCollectionDataSource: UICollectionViewDelegateFlowLayout, U
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if _shouldFetchMoreRestaurants(scrollView) {
-            _fetchRestaurantsHandler.executeIf()
+            _fetchRestaurantsHandler()
         }
         
         _lastScrollPosition = scrollView.contentOffset.y

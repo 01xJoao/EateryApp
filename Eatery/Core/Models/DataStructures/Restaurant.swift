@@ -9,12 +9,10 @@ import Foundation
 
 struct Restaurant: Hashable {
     private let _restaurant: RestaurantObject
-    //private let _bigSizeImage: Bool
     private var _isFavorite = false
 
     init(_ restaurant: RestaurantObject) {
         _restaurant = restaurant
-        //_bigSizeImage = Bool.random()
     }
     
     func getId() -> String {
@@ -44,10 +42,6 @@ struct Restaurant: Hashable {
         }
     }
     
-//    func isImageBig() -> Bool {
-//        _bigSizeImage
-//    }
-    
     func getDistance() -> String {
         return "3 km"
     }
@@ -69,7 +63,7 @@ struct Restaurant: Hashable {
         _isFavorite
     }
     
-    mutating func setFavorite(_ favorite: Bool) {
-        _isFavorite = favorite
+    mutating func setFavorite() {
+        _isFavorite = !_isFavorite
     }
 }

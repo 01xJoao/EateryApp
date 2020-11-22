@@ -26,13 +26,20 @@ final class RestaurantCell: UICollectionViewCell {
     
     private var _imageHeightConstraint:NSLayoutConstraint?
     private var _imageCacheKey:NSString = ""
+    
+    private var _restaurantId: String = ""
+    private var _isFavorite:Bool = false
+    private var _favoriteHandler: CompletionHandlerWithParam<String>?
         
     override init(frame: CGRect) {
         super.init(frame: .zero)
         _setupCell()
     }
     
-    public func configure(with restaurant: Restaurant) {
+    public func configure(with restaurant: Restaurant, favoriteHandler: @escaping CompletionHandlerWithParam<String>) {
+        _restaurantId = restaurant.getId()
+        _favoriteHandler = favoriteHandler
+        
         _titleLabel.text = restaurant.getName()
         _descriptionLabel.text = restaurant.getCuisines()
         _distanceLabel.text = restaurant.getDistance()
@@ -134,11 +141,19 @@ final class RestaurantCell: UICollectionViewCell {
         
         _heartButton.anchor(top: nil, leading: nil, bottom: _restaurantImageView.bottomAnchor, trailing: _restaurantImageView.trailingAnchor)
         _heartButton.withSize(CGSize(width: 47, height: 47))
+        _heartButton.addTarget(self, action: #selector(_heartButtonTouched), for: .touchUpInside)
         _heartButton.addSubview(_heartImage)
 
         _heartImage.fillSuperview(padding: .init(top: 10, left: 8, bottom: 10, right: 8))
         _heartImage.layer.shadowOpacity = 0.4
         _heartImage.layer.shadowOffset = CGSize(width: 1, height: 1)
+    }
+    
+    @objc private func _heartButtonTouched() {
+        guard let handler = _favoriteHandler else { return }
+        
+        _heartImage.image = _setFavoriteImage(!_isFavorite)
+        handler(_restaurantId)
     }
     
     private func _configurePriceScaleLabel() {
@@ -169,7 +184,8 @@ final class RestaurantCell: UICollectionViewCell {
     }
     
     private func _setFavoriteImage(_ isFavorite: Bool) -> UIImage? {
-        UIImage(systemName: isFavorite ? "heart.fill" : "heart" )?.withTintColor(UIColor.Theme.red, renderingMode: .alwaysOriginal)
+        _isFavorite = isFavorite
+        return UIImage(systemName: isFavorite ? "heart.fill" : "heart" )?.withTintColor(UIColor.Theme.red, renderingMode: .alwaysOriginal)
     }
     
     private func _setRestaurantImage(_ imageUrl: String) {

@@ -19,6 +19,7 @@ final class RestaurantsViewModel: ViewModelBase {
     private var _canFetchMoreRestaurants = true
     
     private(set) lazy var fetchMoreRestaurantsCommand = Command(_fetchRestaurants, canExecute: _canExecute)
+    private(set) lazy var favoriteRestaurantCommand = WpCommand(_favoriteRestaurant)
     
     init(restaurantWebService: RestaurantWebService, locationService: LocationService) {
         _restaurantWebService = restaurantWebService
@@ -122,7 +123,20 @@ final class RestaurantsViewModel: ViewModelBase {
         _restaurantStartCount += restaurantCount
     }
     
+    private func _favoriteRestaurant(_ restaurantId: String) {
+        let index = restaurantList.data.value.firstIndex {
+            $0.getId() == restaurantId
+        }
+        
+        guard let safeIndex = index else { return }
+
+        restaurantList.data.value[safeIndex].setFavorite()
+        
+        //save or delete restaurant from favorites
+    }
+    
     private func _canExecute() -> Bool {
         return !self.isBusy.value
     }
 }
+

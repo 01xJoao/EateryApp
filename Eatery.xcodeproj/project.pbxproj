@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9D119B192569E6EA00245EA0 /* Helpers+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D119B182569E6EA00245EA0 /* Helpers+Ext.swift */; };
 		9D213C172564352E0097CD58 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D213C162564352E0097CD58 /* AppDelegate.swift */; };
 		9D213C192564352E0097CD58 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D213C182564352E0097CD58 /* SceneDelegate.swift */; };
 		9D213C212564352E0097CD58 /* Eatery.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9D213C1F2564352E0097CD58 /* Eatery.xcdatamodeld */; };
@@ -83,6 +84,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9D119B182569E6EA00245EA0 /* Helpers+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helpers+Ext.swift"; sourceTree = "<group>"; };
 		9D213C132564352E0097CD58 /* Eatery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eatery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D213C162564352E0097CD58 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9D213C182564352E0097CD58 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -318,6 +320,7 @@
 				9D80311E2564463300234AE0 /* CustomUI+Ext.swift */,
 				9DED64822565BA4B00D2C11B /* Enums.swift */,
 				9D50BDCC2566BF6400C29E9C /* ImageCache.swift */,
+				9D119B182569E6EA00245EA0 /* Helpers+Ext.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -708,6 +711,7 @@
 				9D7CFE4B25645BA200A801BC /* RestaurantsViewModel.swift in Sources */,
 				9D80312725644AD600234AE0 /* BaseViewController.swift in Sources */,
 				9D80313225644BA200234AE0 /* ViewModel.swift in Sources */,
+				9D119B192569E6EA00245EA0 /* Helpers+Ext.swift in Sources */,
 				9D213C192564352E0097CD58 /* SceneDelegate.swift in Sources */,
 				9DED64792565B84900D2C11B /* WebService.swift in Sources */,
 				9D803158256450D100234AE0 /* DiContainer.swift in Sources */,
