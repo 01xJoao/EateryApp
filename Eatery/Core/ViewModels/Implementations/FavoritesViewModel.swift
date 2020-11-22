@@ -12,6 +12,8 @@ final class FavoritesViewModel: ViewModelBase {
     
     private(set) var favoriteList = DynamicValueList<Favorite>()
     
+    private(set) lazy var unfavoriteRestaurantCommand = WpCommand(_unfavoriteRestaurant)
+    
     init(restaurantDatabaseService: RestaurantDatabaseService) {
         _restaurantDatabaseService = restaurantDatabaseService
     }
@@ -27,5 +29,16 @@ final class FavoritesViewModel: ViewModelBase {
         let favoriteRestaurants = favoritesDBO.map { Favorite($0) }
         
         favoriteList.addAll(favoriteRestaurants)
+    }
+    
+    private func _unfavoriteRestaurant(restaurantId: String) {
+        let index = favoriteList.data.value.firstIndex {
+            $0.getId() == restaurantId
+        }
+        
+        guard let safeIndex = index else { return }
+        
+        favoriteList.remove(at: safeIndex)
+        _restaurantDatabaseService.removeFavorite(restaurantId)
     }
 }

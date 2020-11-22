@@ -34,7 +34,7 @@ struct Restaurant: Hashable {
         }
     }
     
-    func getPriceScale() -> String {
+    func getPriceRange() -> String {
         switch _restaurant.priceRange {
         case 0, 1: return "$"
         case 2: return "$$"

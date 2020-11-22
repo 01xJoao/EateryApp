@@ -26,7 +26,7 @@ struct Favorite {
         _restaurant.rating
     }
     
-    func getPriceScale() -> String {
+    func getPriceRange() -> String {
         _restaurant.priceRange
     }
     

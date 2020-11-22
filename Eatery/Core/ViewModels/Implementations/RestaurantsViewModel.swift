@@ -150,7 +150,7 @@ final class RestaurantsViewModel: ViewModelBase {
             id: restaurant.getId(),
             name: restaurant.getName(),
             cousine: restaurant.getCuisines(),
-            priceRange: restaurant.getPriceScale(),
+            priceRange: restaurant.getPriceRange(),
             rating: restaurant.getRating() ?? "",
             lat: restaurant.getLocation().lat,
             long: restaurant.getLocation().long,

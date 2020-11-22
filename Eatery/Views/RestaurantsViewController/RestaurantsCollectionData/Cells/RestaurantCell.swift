@@ -19,7 +19,7 @@ final class RestaurantCell: UICollectionViewCell {
     
     private let _heartButton = UIButton()
     private let _heartImage = UIImageView()
-    private let _priceScaleLabel = CustomBodyLabel(textAligment: .left, fontSize: 17, color: UIColor.Theme.mainGreen, weight: .semibold)
+    private let _priceRangeLabel = CustomBodyLabel(textAligment: .left, fontSize: 17, color: UIColor.Theme.mainGreen, weight: .semibold)
     private let _ratingLabel = CustomBodyLabel(textAligment: .center, fontSize: 16, color: UIColor.Theme.white, weight: .semibold)
     private let _ratingBackgroundView =  UIView(backgroundColor: UIColor.Theme.mainGreen.withAlphaComponent(0.9))
     
@@ -42,8 +42,8 @@ final class RestaurantCell: UICollectionViewCell {
         _titleLabel.text = restaurant.getName()
         _descriptionLabel.text = restaurant.getCuisines()
         _distanceLabel.text = restaurant.getDistance()
-        _priceScaleLabel.text = restaurant.getPriceScale()
-        _priceScaleLabel.textColor = UIHelper.getColorForPrice(restaurant.getPriceScale())
+        _priceRangeLabel.text = restaurant.getPriceRange()
+        _priceRangeLabel.textColor = UIHelper.getColorForPrice(restaurant.getPriceRange())
         _heartImage.image = _setFavoriteImage(restaurant.isFavorite())
         _setRestaurantImage(nil, false)
         
@@ -68,7 +68,7 @@ final class RestaurantCell: UICollectionViewCell {
         _configureDistanceView()
         _configureDescriptionLabel()
         _configureFavoriteButton()
-        _configurePriceScaleLabel()
+        _configurePriceRangeLabel()
         _configureRatingView()
     }
     
@@ -142,19 +142,18 @@ final class RestaurantCell: UICollectionViewCell {
     @objc private func _heartButtonTouched() {
         guard let handler = _favoriteHandler else { return }
         
-        _heartImage.image = _setFavoriteImage(!_isFavorite)
         handler(_restaurantId)
     }
     
-    private func _configurePriceScaleLabel() {
-        self.contentView.addSubview(_priceScaleLabel)
+    private func _configurePriceRangeLabel() {
+        self.contentView.addSubview(_priceRangeLabel)
         
-        _priceScaleLabel.anchor(top: _restaurantImageView.topAnchor, leading: _restaurantImageView.leadingAnchor, bottom: nil, trailing: nil,
+        _priceRangeLabel.anchor(top: _restaurantImageView.topAnchor, leading: _restaurantImageView.leadingAnchor, bottom: nil, trailing: nil,
                                  padding: .init(top: 8, left: 8, bottom: 0, right: 0))
         
-        _priceScaleLabel.layer.shadowOpacity = 0.4
-        _priceScaleLabel.layer.shadowOffset = CGSize(width: 0.5, height: 0.5)
-        _priceScaleLabel.layer.shadowRadius = 0.5
+        _priceRangeLabel.layer.shadowOpacity = 0.4
+        _priceRangeLabel.layer.shadowOffset = CGSize(width: 0.5, height: 0.5)
+        _priceRangeLabel.layer.shadowRadius = 0.5
     }
     
     private func _configureRatingView() {

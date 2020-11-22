@@ -9,6 +9,7 @@ import UIKit
 
 final class FavoritesDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     private var _tableView: UITableView?
+    private var _favoriteHandler: CompletionHandlerWithParam<String>
     
     var favoriteList = [Favorite]() {
         didSet {
@@ -18,8 +19,9 @@ final class FavoritesDataSource: NSObject, UITableViewDataSource, UITableViewDel
         }
     }
     
-    init(_ tableView: UITableView) {
+    init(_ tableView: UITableView, unfavoriteHandler: @escaping CompletionHandlerWithParam<String>) {
         _tableView = tableView
+        _favoriteHandler = unfavoriteHandler
         tableView.register(FavoriteCell.self, forCellReuseIdentifier: FavoriteCell.reuseId)
         tableView.separatorStyle = .none
     }
@@ -31,7 +33,7 @@ final class FavoritesDataSource: NSObject, UITableViewDataSource, UITableViewDel
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: FavoriteCell.reuseId, for: indexPath) as! FavoriteCell
         cell.selectionStyle = .none
-        cell.configure(with: favoriteList[indexPath.row])
+        cell.configure(with: favoriteList[indexPath.row], favoriteHandler: _favoriteHandler)
         return cell
     }
     

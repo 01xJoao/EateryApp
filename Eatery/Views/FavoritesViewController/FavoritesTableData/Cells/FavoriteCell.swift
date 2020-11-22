@@ -20,7 +20,7 @@ final class FavoriteCell: UITableViewCell {
     
     private let _titleLabel = CustomTitleLabel(textAligment: .left, fontSize: 18)
     private let _subtitleLabel = CustomBodyLabel(textAligment: .left, fontSize: 15, color: UIColor.Theme.darkGrey)
-    private let _priceScaleLabel = CustomBodyLabel(textAligment: .right, fontSize: 19, color: UIColor.Theme.mainGreen, weight: .semibold)
+    private let _priceRangeLabel = CustomBodyLabel(textAligment: .right, fontSize: 19, color: UIColor.Theme.mainGreen, weight: .semibold)
     
     private let _distanceLabel = CustomBodyLabel(textAligment: .left, fontSize: 14, color: UIColor.Theme.darkGrey)
     private let _distanceImage = UIImageView(image: UIImage(systemName: "figure.walk")?.withTintColor(UIColor.Theme.darkGrey, renderingMode: .alwaysOriginal))
@@ -28,17 +28,22 @@ final class FavoriteCell: UITableViewCell {
     private let _timeLabel = CustomBodyLabel(textAligment: .left, fontSize: 14, color: UIColor.Theme.darkGrey)
     private let _timeImage = UIImageView(image: UIImage(systemName: "clock")?.withTintColor(UIColor.Theme.darkGrey, renderingMode: .alwaysOriginal))
     
-    
     private var _restaurantImageWidthConstraint:NSLayoutConstraint!
+    
+    private var _restaurantId = ""
+    private var _favoriteHandler: CompletionHandlerWithParam<String>?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         _setupCell()
     }
     
-    public func configure(with favorite: Favorite) {
-        _priceScaleLabel.text = favorite.getPriceScale()
-        _priceScaleLabel.textColor = UIHelper.getColorForPrice(favorite.getPriceScale())
+    public func configure(with favorite: Favorite, favoriteHandler: @escaping CompletionHandlerWithParam<String>) {
+        _favoriteHandler = favoriteHandler
+        _restaurantId = favorite.getId()
+            
+        _priceRangeLabel.text = favorite.getPriceRange()
+        _priceRangeLabel.textColor = UIHelper.getColorForPrice(favorite.getPriceRange())
         
         _titleLabel.text = favorite.getName()
         _subtitleLabel.text =  favorite.getCuisines()
@@ -91,8 +96,8 @@ final class FavoriteCell: UITableViewCell {
     }
     
     private func _configurePriceLabel() {
-        _backgroundView.addSubview(_priceScaleLabel)
-        _priceScaleLabel.anchor(top: _backgroundView.topAnchor, leading: nil, bottom: nil, trailing: _backgroundView.trailingAnchor,
+        _backgroundView.addSubview(_priceRangeLabel)
+        _priceRangeLabel.anchor(top: _backgroundView.topAnchor, leading: nil, bottom: nil, trailing: _backgroundView.trailingAnchor,
                                 padding: .init(top: 5, left: 15, bottom: 0, right: 12))
     }
     
@@ -102,7 +107,7 @@ final class FavoriteCell: UITableViewCell {
                            padding: .init(top: 0, left: 12, bottom: 0, right: 0))
         
         NSLayoutConstraint.activate([
-            _titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: _priceScaleLabel.leadingAnchor)
+            _titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: _priceRangeLabel.leadingAnchor)
         ])
         
         self.contentView.addSubview(_subtitleLabel)
@@ -116,12 +121,20 @@ final class FavoriteCell: UITableViewCell {
         _backgroundView.addSubview(_heartButton)
         
         _heartButton.anchor(top: nil, leading: nil, bottom: _backgroundView.bottomAnchor, trailing: _backgroundView.trailingAnchor,
-                            padding: .init(top: 0, left: 0, bottom: 5, right: 7))
+                            padding: .init(top: 0, left: 0, bottom: 5, right: 3))
         
         _heartButton.withSize(CGSize(width: 47, height: 47))
         
         _heartButton.addSubview(_heartImage)
-        _heartImage.fillSuperview(padding: .init(top: 12, left: 10, bottom: 8, right: 6))
+        _heartImage.fillSuperview(padding: .init(top: 13, left: 11, bottom: 9, right: 7))
+        
+        _heartButton.addTarget(self, action: #selector(_heartButtonTouched), for: .touchUpInside)
+    }
+    
+    @objc private func _heartButtonTouched() {
+        guard let favoriteHandler = _favoriteHandler else { return }
+        
+        favoriteHandler(_restaurantId)
     }
     
     private func _configureInfoView(_ textLabel: UILabel, _ imageLabel: UIImageView, _ paddingBottom: CGFloat) {
@@ -134,13 +147,12 @@ final class FavoriteCell: UITableViewCell {
             spacing: 6
         )
         
-        self.contentView.addSubview(stackView)
-        stackView.anchor(top: nil, leading: _titleLabel.leadingAnchor, bottom: _restaurantImageView.bottomAnchor, trailing: nil,
-                            padding: .init(top: 0, left: 0, bottom: paddingBottom, right: 0))
+        textLabel.numberOfLines = 2
+        textLabel.lineBreakMode = .byTruncatingTail
         
-        NSLayoutConstraint.activate([
-            stackView.trailingAnchor.constraint(lessThanOrEqualTo: _heartButton.leadingAnchor)
-        ])
+        self.contentView.addSubview(stackView)
+        stackView.anchor(top: nil, leading: _titleLabel.leadingAnchor, bottom: _restaurantImageView.bottomAnchor, trailing: _heartButton.leadingAnchor,
+                            padding: .init(top: 0, left: 0, bottom: paddingBottom, right: 2))
     }
     
     override func layoutSubviews() {
