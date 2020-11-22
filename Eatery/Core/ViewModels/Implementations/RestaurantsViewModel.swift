@@ -56,7 +56,9 @@ final class RestaurantsViewModel: ViewModelBase {
             guard let self = self else { return }
             
             guard let location = locationNotification.value else {
-                print("Please enable app location services in settings.")
+                if !self._locationService.checkUserAuthorization() {
+                    print("Please enable app location services in settings.")
+                }
                 return
             }
             
