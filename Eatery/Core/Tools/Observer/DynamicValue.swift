@@ -8,7 +8,7 @@
 import Foundation
 
 final class DynamicValue<T> {
-    var value : T { didSet { notify() } }
+    var value: T { didSet { notify() } }
     private var _observers = [String: CompletionHandler]()
     
     init(_ value: T) {

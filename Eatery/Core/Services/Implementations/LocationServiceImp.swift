@@ -9,7 +9,7 @@ import CoreLocation
 
 final class LocationServiceImp: NSObject, LocationService, CLLocationManagerDelegate {    
     private var _locationManager: CLLocationManager = CLLocationManager()
-    private let _currentLocation : DynamicValue<(String, String)?> = DynamicValue<(String, String)?>(nil)
+    private let _currentLocation: DynamicValue<(String, String)?> = DynamicValue<(String, String)?>(nil)
     private var _location: CLLocation?
     
     override init() {

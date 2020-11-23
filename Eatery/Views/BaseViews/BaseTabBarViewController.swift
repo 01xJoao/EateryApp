@@ -16,7 +16,7 @@ class BaseTabBarController<TViewModel: ViewModel>: UITabBarController {
     }
     
     private func _instantiateViewModel() {
-        let vm : TViewModel = DiContainer.resolve()
+        let vm: TViewModel = DiContainer.resolve()
         viewModel = vm
         viewModel.initialize()
     }

@@ -17,7 +17,7 @@ final class WebServiceImp: WebService {
         _URLSession = URLSession(configuration: configuration)
     }
 
-    func getRequest<T>(path: String, query: [String: String?], completion: @escaping CompletionWebHandler<T>) where T : Decodable, T : Encodable {
+    func getRequest<T>(path: String, query: [String: String?], completion: @escaping CompletionWebHandler<T>) where T: Decodable, T: Encodable {
         let requestComponent = _createURLComponent(path, query)
         
         guard let composedURL = requestComponent.url else {

@@ -18,14 +18,12 @@ final class MainViewController: BaseTabBarController<MainViewModel> {
     
     private func _createTabBarController() {
         self.viewControllers = [
-            _createViewTab(RestaurantsViewModel.self, viewModel.restaurantsTitle,  UIImage(systemName: "leaf")!, selectedColor: _greenColor),
-            _createViewTab(FavoritesViewModel.self, viewModel.favoritesTitle, UIImage(systemName: "heart.circle")!, selectedColor: UIColor.Theme.red)
+            _createViewTab(RestaurantsViewModel.self, viewModel.restaurantsTitle,  UIImage(systemName: "leaf")!, _greenColor),
+            _createViewTab(FavoritesViewModel.self, viewModel.favoritesTitle, UIImage(systemName: "heart.circle")!, _redColor)
         ]
-        
-        _changeTabBarTitleColors()
     }
     
-    private func _createViewTab<TViewModel : ViewModel>(_ vm : TViewModel.Type, _ title : String, _ image : UIImage, selectedColor: UIColor) -> UIViewController{
+    private func _createViewTab<TViewModel: ViewModel>(_ vm: TViewModel.Type, _ title: String, _ image: UIImage, _ selectedColor: UIColor) -> UIViewController{
         let viewController: BaseViewController<TViewModel> = DiContainer.resolveViewController(name: String(describing: vm.self))
         
         viewController.tabBarItem = UITabBarItem(title: title, image: image.withTintColor(UIColor.Theme.darkGrey, renderingMode: .alwaysOriginal),
@@ -34,6 +32,11 @@ final class MainViewController: BaseTabBarController<MainViewModel> {
         let navigationController = UINavigationController()
         navigationController.pushViewController(viewController, animated: false)
         return navigationController
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        _changeTabBarTitleColors()
     }
     
     private func _changeTabBarTitleColors() {

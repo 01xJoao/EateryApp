@@ -12,7 +12,7 @@ final class RestaurantDatabaseServiceImp: RestaurantDatabaseService {
     private let _restaurantEntity = "RestaurantData"
     
     private var _managedContext: NSManagedObjectContext!
-    private var _fetchRequest : NSFetchRequest<NSFetchRequestResult> {
+    private var _fetchRequest: NSFetchRequest<NSFetchRequestResult> {
         NSFetchRequest<NSFetchRequestResult>(entityName: _restaurantEntity)
     }
     
