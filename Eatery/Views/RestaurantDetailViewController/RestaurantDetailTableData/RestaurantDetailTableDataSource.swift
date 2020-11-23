@@ -32,6 +32,7 @@ final class RestaurantDetailTableDataSource: NSObject, UITableViewDataSource, UI
         cell.textLabel?.numberOfLines = 0
         cell.textLabel?.lineBreakMode = .byWordWrapping
         cell.textLabel?.textAlignment = .justified
+        cell.textLabel?.font = .systemFont(ofSize: 14)
         
         cell.detailTextLabel?.text = review.getUser()
         cell.detailTextLabel?.textColor = .secondaryLabel

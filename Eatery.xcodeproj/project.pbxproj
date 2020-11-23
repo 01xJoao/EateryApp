@@ -609,10 +609,10 @@
 			children = (
 				9D9AEA97256BDBE90013A9E7 /* Animations */,
 				9D9AEA91256BDB650013A9E7 /* Dialog */,
-				9DED645C2565760700D2C11B /* CustomBodyLabel.swift */,
-				9DED645E2565760700D2C11B /* CustomTitleLabel.swift */,
-				9D50BDD32566DC0C00C29E9C /* CustomCollectionLayout.swift */,
 				9D80311E2564463300234AE0 /* CustomUI+Ext.swift */,
+				9DED645E2565760700D2C11B /* CustomTitleLabel.swift */,
+				9DED645C2565760700D2C11B /* CustomBodyLabel.swift */,
+				9D50BDD32566DC0C00C29E9C /* CustomCollectionLayout.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
