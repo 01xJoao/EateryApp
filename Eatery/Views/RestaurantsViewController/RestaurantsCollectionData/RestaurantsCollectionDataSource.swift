@@ -102,6 +102,10 @@ extension RestaurantsCollectionDataSource: UICollectionViewDelegateFlowLayout, U
         let scrollPosition = scrollView.contentOffset.y
         let scrollSize = scrollView.contentSize.height
         
-        return scrollPosition > _lastScrollPosition && scrollPosition > (scrollSize * 0.6)
+        if (scrollPosition > _lastScrollPosition && scrollPosition > (scrollSize * 0.6)) {
+            return true
+        }
+        
+        return scrollView.contentOffset.y >= scrollView.contentSize.height - scrollView.bounds.size.height
     }
 }
