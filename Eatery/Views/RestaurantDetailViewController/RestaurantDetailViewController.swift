@@ -93,7 +93,6 @@ class RestaurantDetailViewController: BaseViewController<RestaurantDetailViewMod
         let defaultImage = UIImage(systemName: "photo.on.rectangle.angled")!.withTintColor(UIColor.Theme.darkGrey, renderingMode: .alwaysOriginal)
                     .resizedImage(for: .init(width: 50, height: 40))
         
-        
         if let image = viewModel.favoriteRestaurantImage {
             _restaurantImageView.image = UIImage(data: image)
             self._restaurantImageView.contentMode = .scaleAspectFill

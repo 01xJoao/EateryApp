@@ -61,7 +61,7 @@ final class RestaurantsViewModel: ViewModelBase {
             
             guard let location = locationNotification.value else {
                 if !self._locationService.checkUserAuthorization() {
-                    self._dialogService.showInfo(I18N.localize(key: "dialog_enableAppLocation"), informationType: .bad)
+                    self._dialogService.showInfo(I18N.localize(key: "dialog_enableAppLocation"), informationType: .info)
                 }
                 return
             }
@@ -74,7 +74,7 @@ final class RestaurantsViewModel: ViewModelBase {
     
     private func _requestUserLocation() {
         if !_locationService.requestUserAuthorization() {
-            self._dialogService.showInfo(I18N.localize(key: "dialog_enableDeviceLocation"), informationType: .bad)
+            self._dialogService.showInfo(I18N.localize(key: "dialog_enableDeviceLocation"), informationType: .info)
         }
     }
     
