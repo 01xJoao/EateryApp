@@ -85,6 +85,6 @@ struct Restaurant: Hashable {
     }
     
     func containsSearch(_ value: String) -> Bool {
-        _restaurant.name.contains(value) || _restaurant.cuisines.contains(value)
+        _restaurant.name.lowercased().contains(value) || _restaurant.cuisines.lowercased().contains(value)
     }
 }

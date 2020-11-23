@@ -229,7 +229,7 @@ final class RestaurantsViewModel: ViewModelBase {
     }
     
     private func _searchRestaurant(search: String) {
-        _search = search
+        _search = search.lowercased()
         isSearching = true
         
         guard !search.isEmpty else {
