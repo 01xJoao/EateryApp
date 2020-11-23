@@ -34,7 +34,8 @@ struct Helper {
         if(distance < 1000) {
             return "\(distance) m"
         } else {
-            return "\(distance/1000) km"
+            let distance = String(format: "%.1f", Double(distance)/1000)
+            return "\(distance) km"
         }
     }
 }

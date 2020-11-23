@@ -25,7 +25,7 @@ class CustomBodyLabel: UILabel {
         self.adjustsFontForContentSizeCategory = true
         self.adjustsFontSizeToFitWidth = true
         self.minimumScaleFactor = 0.8
-        self.lineBreakMode = .byWordWrapping
+        self.lineBreakMode = .byTruncatingTail
         self.translatesAutoresizingMaskIntoConstraints = false
     }
     

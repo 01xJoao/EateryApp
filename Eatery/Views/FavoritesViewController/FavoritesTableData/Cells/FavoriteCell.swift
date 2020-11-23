@@ -147,9 +147,6 @@ final class FavoriteCell: UITableViewCell {
             spacing: 6
         )
         
-        textLabel.numberOfLines = 2
-        textLabel.lineBreakMode = .byTruncatingTail
-        
         self.contentView.addSubview(stackView)
         stackView.anchor(top: nil, leading: _titleLabel.leadingAnchor, bottom: _restaurantImageView.bottomAnchor, trailing: _heartButton.leadingAnchor,
                             padding: .init(top: 0, left: 0, bottom: paddingBottom, right: 2))

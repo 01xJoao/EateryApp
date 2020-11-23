@@ -100,7 +100,7 @@ final class RestaurantCell: UICollectionViewCell {
         self.contentView.addSubview(_titleLabel)
         
         _titleLabel.anchor(top: _restaurantImageView.bottomAnchor, leading: _restaurantImageView.leadingAnchor, bottom: nil, trailing: _restaurantImageView.trailingAnchor,
-                           padding: .init(top: 18, left: 0, bottom: 0, right: 0))
+                           padding: .init(top: 20, left: 0, bottom: 0, right: 0))
     }
     
     private func _configureDistanceView() {

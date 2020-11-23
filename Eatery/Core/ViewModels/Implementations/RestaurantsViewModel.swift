@@ -18,6 +18,7 @@ final class RestaurantsViewModel: ViewModelBase {
     private var _userLocation: (lat: String, long: String)?
     private var _favoriteRestaurants = [String]()
     private var _search = ""
+    private let _searchRadius = "15000"
     
     private(set) var restaurantList = DynamicValueList<Restaurant>()
     private(set) var searchRestaurantList = DynamicValueList<Restaurant>()
@@ -97,6 +98,7 @@ final class RestaurantsViewModel: ViewModelBase {
             "count": String(_numberOfRestaurantsPerCall),
             "lat": userLocation.lat,
             "lon": userLocation.long,
+            "radius": _searchRadius,
             "sort": restaurantFilter.rawValue
         ]
         
