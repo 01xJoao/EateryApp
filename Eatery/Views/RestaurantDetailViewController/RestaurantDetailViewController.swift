@@ -64,7 +64,7 @@ class RestaurantDetailViewController: BaseViewController<RestaurantDetailViewMod
         
         _menuBackgroundView.addSubview(_menuLabel)
         _menuLabel.anchor(top: nil, leading: _menuBackgroundView.leadingAnchor, bottom: _menuBackgroundView.bottomAnchor, trailing: _menuBackgroundView.trailingAnchor,
-                                   padding: .init(top: 0, left: 20, bottom: 2, right: 0))
+                                   padding: .init(top: 0, left: 20, bottom: 8, right: 0))
     }
     
     private func _configureRestaurantImage() {

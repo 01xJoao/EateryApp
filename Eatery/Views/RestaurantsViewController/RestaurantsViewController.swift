@@ -9,6 +9,7 @@ import UIKit
 
 final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>, UISearchBarDelegate {
     private var _collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    private let _refreshControl = UIRefreshControl()
     
     private lazy var _collectionDataSourceProvider = RestaurantsCollectionDataSource(
         collectionView: _collectionView,
@@ -33,7 +34,7 @@ final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>,
         _configureSearchController()
         _configureFilter()
         _configureCollectionView()
-        _configureActivityIndicator()
+        _configureActivityIndicators()
         _configureViewBackgroundImage()
     }
     
@@ -120,6 +121,18 @@ final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>,
         
         _collectionView.anchor(top: self.view.topAnchor, leading: self.view.safeAreaLayoutGuide.leadingAnchor,
                                bottom: self.view.bottomAnchor, trailing: self.view.safeAreaLayoutGuide.trailingAnchor)
+        
+        _configureTableViewRefreshControl()
+    }
+    
+    private func _configureTableViewRefreshControl() {
+        _collectionView.refreshControl = _refreshControl
+        _refreshControl.addTarget(self, action: #selector(_refreshEvents), for: .valueChanged)
+    }
+    
+    @objc private func _refreshEvents(_ sender: AnyObject) {
+        _refreshControl.beginRefreshing()
+        viewModel.fetchMoreRestaurantsCommand.executeIf()
     }
     
     private func _setCollectionViewHorizontalScroll() {
@@ -128,13 +141,25 @@ final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>,
         }
     }
     
-    private func _configureActivityIndicator() {
+    private func _configureActivityIndicators() {
         viewModel.isBusy.addAndNotify(observer: "isBusy") { [weak self] in
             guard let self = self else { return }
             
             DispatchQueue.main.async {
-                self._activityIndicatorView.isHidden = !self.viewModel.isBusy.value
+                if self._refreshControl.isRefreshing {
+                    self._handleRefreshControlIndicator()
+                } else {
+                    self._activityIndicatorView.isHidden = !self.viewModel.isBusy.value
+                }
             }
+        }
+    }
+    
+    private func _handleRefreshControlIndicator() {
+        if self.viewModel.isBusy.value {
+            self._refreshControl.beginRefreshing()
+        } else {
+            self._refreshControl.endRefreshing()
         }
     }
     

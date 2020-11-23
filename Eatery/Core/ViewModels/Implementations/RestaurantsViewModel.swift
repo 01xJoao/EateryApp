@@ -92,9 +92,12 @@ final class RestaurantsViewModel: ViewModelBase {
     }
     
     private func _fetchRestaurants(clearRestaurantList: Bool = false) {
-        guard _canFetchMoreRestaurants, let userLocation = _userLocation else { return }
-        
         self.isBusy.value = true
+        
+        guard _canFetchMoreRestaurants, let userLocation = _userLocation else {
+            self.isBusy.value = false
+            return
+        }
         
         let query = [
             "start": String(_restaurantStartCount),
