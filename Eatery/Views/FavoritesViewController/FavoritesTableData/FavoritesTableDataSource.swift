@@ -9,7 +9,8 @@ import UIKit
 
 final class FavoritesDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     private let _tableView: UITableView
-    private var _favoriteHandler: CompletionHandlerWithParam<String>
+    private let _favoriteHandler: CompletionHandlerWithParam<String>
+    private let _selectHandler: CompletionHandlerWithParam<String>
     
     var favoriteList = [Favorite]() {
         didSet {
@@ -19,15 +20,18 @@ final class FavoritesDataSource: NSObject, UITableViewDataSource, UITableViewDel
         }
     }
     
-    init(_ tableView: UITableView, unfavoriteHandler: @escaping CompletionHandlerWithParam<String>) {
+    init(_ tableView: UITableView, selectHandler: @escaping CompletionHandlerWithParam<String>, unfavoriteHandler: @escaping CompletionHandlerWithParam<String>) {
         _tableView = tableView
+        _selectHandler = selectHandler
         _favoriteHandler = unfavoriteHandler
+        
         tableView.register(FavoriteCell.self, forCellReuseIdentifier: FavoriteCell.reuseId)
         tableView.separatorStyle = .none
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(indexPath.row)
+        let favoriteRestaurant = favoriteList[indexPath.row]
+        _selectHandler(favoriteRestaurant.getId())
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -38,7 +42,7 @@ final class FavoritesDataSource: NSObject, UITableViewDataSource, UITableViewDel
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

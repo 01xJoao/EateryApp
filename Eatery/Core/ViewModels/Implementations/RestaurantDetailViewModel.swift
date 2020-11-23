@@ -12,7 +12,7 @@ final class RestaurantDetailViewModel: ViewModelBase {
     private let _dialogService: DialogService
     
     private(set) var restaurant: Restaurant!
-    
+    private(set) var favoriteRestaurantImage: Data?
     private(set) var reviewList = DynamicValueList<Review>()
     
     init(restaurantWebService: RestaurantWebService, dialogService: DialogService) {
@@ -21,12 +21,18 @@ final class RestaurantDetailViewModel: ViewModelBase {
     }
     
     override func prepare(arguments: Any) {
-        guard let restaurant = arguments as? Restaurant else {
-            _navigateBack()
+        if let restaurant = arguments as? Restaurant {
+            self.restaurant = restaurant
             return
         }
         
-        self.restaurant = restaurant
+        if let favoriteRestaurant = arguments as? Favorite {
+            self.restaurant = Restaurant(favoriteRestaurant)
+            self.favoriteRestaurantImage = favoriteRestaurant.getThumbnail()
+            return
+        }
+        
+        _navigateBack()
     }
     
     override func initialize() {

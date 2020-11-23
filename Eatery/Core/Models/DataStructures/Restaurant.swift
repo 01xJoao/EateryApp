@@ -9,13 +9,21 @@ import Foundation
 
 struct Restaurant: Hashable {
     private let _restaurant: RestaurantObject
-    private var _isFavorite = false
     private var _distance = ""
+    private var _isFavorite = false
 
-    init(_ restaurant: RestaurantObject, isFavorite: Bool = false, distance: String) {
+    init(_ restaurant: RestaurantObject, isFavorite: Bool = false, distance: String = "") {
         _restaurant = restaurant
         _isFavorite = isFavorite
         _distance = distance
+    }
+    
+    init(_ favoriteRestaurant: Favorite) {
+        _restaurant = RestaurantObject(id: favoriteRestaurant.getId(), name: favoriteRestaurant.getName(),
+                                       cuisines: favoriteRestaurant.getCuisines(), thumb: "",
+                                       location: LocationObject(address: "", latitude: "", longitude: ""),
+                                       userRating: UserRatingObject(aggregateRating: AggregateRating.integer(0)),
+                                       priceRange: 0, timings: favoriteRestaurant.getTiming())
     }
     
     func getId() -> String {

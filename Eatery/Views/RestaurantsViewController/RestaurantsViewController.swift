@@ -104,6 +104,7 @@ final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>,
         }
         
         self.navigationController?.setToolbarHidden(true, animated: true)
+        
         let filterSelected = _filterSegmentControl.selectedSegmentIndex
         viewModel.changeFilterCommand.execute(filterSelected)
     }
@@ -131,8 +132,10 @@ final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>,
     }
     
     @objc private func _refreshEvents(_ sender: AnyObject) {
-        _refreshControl.beginRefreshing()
-        viewModel.fetchMoreRestaurantsCommand.executeIf()
+        if !viewModel.isBusy.value {
+            _refreshControl.beginRefreshing()
+            viewModel.fetchMoreRestaurantsCommand.execute()
+        }
     }
     
     private func _setCollectionViewHorizontalScroll() {

@@ -14,6 +14,7 @@ final class FavoritesViewModel: ViewModelBase {
     private(set) var favoriteList = DynamicValueList<Favorite>()
     
     private(set) lazy var unfavoriteRestaurantCommand = WpCommand(_unfavoriteRestaurant)
+    private(set) lazy var navigateToRestaurantCommand = WpCommand(_navigateToRetaurant)
     
     init(restaurantDatabaseService: RestaurantDatabaseService, locationSerivce: LocationService) {
         _restaurantDatabaseService = restaurantDatabaseService
@@ -55,6 +56,11 @@ final class FavoritesViewModel: ViewModelBase {
             favoriteList.remove(at: safeIndex)
             _restaurantDatabaseService.removeFavorite(restaurantId)
         }
+    }
+    
+    private func _navigateToRetaurant(restaurantId: String) {
+        let favoriteRestaurant = favoriteList.data.value.first { $0.getId() == restaurantId }
+        navigationService.navigate(viewModel: RestaurantDetailViewModel.self, arguments: favoriteRestaurant, animated: true)
     }
     
     let favoritesTitle = I18N.localize(key: "favorites")

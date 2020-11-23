@@ -9,8 +9,7 @@ import UIKit
 
 final class FavoritesViewController: BaseViewController<FavoritesViewModel> {
     private let _tableView = UITableView()
-    private lazy var _tableDataSourceProvider = FavoritesDataSource(_tableView, unfavoriteHandler: _unfavoriteHandler)
-    
+    private lazy var _tableDataSourceProvider = FavoritesDataSource(_tableView, selectHandler: _selectRestaurantHandler, unfavoriteHandler: _unfavoriteHandler)
     private let _backgroundImage = UIImageView(image: UIImage(systemName: "leaf")?.withTintColor(UIColor.Theme.lightGrey, renderingMode: .alwaysOriginal))
     
     override func viewDidLoad() {
@@ -64,5 +63,9 @@ final class FavoritesViewController: BaseViewController<FavoritesViewModel> {
             
             self._backgroundImage.isHidden = !self.viewModel.favoriteList.data.value.isEmpty
         }
+    }
+    
+    private func _selectRestaurantHandler(restaurantId: String) {
+        viewModel.navigateToRestaurantCommand.execute(restaurantId)
     }
 }

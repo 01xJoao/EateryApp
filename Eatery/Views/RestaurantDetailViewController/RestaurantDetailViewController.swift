@@ -42,12 +42,14 @@ class RestaurantDetailViewController: BaseViewController<RestaurantDetailViewMod
             guard let self = self else { return }
             
             self._tableDataSourceProvider.reviews = self.viewModel.reviewList.data.value
-            self._shouldShowEmptyLabel(self.viewModel.reviewList.data.value.isEmpty)
+            self._shouldShowEmptyLabel(reviewListIsEmpty: self.viewModel.reviewList.data.value.isEmpty)
         }
     }
     
-    private func _shouldShowEmptyLabel(_ reviewListIsEmpty: Bool) {
-        DispatchQueue.main.async { self._noReviewsLabel.isHidden = !reviewListIsEmpty }
+    private func _shouldShowEmptyLabel(reviewListIsEmpty: Bool) {
+        DispatchQueue.main.async {
+            self._noReviewsLabel.isHidden = !reviewListIsEmpty
+        }
     }
     
     private func _configureCustomNavigationBar() {
@@ -61,8 +63,8 @@ class RestaurantDetailViewController: BaseViewController<RestaurantDetailViewMod
         
         _menuBackgroundView.anchor(top: _navigationBackgroundView.bottomAnchor, leading: self.view.leadingAnchor, bottom: nil, trailing: self.view.trailingAnchor)
         _menuBackgroundView.withHeight(95)
-        
         _menuBackgroundView.addSubview(_menuLabel)
+        
         _menuLabel.anchor(top: nil, leading: _menuBackgroundView.leadingAnchor, bottom: _menuBackgroundView.bottomAnchor, trailing: _menuBackgroundView.trailingAnchor,
                                    padding: .init(top: 0, left: 20, bottom: 8, right: 0))
     }
@@ -91,9 +93,13 @@ class RestaurantDetailViewController: BaseViewController<RestaurantDetailViewMod
         let defaultImage = UIImage(systemName: "photo.on.rectangle.angled")!.withTintColor(UIColor.Theme.darkGrey, renderingMode: .alwaysOriginal)
                     .resizedImage(for: .init(width: 50, height: 40))
         
-        _restaurantImageView.image = defaultImage
         
-        _setRestaurantImage(viewModel.restaurant.getThumbnail())
+        if let image = viewModel.favoriteRestaurantImage {
+            _restaurantImageView.image = UIImage(data: image)
+        } else {
+            _restaurantImageView.image = defaultImage
+            _setRestaurantImage(viewModel.restaurant.getThumbnail())
+        }
     }
     
     private func _setRestaurantImage(_ imageUrl: String) {
