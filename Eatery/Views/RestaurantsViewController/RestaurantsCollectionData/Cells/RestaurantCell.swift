@@ -81,10 +81,9 @@ final class RestaurantCell: UICollectionViewCell {
         backgroundShadow.layer.shadowOpacity = 0.35
         backgroundShadow.layer.shadowRadius = 3
         backgroundShadow.layer.shadowOffset = CGSize(width: 0, height: 0)
-        
         backgroundShadow.addSubview(_restaurantImageView)
-        _restaurantImageView.fillSuperview()
         
+        _restaurantImageView.fillSuperview()
         _restaurantImageView.layer.cornerRadius = backgroundShadow.layer.cornerRadius
         _restaurantImageView.layer.masksToBounds = true
         _restaurantImageView.contentMode = .scaleAspectFill

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9D040A48256BE7F2001207C7 /* RestaurantDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D040A47256BE7F2001207C7 /* RestaurantDetailViewController.swift */; };
 		9D119B192569E6EA00245EA0 /* Helpers+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D119B182569E6EA00245EA0 /* Helpers+Ext.swift */; };
 		9D1861BE256B227F00DC9710 /* I18N.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1861BD256B227F00DC9710 /* I18N.swift */; };
 		9D1861C5256B26C200DC9710 /* pt.json in Resources */ = {isa = PBXBuildFile; fileRef = 9D1861C4256B26C200DC9710 /* pt.json */; };
@@ -93,6 +94,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9D040A47256BE7F2001207C7 /* RestaurantDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailViewController.swift; sourceTree = "<group>"; };
 		9D119B182569E6EA00245EA0 /* Helpers+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helpers+Ext.swift"; sourceTree = "<group>"; };
 		9D1861BD256B227F00DC9710 /* I18N.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = I18N.swift; sourceTree = "<group>"; };
 		9D1861C4256B26C200DC9710 /* pt.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = pt.json; sourceTree = "<group>"; };
@@ -311,6 +313,7 @@
 		9D7CFE702564605700A801BC /* RestaurantDetailViewController */ = {
 			isa = PBXGroup;
 			children = (
+				9D040A47256BE7F2001207C7 /* RestaurantDetailViewController.swift */,
 			);
 			path = RestaurantDetailViewController;
 			sourceTree = "<group>";
@@ -362,7 +365,6 @@
 			isa = PBXGroup;
 			children = (
 				9DC73B6225648378003E3547 /* UIViewHelpers */,
-				9D80311E2564463300234AE0 /* CustomUI+Ext.swift */,
 				9DED64822565BA4B00D2C11B /* EnumTypes.swift */,
 				9D50BDCC2566BF6400C29E9C /* ImageCache.swift */,
 				9D119B182569E6EA00245EA0 /* Helpers+Ext.swift */,
@@ -593,6 +595,7 @@
 				9DED645C2565760700D2C11B /* CustomBodyLabel.swift */,
 				9DED645E2565760700D2C11B /* CustomTitleLabel.swift */,
 				9D50BDD32566DC0C00C29E9C /* CustomCollectionLayout.swift */,
+				9D80311E2564463300234AE0 /* CustomUI+Ext.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -758,6 +761,7 @@
 				9D80314825644D9D00234AE0 /* MainViewController.swift in Sources */,
 				9DED64742565AF3D00D2C11B /* LocationServiceImp.swift in Sources */,
 				9D9AEA80256B3B330013A9E7 /* AppData.swift in Sources */,
+				9D040A48256BE7F2001207C7 /* RestaurantDetailViewController.swift in Sources */,
 				9D80311F2564463300234AE0 /* CustomUI+Ext.swift in Sources */,
 				9DC73B6E256483A4003E3547 /* AspectFitImageView.swift in Sources */,
 				9D803116256443B800234AE0 /* RootViewController.swift in Sources */,

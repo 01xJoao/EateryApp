@@ -8,13 +8,11 @@
 import UIKit
 
 final class NavigationServiceImp: NavigationService {
-    func rootViewController() -> RootViewController {
-        (UIApplication.shared.connectedScenes.first?.delegate as! SceneDelegate).rootViewController
-    }
+    private let rootViewController = { (UIApplication.shared.connectedScenes.first?.delegate as! SceneDelegate).rootViewController }()
     
     func navigate<TViewModel: ViewModel>(viewModel: TViewModel.Type, arguments: Any?, animated: Bool) {
         let viewController: UIViewController = _getViewController(type: viewModel, args: arguments)
-        rootViewController().navigationController?.pushViewController(viewController, animated: animated)
+        rootViewController.navigationController?.pushViewController(viewController, animated: animated)
     }
 
     func navigateAndSetAsContainer<TViewModel: ViewModel>(viewModel: TViewModel.Type) {
@@ -34,14 +32,10 @@ final class NavigationServiceImp: NavigationService {
     }
 
     private func _setNewContainerViewController(_ viewController: UIViewController) {
-        rootViewController().changeViewController(viewController)
+        rootViewController.changeViewController(viewController)
     }
 
     func close(arguments: Any?, animated: Bool) {
-        rootViewController().navigationController?.popViewController(animated: true)
+        rootViewController.navigationController?.popViewController(animated: true)
     }
-    
-    func navigateModal<TViewModel>(viewModel: TViewModel.Type, arguments: Any?) where TViewModel : ViewModel {}
-    
-    func closeModal(arguments: Any?) {}
 }

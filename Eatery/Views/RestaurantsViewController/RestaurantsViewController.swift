@@ -13,7 +13,8 @@ final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>,
     private lazy var _collectionDataSourceProvider = RestaurantsCollectionDataSource(
         collectionView: _collectionView,
         fetchHandler: _fetchMoreRestaurantsHandler,
-        favoriteHandler: _setRestaurantAsfavoriteHandler
+        favoriteHandler: _setRestaurantAsfavoriteHandler,
+        selectHandler: _selectRestaurantHandler
     )
     
     private lazy var _filterSegmentControl = UISegmentedControl(items: [viewModel.distanceLabel, viewModel.ratingLabel, viewModel.priceLabel])
@@ -148,6 +149,10 @@ final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>,
     
     private func _setRestaurantAsfavoriteHandler(restaurantId: String) {
         viewModel.favoriteRestaurantCommand.execute(restaurantId)
+    }
+    
+    private func _selectRestaurantHandler(restaurantId: String) {
+        viewModel.navigateToRestaurantCommand.execute(restaurantId)
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

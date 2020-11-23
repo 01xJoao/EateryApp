@@ -10,6 +10,7 @@ import UIKit
 class BaseViewController<TViewModel: ViewModel>: UIViewController {
     private(set) var viewModel: TViewModel!
     var arguments: Any?
+    var largeTitle: Bool { true }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,7 +20,8 @@ class BaseViewController<TViewModel: ViewModel>: UIViewController {
     
     private func _setViewConfigurations() {
         self.view.backgroundColor = UIColor.Theme.backgroundColor
-        self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationController?.navigationBar.prefersLargeTitles = largeTitle
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     private func _instantiateViewModel() {
@@ -41,5 +43,10 @@ class BaseViewController<TViewModel: ViewModel>: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         viewModel?.disappearing()
+    }
+    
+    override func willMove(toParent parent: UIViewController?) {
+        super.willMove(toParent: parent)
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
 }

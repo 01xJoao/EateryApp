@@ -31,6 +31,7 @@ final class RestaurantsViewModel: ViewModelBase {
     private(set) lazy var seachRestaurantCommand = WpCommand(_searchRestaurant)
     private(set) lazy var cancelSearchRestaurantCommand = Command(_cancelSearch)
     private(set) lazy var changeFilterCommand = WpCommand(_filterRestaurants)
+    private(set) lazy var navigateToRestaurantCommand = WpCommand(_navigateToRetaurant)
     
     init(restaurantWebService: RestaurantWebService, locationService: LocationService, restaurantDatabaseService: RestaurantDatabaseService, dialogService: DialogService) {
         _restaurantWebService = restaurantWebService
@@ -254,6 +255,11 @@ final class RestaurantsViewModel: ViewModelBase {
         restaurantFilter = RestaurantFilterType.allCases[filter]
         _clearRestaurantCount()
         _fetchRestaurants(clearList: true)
+    }
+    
+    private func _navigateToRetaurant(restaurantId: String) {
+        let restaurant = restaurantList.data.value.first { $0.getId() == restaurantId }
+        navigationService.navigate(viewModel: RestaurantDetailViewModel.self, arguments: restaurant, animated: true)
     }
     
     private func _canExecute() -> Bool {

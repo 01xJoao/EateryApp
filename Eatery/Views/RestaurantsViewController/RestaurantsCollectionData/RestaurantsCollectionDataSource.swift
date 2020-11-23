@@ -14,11 +14,15 @@ final class RestaurantsCollectionDataSource: UICollectionViewDiffableDataSource<
     private var _lastScrollPosition:CGFloat = 0
     
     private var _restaurantList = [Restaurant]()
-    private var _fetchRestaurantsHandler: CompletionHandler
+    private let _fetchRestaurantsHandler: CompletionHandler
+    private let _selectHandler: CompletionHandlerWithParam<String>
     
-    init(collectionView: UICollectionView, fetchHandler: @escaping CompletionHandler, favoriteHandler: @escaping CompletionHandlerWithParam<String>) {
+    init(collectionView: UICollectionView, fetchHandler: @escaping CompletionHandler, favoriteHandler: @escaping CompletionHandlerWithParam<String>,
+            selectHandler: @escaping CompletionHandlerWithParam<String>) {
+        
         collectionView.register(RestaurantCell.self, forCellWithReuseIdentifier: RestaurantCell.reuseId)
         _fetchRestaurantsHandler = fetchHandler
+        _selectHandler = selectHandler
 
         super.init(collectionView: collectionView) { (collectionView, indexPath, rastaurant) -> UICollectionViewCell? in
             let restaurantCell = collectionView.dequeueReusableCell(withReuseIdentifier: RestaurantCell.reuseId, for: indexPath) as! RestaurantCell
@@ -74,7 +78,8 @@ extension RestaurantsCollectionDataSource: UICollectionViewDelegateFlowLayout, U
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath.item)
+        let restaurantId = _restaurantList[indexPath.item].getId()
+        _selectHandler(restaurantId)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
