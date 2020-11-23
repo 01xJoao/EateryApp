@@ -96,6 +96,7 @@ class RestaurantDetailViewController: BaseViewController<RestaurantDetailViewMod
         
         if let image = viewModel.favoriteRestaurantImage {
             _restaurantImageView.image = UIImage(data: image)
+            self._restaurantImageView.contentMode = .scaleAspectFill
         } else {
             _restaurantImageView.image = defaultImage
             _setRestaurantImage(viewModel.restaurant.getThumbnail())
