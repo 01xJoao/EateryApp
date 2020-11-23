@@ -45,6 +45,7 @@
 		9D95E27125699C2F00E77840 /* RestaurantDatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D95E27025699C2F00E77840 /* RestaurantDatabaseService.swift */; };
 		9D95E27A25699CBD00E77840 /* RestaurantDBObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D95E27925699CBD00E77840 /* RestaurantDBObject.swift */; };
 		9D95E28725699D4700E77840 /* RestaurantDatabaseServiceImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D95E28625699D4700E77840 /* RestaurantDatabaseServiceImp.swift */; };
+		9D9AEA80256B3B330013A9E7 /* AppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9AEA7F256B3B330013A9E7 /* AppData.swift */; };
 		9DC73B6A256483A4003E3547 /* UIView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC73B63256483A4003E3547 /* UIView+Layout.swift */; };
 		9DC73B6B256483A4003E3547 /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC73B64256483A4003E3547 /* UIButton.swift */; };
 		9DC73B6C256483A4003E3547 /* AnchoredConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC73B65256483A4003E3547 /* AnchoredConstraints.swift */; };
@@ -131,6 +132,7 @@
 		9D95E27025699C2F00E77840 /* RestaurantDatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDatabaseService.swift; sourceTree = "<group>"; };
 		9D95E27925699CBD00E77840 /* RestaurantDBObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDBObject.swift; sourceTree = "<group>"; };
 		9D95E28625699D4700E77840 /* RestaurantDatabaseServiceImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDatabaseServiceImp.swift; sourceTree = "<group>"; };
+		9D9AEA7F256B3B330013A9E7 /* AppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppData.swift; sourceTree = "<group>"; };
 		9DC73B63256483A4003E3547 /* UIView+Layout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Layout.swift"; sourceTree = "<group>"; };
 		9DC73B64256483A4003E3547 /* UIButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
 		9DC73B65256483A4003E3547 /* AnchoredConstraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnchoredConstraints.swift; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 				9D213C22256435320097CD58 /* Assets.xcassets */,
 				9D213C1F2564352E0097CD58 /* Eatery.xcdatamodeld */,
 				9D213C24256435320097CD58 /* LaunchScreen.storyboard */,
+				9D9AEA7F256B3B330013A9E7 /* AppData.swift */,
 				9D213C162564352E0097CD58 /* AppDelegate.swift */,
 				9D213C182564352E0097CD58 /* SceneDelegate.swift */,
 				9D80310C256442F800234AE0 /* Core */,
@@ -723,6 +726,7 @@
 				9D80313F25644BFA00234AE0 /* MainViewModel.swift in Sources */,
 				9D80314825644D9D00234AE0 /* MainViewController.swift in Sources */,
 				9DED64742565AF3D00D2C11B /* LocationServiceImp.swift in Sources */,
+				9D9AEA80256B3B330013A9E7 /* AppData.swift in Sources */,
 				9D80311F2564463300234AE0 /* CustomUI+Ext.swift in Sources */,
 				9DC73B6E256483A4003E3547 /* AspectFitImageView.swift in Sources */,
 				9D803116256443B800234AE0 /* RootViewController.swift in Sources */,

@@ -26,5 +26,13 @@ enum RestaurantFilter: String, CaseIterable {
     case rating = "rating"
     case cost = "cost"
     
+    func getOrder() -> String {
+        switch self {
+        case RestaurantFilter.distance: return "asc"
+        case RestaurantFilter.rating: return "desc"
+        case RestaurantFilter.cost: return "asc"
+        }
+    }
+    
     static let allValues = [distance, rating, cost]
 }

@@ -8,7 +8,6 @@
 import Foundation
 
 final class WebServiceImp: WebService {
-    private let _zomatoAPIKey = "38fd20391c95ec7757bb9b1010596d17"
     private let _URLSession: URLSession
     
     init() {
@@ -28,7 +27,7 @@ final class WebServiceImp: WebService {
  
         var getRequest = URLRequest(url: composedURL)
         getRequest.setValue("application/json", forHTTPHeaderField: "Accept")
-        getRequest.setValue(_zomatoAPIKey, forHTTPHeaderField: "user-key")
+        getRequest.setValue(API.zomato, forHTTPHeaderField: "user-key")
 
         _URLSession.dataTask(with: getRequest) { data, response, error in
             if let _ = error {

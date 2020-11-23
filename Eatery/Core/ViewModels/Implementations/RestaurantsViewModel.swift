@@ -99,7 +99,8 @@ final class RestaurantsViewModel: ViewModelBase {
             "lat": userLocation.lat,
             "lon": userLocation.long,
             "radius": _searchRadius,
-            "sort": restaurantFilter.rawValue
+            "sort": restaurantFilter.rawValue,
+            "order": restaurantFilter.getOrder()
         ]
         
         _restaurantWebService.getRestaurants(query: query) { [weak self] (result: Result<RestaurantListObject?, WebServiceError>) in
