@@ -10,20 +10,21 @@ import Foundation
 final class RestaurantsViewModel: ViewModelBase {
     private let _restaurantWebService: RestaurantWebService
     private let _restaurantDatabaseService: RestaurantDatabaseService
-    private var _locationService: LocationService
+    private let _locationService: LocationService
+    private let _dialogService: DialogService
     
     private var _restaurantStartCount = 1
     private let _numberOfRestaurantsPerCall = 20
     private var _canFetchMoreRestaurants = true
     private var _userLocation: (lat: String, long: String)?
     private var _favoriteRestaurants = [String]()
+    private let _searchRadius = "20000"
     private var _search = ""
-    private let _searchRadius = "15000"
     
     private(set) var restaurantList = DynamicValueList<Restaurant>()
     private(set) var searchRestaurantList = DynamicValueList<Restaurant>()
     private(set) var isSearching = false
-    private(set) var restaurantFilter = RestaurantFilter.distance
+    private(set) var restaurantFilter = RestaurantFilterType.distance
     
     private(set) lazy var fetchMoreRestaurantsCommand = Command({ self._fetchRestaurants()}, canExecute: _canExecute)
     private(set) lazy var favoriteRestaurantCommand = WpCommand(_favoriteRestaurant)
@@ -31,10 +32,11 @@ final class RestaurantsViewModel: ViewModelBase {
     private(set) lazy var cancelSearchRestaurantCommand = Command(_cancelSearch)
     private(set) lazy var changeFilterCommand = WpCommand(_filterRestaurants)
     
-    init(restaurantWebService: RestaurantWebService, locationService: LocationService, restaurantDatabaseService: RestaurantDatabaseService) {
+    init(restaurantWebService: RestaurantWebService, locationService: LocationService, restaurantDatabaseService: RestaurantDatabaseService, dialogService: DialogService) {
         _restaurantWebService = restaurantWebService
         _restaurantDatabaseService = restaurantDatabaseService
         _locationService = locationService
+        _dialogService = dialogService
     }
     
     override func initialize() {
@@ -58,7 +60,7 @@ final class RestaurantsViewModel: ViewModelBase {
             
             guard let location = locationNotification.value else {
                 if !self._locationService.checkUserAuthorization() {
-                    print("Please enable app location services in settings.")
+                    self._dialogService.showInfo(I18N.localize(key: "dialog_enableAppLocation"), informationType: .bad)
                 }
                 return
             }
@@ -71,7 +73,7 @@ final class RestaurantsViewModel: ViewModelBase {
     
     private func _requestUserLocation() {
         if !_locationService.requestUserAuthorization() {
-            print("Please enable location services on your phone.")
+            self._dialogService.showInfo(I18N.localize(key: "dialog_enableDeviceLocation"), informationType: .bad)
         }
     }
     
@@ -103,15 +105,15 @@ final class RestaurantsViewModel: ViewModelBase {
             "order": restaurantFilter.getOrder()
         ]
         
-        _restaurantWebService.getRestaurants(query: query) { [weak self] (result: Result<RestaurantListObject?, WebServiceError>) in
+        _restaurantWebService.getRestaurants(query: query) { [weak self] (result: Result<RestaurantListObject?, WebServiceErrorType>) in
             guard let self = self else { return }
             
             switch result {
             case .success(let restaurantList):
                 guard let restaurantList = restaurantList else { return }
                 self._addRestaurantsToList(restaurantList, clearList)
-            case .failure( let error):
-                print("Display error: \(error)")
+            case .failure(let error):
+                self._dialogService.showInfo(I18N.localize(key: error.rawValue), informationType: .bad)
             }
             
             self.isBusy.value = false
@@ -153,9 +155,9 @@ final class RestaurantsViewModel: ViewModelBase {
     
     private func _displayReasonForNotAddingRestaurants() {
         if restaurantList.data.value.isEmpty {
-            print("We could not find restaurants in your location :/")
+            self._dialogService.showInfo(I18N.localize(key: "dialog_noRestaurantsFound"), informationType: .bad)
         } else {
-            print("We could not find more restaurants.")
+            self._dialogService.showInfo(I18N.localize(key: "dialog_noMoreRestaurants"), informationType: .info)
         }
     }
     
@@ -249,7 +251,7 @@ final class RestaurantsViewModel: ViewModelBase {
     }
     
     private func _filterRestaurants(filter: Int) {
-        restaurantFilter = RestaurantFilter.allCases[filter]
+        restaurantFilter = RestaurantFilterType.allCases[filter]
         _clearRestaurantCount()
         _fetchRestaurants(clearList: true)
     }

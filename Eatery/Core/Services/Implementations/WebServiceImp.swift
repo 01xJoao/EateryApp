@@ -31,17 +31,17 @@ final class WebServiceImp: WebService {
 
         _URLSession.dataTask(with: getRequest) { data, response, error in
             if let _ = error {
-                completion(.failure(WebServiceError.noInternet))
+                completion(.failure(WebServiceErrorType.noInternet))
                 return
             }
             
             guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else  {
-                completion(.failure(WebServiceError.requestError))
+                completion(.failure(WebServiceErrorType.requestError))
                 return
             }
             
             guard let validData = data else {
-                completion(.failure(WebServiceError.dataError))
+                completion(.failure(WebServiceErrorType.dataError))
                 return
             }
             
@@ -49,7 +49,7 @@ final class WebServiceImp: WebService {
                 let value = try JSONDecoder().decode(T.self, from: validData)
                 completion(.success(value))
             } catch {
-                completion(.failure(WebServiceError.dataError))
+                completion(.failure(WebServiceErrorType.dataError))
             }
             
         }.resume()

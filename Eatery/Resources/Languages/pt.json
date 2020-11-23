@@ -4,5 +4,12 @@
     "restaurants_search": "Procurar",
     "restaurants_distance": "Distancia",
     "restaurants_rating": "Avaliação",
-    "restaurants_price": "Preço"
+    "restaurants_price": "Preço",
+    "dialog_noRestaurantsFound": "Não foi possível encontrar restaurantes na sua área 🙁",
+    "dialog_noMoreRestaurants": "Não encontramos mais restaurantes.",
+    "dialog_enableAppLocation": "Ative o serviço de localização nas definições da aplicação.",
+    "dialog_enableDeviceLocation": "Ative o serviço de localização do dispositivo.",
+    "error_noInternet": "Sem ligação à Internet, por favor, tente novamente mais tarde.",
+    "error_webRequest": "Algo deu errado, por favor, tente novamente.",
+    "error_webData": "Erro no pedido, por favor, tente novamente."
 }

@@ -4,5 +4,12 @@
     "restaurants_search": "Search",
     "restaurants_distance": "Distance",
     "restaurants_rating": "Rating",
-    "restaurants_price": "Price"
+    "restaurants_price": "Price",
+    "dialog_noRestaurantsFound": "We couldn't find restaurants in your area 🙁",
+    "dialog_noMoreRestaurants": "We couldn't find more restaurants.",
+    "dialog_enableAppLocation": "Please enable app location service in settings.",
+    "dialog_enableDeviceLocation": "Please enable location service on your device.",
+    "error_noInternet": "No internet connection, please try again later.",
+    "error_webRequest": "Something went wrong, pelase try again.",
+    "error_webData": "Data received from the server is invalid. Please try again."
 }

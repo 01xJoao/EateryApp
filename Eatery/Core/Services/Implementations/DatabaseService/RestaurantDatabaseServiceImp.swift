@@ -8,7 +8,7 @@
 import UIKit
 import CoreData
 
-class RestaurantDatabaseServiceImp: RestaurantDatabaseService {
+final class RestaurantDatabaseServiceImp: RestaurantDatabaseService {
     private let _restaurantEntity = "RestaurantData"
     
     private var _managedContext: NSManagedObjectContext!
