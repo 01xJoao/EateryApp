@@ -8,13 +8,13 @@
 import UIKit
 
 final class FavoritesDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
-    private var _tableView: UITableView?
+    private let _tableView: UITableView
     private var _favoriteHandler: CompletionHandlerWithParam<String>
     
     var favoriteList = [Favorite]() {
         didSet {
             DispatchQueue.main.async { [weak self] in
-                self?._tableView?.reloadData()
+                self?._tableView.reloadData()
             }
         }
     }

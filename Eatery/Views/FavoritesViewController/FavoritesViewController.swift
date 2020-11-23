@@ -18,10 +18,10 @@ final class FavoritesViewController: BaseViewController<FavoritesViewModel> {
         self.title = viewModel.favoritesTitle
         
         _setupView()
+        _setData()
     }
     
     private func _setupView() {
-        _setData()
         _configureTableView()
         _configureViewBackgroundImage()
     }

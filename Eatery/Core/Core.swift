@@ -30,7 +30,7 @@ struct Core {
                                                                                             restaurantDatabaseService: DiContainer.resolve(), dialogService: DiContainer.resolve()) })
         
         DiContainer.register(FavoritesViewModel.self, constructor: { FavoritesViewModel(restaurantDatabaseService: DiContainer.resolve(), locationSerivce: DiContainer.resolve()) })
-        DiContainer.register(RestaurantDetailViewModel.self, constructor: { RestaurantDetailViewModel() })
+        DiContainer.register(RestaurantDetailViewModel.self, constructor: { RestaurantDetailViewModel(restaurantWebService: DiContainer.resolve(), dialogService: DiContainer.resolve()) })
     }
     
     private static func _registerViewControllers() {

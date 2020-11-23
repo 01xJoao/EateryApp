@@ -25,10 +25,10 @@ final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>,
         super.viewDidLoad()
         self.title = viewModel.titleLabel
         _setupView()
+        _setData()
     }
     
     private func _setupView() {
-        _setData()
         _configureFilterButton()
         _configureSearchController()
         _configureFilter()
@@ -102,6 +102,7 @@ final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>,
             return
         }
         
+        self.navigationController?.setToolbarHidden(true, animated: true)
         let filterSelected = _filterSegmentControl.selectedSegmentIndex
         viewModel.changeFilterCommand.execute(filterSelected)
     }

@@ -11,5 +11,7 @@
     "dialog_enableDeviceLocation": "Please enable location service on your device.",
     "error_noInternet": "No internet connection, please try again later.",
     "error_webRequest": "Something went wrong, pelase try again.",
-    "error_webData": "Data received from the server is invalid. Please try again."
+    "error_webData": "Data received from the server is invalid. Please try again.",
+    "restaurantDetail_reviews": "Reviews",
+    "restaurantDetail_noReviews": "No Reviews"
 }

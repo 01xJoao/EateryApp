@@ -27,6 +27,14 @@ struct UIHelper {
         default: return  UIColor.Theme.red
         }
     }
+    
+    static func getColorForRating(_ rating: Double) -> UIColor {
+        switch rating {
+        case 4.0...5.0: return UIColor.Theme.mainGreen
+        case 3.0...3.9: return UIColor.Theme.yellow
+        default: return UIColor.Theme.red
+        }
+    }
 }
 
 struct Helper {

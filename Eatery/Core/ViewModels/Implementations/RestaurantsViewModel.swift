@@ -91,7 +91,7 @@ final class RestaurantsViewModel: ViewModelBase {
         _canFetchMoreRestaurants = true
     }
     
-    private func _fetchRestaurants(clearList: Bool = false) {
+    private func _fetchRestaurants(clearRestaurantList: Bool = false) {
         guard _canFetchMoreRestaurants, let userLocation = _userLocation else { return }
         
         self.isBusy.value = true
@@ -112,7 +112,7 @@ final class RestaurantsViewModel: ViewModelBase {
             switch result {
             case .success(let restaurantList):
                 guard let restaurantList = restaurantList else { return }
-                self._addRestaurantsToList(restaurantList, clearList)
+                self._addRestaurantsToList(restaurantList, clearRestaurantList)
             case .failure(let error):
                 self._dialogService.showInfo(I18N.localize(key: error.rawValue), informationType: .bad)
             }
@@ -121,7 +121,7 @@ final class RestaurantsViewModel: ViewModelBase {
         }
     }
     
-    private func _addRestaurantsToList(_ restaurants: RestaurantListObject, _ clearList: Bool) {
+    private func _addRestaurantsToList(_ restaurants: RestaurantListObject, _ clearRestaurantList: Bool) {
         guard restaurants.resultsShown > 0 else {
             _canFetchMoreRestaurants = false
             _displayReasonForNotAddingRestaurants()
@@ -135,7 +135,7 @@ final class RestaurantsViewModel: ViewModelBase {
             return Restaurant(value.restaurant, isFavorite: _favoriteRestaurants.contains(value.restaurant.id), distance: distance)
         }
         
-        if clearList {
+        if clearRestaurantList {
             restaurantList.removeAllAndAdd(object: newRestaurantList)
         } else {
             restaurantList.addAll(newRestaurantList)
@@ -232,13 +232,13 @@ final class RestaurantsViewModel: ViewModelBase {
         _search = search.lowercased()
         isSearching = true
         
-        guard !search.isEmpty else {
+        guard !_search.isEmpty else {
             searchRestaurantList.removeAllAndAdd(object: restaurantList.data.value)
             return
         }
         
         let searchRestaurants = restaurantList.data.value.filter {
-            $0.containsSearch(search)
+            $0.containsSearch(_search)
         }
         
         searchRestaurantList.removeAllAndAdd(object: searchRestaurants)
@@ -254,7 +254,7 @@ final class RestaurantsViewModel: ViewModelBase {
     private func _filterRestaurants(filter: Int) {
         restaurantFilter = RestaurantFilterType.allCases[filter]
         _clearRestaurantCount()
-        _fetchRestaurants(clearList: true)
+        _fetchRestaurants(clearRestaurantList: true)
     }
     
     private func _navigateToRetaurant(restaurantId: String) {

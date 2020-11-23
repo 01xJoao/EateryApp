@@ -9,4 +9,5 @@ import Foundation
 
 protocol RestaurantWebService {
     func getRestaurants(query: [String: String?], completion: @escaping CompletionWebHandler<RestaurantListObject>)
+    func getRestaurantReviews(query: [String: String?], completion: @escaping CompletionWebHandler<ReviewObject>)
 }
