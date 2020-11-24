@@ -30,7 +30,7 @@ enum CustomUIAppearance {
             $0?.backButtonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.clear]
         }
         
-        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [.foregroundColor: UIColor.white]
     }
     
     static private func _textShadow() -> NSShadow {

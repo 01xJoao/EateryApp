@@ -20,13 +20,13 @@ final class FavoriteCell: UITableViewCell {
     
     private let _titleLabel = CustomTitleLabel(textAligment: .left, fontSize: 18)
     private let _subtitleLabel = CustomBodyLabel(textAligment: .left, fontSize: 15, color: UIColor.Theme.darkGrey)
-    private let _priceRangeLabel = CustomBodyLabel(textAligment: .right, fontSize: 19, color: UIColor.Theme.mainGreen, weight: .semibold)
+    private let _priceRangeLabel = CustomBodyLabel(textAligment: .right, fontSize: 17, color: UIColor.Theme.mainGreen, weight: .semibold)
     
-    private let _distanceLabel = CustomBodyLabel(textAligment: .left, fontSize: 14, color: UIColor.Theme.darkGrey)
-    private let _distanceImage = UIImageView(image: UIImage(systemName: "figure.walk")?.withTintColor(UIColor.Theme.darkGrey, renderingMode: .alwaysOriginal))
+    private let _distanceLabel = CustomBodyLabel(textAligment: .left, fontSize: 14, color: .darkGray)
+    private let _distanceImage = UIImageView(image: UIImage(systemName: "figure.walk")?.withTintColor(.darkGray, renderingMode: .alwaysOriginal))
     
-    private let _timeLabel = CustomBodyLabel(textAligment: .left, fontSize: 14, color: UIColor.Theme.darkGrey)
-    private let _timeImage = UIImageView(image: UIImage(systemName: "clock")?.withTintColor(UIColor.Theme.darkGrey, renderingMode: .alwaysOriginal))
+    private let _timeLabel = CustomBodyLabel(textAligment: .left, fontSize: 14, color: .darkGray)
+    private let _timeImage = UIImageView(image: UIImage(systemName: "clock")?.withTintColor(.darkGray, renderingMode: .alwaysOriginal))
     
     private var _restaurantImageWidthConstraint:NSLayoutConstraint!
     
