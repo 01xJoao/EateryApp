@@ -32,12 +32,8 @@ final class RestaurantsCollectionDataSource: UICollectionViewDiffableDataSource<
         }
     }
     
-    func updateData(on restaurants: [Restaurant], isSearching: Bool) {
-        if isSearching {
-            _restaurantList.append(contentsOf: restaurants)
-        } else {
-            _restaurantList = restaurants
-        }
+    func updateData(on restaurants: [Restaurant]) {
+        _restaurantList = restaurants
         
         var snapshot = NSDiffableDataSourceSnapshot<Section, Restaurant>()
         snapshot.appendSections([.restaurants])

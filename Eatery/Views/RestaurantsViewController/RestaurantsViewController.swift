@@ -45,7 +45,7 @@ final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>,
             
             DispatchQueue.main.async {
                 self._backgroundImage.isHidden = !self.viewModel.restaurantList.data.value.isEmpty
-                self._collectionDataSourceProvider.updateData(on: self.viewModel.restaurantList.data.value, isSearching: false)
+                self._collectionDataSourceProvider.updateData(on: self.viewModel.restaurantList.data.value)
             }
         }
         
@@ -53,7 +53,7 @@ final class RestaurantsViewController: BaseViewController<RestaurantsViewModel>,
             guard let self = self else { return }
             
             DispatchQueue.main.async {
-                self._collectionDataSourceProvider.updateData(on: self.viewModel.searchRestaurantList.data.value, isSearching: true)
+                self._collectionDataSourceProvider.updateData(on: self.viewModel.searchRestaurantList.data.value)
             }
         }
     }
