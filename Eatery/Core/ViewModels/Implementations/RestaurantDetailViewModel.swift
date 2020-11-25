@@ -68,7 +68,7 @@ final class RestaurantDetailViewModel: ViewModelBase {
     }
     
     private func _navigateBack() {
-        navigationService.close(arguments: nil, animated: true)
+        navigationService.close(animated: true)
     }
     
     let reviewsLabel = I18N.localize(key: "restaurantDetail_reviews")

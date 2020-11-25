@@ -35,7 +35,7 @@ final class NavigationServiceImp: NavigationService {
         rootViewController.changeViewController(viewController)
     }
 
-    func close(arguments: Any?, animated: Bool) {
+    func close(animated: Bool) {
         rootViewController.navigationController?.popViewController(animated: true)
     }
 }

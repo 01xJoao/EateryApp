@@ -33,7 +33,7 @@ struct Favorite {
     }
     
     func getDistance() -> String {
-        return _distance
+        _distance
     }
     
     func getThumbnail() -> Data? {
