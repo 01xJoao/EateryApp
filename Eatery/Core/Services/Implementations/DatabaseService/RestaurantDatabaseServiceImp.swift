@@ -63,6 +63,7 @@ final class RestaurantDatabaseServiceImp: RestaurantDatabaseService {
         do {
             try _managedContext.save()
         } catch let error {
+            _managedContext.rollback()
             print("Could not save data: \(restaurantData) to database with values: \(restaurant). Error: \(error)")
         }
     }
@@ -75,6 +76,7 @@ final class RestaurantDatabaseServiceImp: RestaurantDatabaseService {
         do {
             try _managedContext.execute(deleteRequest)
         } catch let error {
+            _managedContext.rollback()
             print("Could not execute \(deleteRequest). Error: \(error)")
         }
     }
