@@ -47,7 +47,7 @@
 		9D95E25A2569616E00E77840 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D95E2592569616E00E77840 /* Command.swift */; };
 		9D95E2622569618900E77840 /* Command{T}.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D95E2612569618900E77840 /* Command{T}.swift */; };
 		9D95E27125699C2F00E77840 /* RestaurantDatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D95E27025699C2F00E77840 /* RestaurantDatabaseService.swift */; };
-		9D95E27A25699CBD00E77840 /* RestaurantDBObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D95E27925699CBD00E77840 /* RestaurantDBObject.swift */; };
+		9D95E27A25699CBD00E77840 /* RestaurantData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D95E27925699CBD00E77840 /* RestaurantData.swift */; };
 		9D95E28725699D4700E77840 /* RestaurantDatabaseServiceImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D95E28625699D4700E77840 /* RestaurantDatabaseServiceImp.swift */; };
 		9D9AEA80256B3B330013A9E7 /* AppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9AEA7F256B3B330013A9E7 /* AppData.swift */; };
 		9D9AEA88256BD7B20013A9E7 /* DialogService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9AEA87256BD7B20013A9E7 /* DialogService.swift */; };
@@ -143,7 +143,7 @@
 		9D95E2592569616E00E77840 /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 		9D95E2612569618900E77840 /* Command{T}.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Command{T}.swift"; sourceTree = "<group>"; };
 		9D95E27025699C2F00E77840 /* RestaurantDatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDatabaseService.swift; sourceTree = "<group>"; };
-		9D95E27925699CBD00E77840 /* RestaurantDBObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDBObject.swift; sourceTree = "<group>"; };
+		9D95E27925699CBD00E77840 /* RestaurantData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantData.swift; sourceTree = "<group>"; };
 		9D95E28625699D4700E77840 /* RestaurantDatabaseServiceImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDatabaseServiceImp.swift; sourceTree = "<group>"; };
 		9D9AEA7F256B3B330013A9E7 /* AppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppData.swift; sourceTree = "<group>"; };
 		9D9AEA87256BD7B20013A9E7 /* DialogService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogService.swift; sourceTree = "<group>"; };
@@ -517,7 +517,7 @@
 		9D95E27825699C9400E77840 /* DBO */ = {
 			isa = PBXGroup;
 			children = (
-				9D95E27925699CBD00E77840 /* RestaurantDBObject.swift */,
+				9D95E27925699CBD00E77840 /* RestaurantData.swift */,
 			);
 			path = DBO;
 			sourceTree = "<group>";
@@ -828,7 +828,7 @@
 				9DED645F2565760700D2C11B /* CustomBodyLabel.swift in Sources */,
 				9D80314D25644E0900234AE0 /* BaseTabBarViewController.swift in Sources */,
 				9D93E377256C3DC2007B469A /* RestaurantDetailTableDataSource.swift in Sources */,
-				9D95E27A25699CBD00E77840 /* RestaurantDBObject.swift in Sources */,
+				9D95E27A25699CBD00E77840 /* RestaurantData.swift in Sources */,
 				9DD9EF4C256850CB00E00BE5 /* FavoriteCell.swift in Sources */,
 				9D7CFE6125645CB900A801BC /* DynamicValue.swift in Sources */,
 				9D9AEA93256BDB760013A9E7 /* InfoDialogView.swift in Sources */,

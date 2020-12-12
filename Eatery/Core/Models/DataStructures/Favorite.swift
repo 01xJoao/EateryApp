@@ -8,12 +8,11 @@
 import Foundation
 
 struct Favorite {
-    private let _restaurant: RestaurantDBObject
-    private let _distance: String
+    private let _restaurant: RestaurantData
+    private var _distance: String = ""
     
-    init(_ restaurant: RestaurantDBObject, distance: String) {
+    init(_ restaurant: RestaurantData) {
         _restaurant = restaurant
-        _distance = distance
     }
     
     func getId() -> String {
@@ -50,5 +49,17 @@ struct Favorite {
     
     func getImage() -> Data? {
         _restaurant.image
+    }
+    
+    func getLatitude() -> String {
+        _restaurant.lat
+    }
+    
+    func getLongitude() -> String {
+        _restaurant.long
+    }
+    
+    mutating func setDistance(_ distance: String) {
+        _distance = distance
     }
 }

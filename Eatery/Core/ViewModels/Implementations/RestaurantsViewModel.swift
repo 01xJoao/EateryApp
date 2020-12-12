@@ -194,7 +194,7 @@ final class RestaurantsViewModel: ViewModelBase {
     private func _saveRestaurantInDatabase(_ restaurant: Restaurant) {
         let restaurantImageData = ImageCache.shared.getImageData(from: restaurant.getThumbnail())
         
-        let restaurantDBO = RestaurantDBObject(
+        let restaurantDBO = RestaurantDataDBO(
             id: restaurant.getId(),
             name: restaurant.getName(),
             cousine: restaurant.getCuisines(),
@@ -210,7 +210,7 @@ final class RestaurantsViewModel: ViewModelBase {
     }
     
     private func _getFavoriteRestaurants() {
-        _favoriteRestaurants = _restaurantDatabaseService.getFavorites().map { $0.id }
+        _favoriteRestaurants = _restaurantDatabaseService.getFavorites().map { $0.getId() }
         _updateRestaurantListWithFavorites()
     }
     

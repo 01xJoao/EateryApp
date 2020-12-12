@@ -28,14 +28,14 @@ final class FavoritesViewModel: ViewModelBase {
     private func _getFavoriteRestaurants() {
         favoriteList.removeAll()
         
-        let favoritesDBO = _restaurantDatabaseService.getFavorites()
-        let favoriteRestaurants = favoritesDBO.map { restaurant -> Favorite in
-            let distance = _getRestaurantDistance((lat: restaurant.lat, long: restaurant.long))
-            
-            return Favorite(restaurant, distance: distance)
+        var favorites = _restaurantDatabaseService.getFavorites()
+        
+        for i in 0..<favorites.count {
+            let distance = _getRestaurantDistance((lat: favorites[i].getLatitude(), long: favorites[i].getLongitude()))
+            favorites[i].setDistance(distance)
         }
         
-        favoriteList.addAll(favoriteRestaurants)
+        favoriteList.addAll(favorites)
     }
     
     private func _getRestaurantDistance(_ location: (lat: String, long: String)) -> String {

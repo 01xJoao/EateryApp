@@ -10,11 +10,7 @@ import CoreData
 
 final class RestaurantDatabaseServiceImp: RestaurantDatabaseService {
     private let _restaurantEntity = "RestaurantData"
-    
     private var _managedContext: NSManagedObjectContext!
-    private var _fetchRequest: NSFetchRequest<NSFetchRequestResult> {
-        NSFetchRequest<NSFetchRequestResult>(entityName: _restaurantEntity)
-    }
     
     init() {
         _setManagerContext()
@@ -25,40 +21,29 @@ final class RestaurantDatabaseServiceImp: RestaurantDatabaseService {
         _managedContext = appDelegate?.persistentContainer.viewContext
     }
     
-    func getFavorites() -> [RestaurantDBObject] {
+    func getFavorites() -> [Favorite] {
+        let fetchRequest = NSFetchRequest<RestaurantData>(entityName: _restaurantEntity)
+        
         do {
-            let result = try _managedContext.fetch(_fetchRequest)
+            let restaurants = try _managedContext.fetch(fetchRequest)
             
-            guard let restaurantData = result as? [RestaurantData] else { return [] }
-            
-            let restaurants = restaurantData.map {
-                RestaurantDBObject(data: $0)
-            }
-            
-            return restaurants
+            return restaurants.map { restaurant -> Favorite in Favorite(restaurant) }
         } catch let error {
             print( "Could not retrieve favortes. Error \(error)")
+            _managedContext.rollback()
             return []
         }
     }
     
-    func saveFavorite(_ restaurant: RestaurantDBObject) {
+    func saveFavorite(_ restaurant: RestaurantDataDBO) {
         let restaurantEntity = NSEntityDescription.entity(forEntityName: _restaurantEntity, in: _managedContext)!
         let restaurantData = RestaurantData(entity: restaurantEntity, insertInto: _managedContext)
         
         _save(restaurantData, restaurant)
     }
     
-    private func _save(_ restaurantData: RestaurantData, _ restaurant: RestaurantDBObject) {
-        restaurantData.setValue(restaurant.id, forKey: String(describing: "id"))
-        restaurantData.setValue(restaurant.name, forKey: String(describing: "name"))
-        restaurantData.setValue(restaurant.cousine, forKey: String(describing: "cousine"))
-        restaurantData.setValue(restaurant.priceRange, forKey: String(describing: "priceRange"))
-        restaurantData.setValue(restaurant.rating, forKey: String(describing: "rating"))
-        restaurantData.setValue(restaurant.lat, forKey: String(describing: "lat"))
-        restaurantData.setValue(restaurant.long, forKey: String(describing: "long"))
-        restaurantData.setValue(restaurant.timings, forKey: String(describing: "timings"))
-        restaurantData.setValue(restaurant.image, forKey: String(describing: "image"))
+    private func _save(_ restaurantData: RestaurantData, _ restaurant: RestaurantDataDBO) {
+        restaurantData.fillData(with: restaurant)
         
         do {
             try _managedContext.save()
@@ -69,8 +54,9 @@ final class RestaurantDatabaseServiceImp: RestaurantDatabaseService {
     }
     
     func removeFavorite(_ resturantId: String) {
-        let fetchRequest = _fetchRequest
-        fetchRequest.predicate = NSPredicate(format: "id == \(resturantId)", resturantId)
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: _restaurantEntity)
+        fetchRequest.predicate = NSPredicate(format: "id == %@", resturantId)
+        
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
         
         do {

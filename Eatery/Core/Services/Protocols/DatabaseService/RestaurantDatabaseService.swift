@@ -8,7 +8,7 @@
 import Foundation
 
 protocol RestaurantDatabaseService {
-    func getFavorites() -> [RestaurantDBObject]
-    func saveFavorite(_ restaurant: RestaurantDBObject)
+    func getFavorites() -> [Favorite]
+    func saveFavorite(_ restaurant: RestaurantDataDBO)
     func removeFavorite(_ resturantId: String)
 }
